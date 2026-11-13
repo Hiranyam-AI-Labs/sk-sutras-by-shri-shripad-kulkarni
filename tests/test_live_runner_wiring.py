@@ -34,16 +34,19 @@ class FakeDispatch:
         self.calls.append((role, payload))
         if role == "sutrakar_master":
             mode = payload["mode"]
-            data = ({"accepted": True} if mode == "arbitrate" else
+            data = ({"accepted": True, "reason": "substantiated"} if mode == "arbitrate" else
                     {"findings": ["independent"], "challenges": ["check source"]} if mode == "consult"
                     else make_draft())
         elif role == "bharatiya_jnana_specialist":
             data = {"bridge": "Bridge", "findings": ["documented"]}
         elif role == "independent_validator":
             data = {"gates": {name: {"status": "PASS", "evidence": "Synthetic inspection"}
-                              for name in GATE_NAMES}}
+                              for name in GATE_NAMES}, "findings": []}
         else:
-            data = {"analysis": "Synthetic source review"}
+            data = ({"thesis": "Synthetic source review", "source_reference": "Narada 1"}
+                    if role == "narada_specialist" else
+                    {"review": "Synthetic candidate review", "preferred_sutra_no": "1",
+                     "rejected_reasons": []})
         return SimpleNamespace(content=json.dumps(data, ensure_ascii=False))
 
 
@@ -122,3 +125,49 @@ def test_budget_preflight_blocks_before_first_role_call():
             runner.execute_live_council(1)
         assert dispatch.calls == 0
         assert dispatch.audit == []
+
+
+def test_iks_packet_uses_vector_ids_verified_against_local_corpus():
+    """The live researcher receives IKS passages from indexed source IDs."""
+    with tempfile.TemporaryDirectory() as folder:
+        path = Path(folder)
+        source, corpus = path / "doc.txt", path / "iks.json"
+        source.write_text("source ethics business passage", encoding="utf-8")
+        corpus.write_text(json.dumps([{"id": "iks-1", "tradition": "Yoga",
+                                      "section": "one", "verse_no": "2",
+                                      "sanskrit": "सत्यं", "english_meaning": "truth"}]), encoding="utf-8")
+
+        class Collection:
+            """Return the one test ID from a local vector query."""
+
+            def count(self):
+                """Report an indexed entry."""
+                return 1
+
+            def query(self, query_texts, n_results):
+                """Return the requested semantic ID shape."""
+                return {"ids": [["iks-1"]]}
+
+        class Client:
+            """Expose only the production IKS collection name."""
+
+            def get_collection(self, name):
+                """Reject an unexpected collection identity."""
+                assert name == "iks_canonical_library"
+                return Collection()
+
+        vector = FakeVector()
+        vector.client = Client()
+        dispatch = FakeDispatch()
+        examples = ExampleRegistry(path / "examples.db")
+        examples.register("Person A", "PERSON", "Record A")
+        runner = DynamicLiveCouncilRunner(
+            dispatcher=dispatch, vector_store=vector,
+            review_store=ReviewStore(path / "review.db"), example_registry=examples,
+            narada_sutras=[{"sutra_no": 1, "sanskrit": "source ethics"}],
+            shandilya_sutras=[{"sutra_no": 1, "sanskrit": "matching source"}],
+            source_paths={"DOC-01": source, "IKS": corpus})
+        assert runner.execute_live_council(1)["qualifying"] == 1
+        research = [payload for role, payload in dispatch.calls
+                    if role == "bharatiya_jnana_specialist"]
+        assert any(p["source_id"] == "IKS:iks-1" for p in research[0]["passages"])

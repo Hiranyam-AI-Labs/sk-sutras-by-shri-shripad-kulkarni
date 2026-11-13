@@ -2,6 +2,14 @@
 
 All notable changes, architectural updates, and releases for **SK Sutras - by Shri Shripad Kulkarni** are documented in this client-facing log.
 
+## [Unreleased council workflow] - 2026-11-14
+
+- Added a fifteen-gate, five-role drafting path that stops at human review. It retrieves source passages and indexed IKS records, stores draft versions, and reports an explicit eligible count or shortfall.
+- Added authenticated scholar and author decisions bound to exact draft versions and content hashes. Author approval commits the matching named-example reservations; publication rechecks them.
+- Added durable per-run provider call and estimated budget records across restarts. No live provider call or billing claim was made during implementation.
+- Added a Word/PDF renderer that reads a frozen approved edition and refuses stale or incomplete content. Synthetic output passed offline text and PDF page checks; a real edition has not been published.
+- Offline focused regression: 38 passing tests. Controlled live UAT and human scholarly approval remain required before release.
+
 ## [v0.8.1-editorial-refinement] - 2026-11-11
 
 ### Executive Summary of Changes

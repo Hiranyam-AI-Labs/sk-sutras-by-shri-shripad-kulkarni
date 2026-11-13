@@ -13,7 +13,7 @@ Description: Dynamic Sequential Five-Agent Multi-LLM Research, Orchestration,
                * Agent 3: Bharatiya Jnana Specialist (Anthropic claude-sonnet-5-5)
                * Agent 4: Sutrakar Author (Anthropic claude-sonnet-5-5)
                * Agent 5: Independent Validator (OpenAI gpt-4o)
-             - Generates exactly 10 new, approved Canonical Udyog Sutras.
+             - Targets 10 AI-qualified drafts for separate human review.
              - Enforces strict conciseness mandate:
                "सूत्र लहान, विचार महान, निरूपण सुटसुटीत, संक्षिप्त आणि आचरण व्यावहारिक."
                * Sutra: Extremely short, title-like, memorable Sanskrit aphorism (2-5 words).
@@ -21,10 +21,9 @@ Description: Dynamic Sequential Five-Agent Multi-LLM Research, Orchestration,
                * Case Studies: 2 concise bullet points (Eastern & Western).
                * Mental Resilience: Patanjali Yoga Sutra guidance in 2-3 lines.
                * Guidance: 3 short, actionable lines for Founders, Managers, Leaders.
-             - Captures full cryptographic & structural proof of live LLM API calls
-               (HTTP 200 OK, positive non-error responses, token counts, SHA-256 hashes).
-             - Produces docs/UDYOG_SUTRAS_TEN_NEW_CANONICAL_MATCHING_AND_SHLOKAS.docx
-               with mandatory footer: "Proprietory and Confidential- Hiranyam AI Labs".
+             - Reserves bounded estimated cost and audits response hashes and
+               provider-exposed usage without asserting unavailable HTTP/billing data.
+             - Publication is a separate frozen-manifest human-approved action.
 ================================================================================
 """
 
@@ -51,7 +50,8 @@ from src.agents.validator_agent import (
     check_duplicate_or_near_duplicate,
     normalize_sutra_text,
 )
-from src.orchestration.source_evidence import retrieve_passages, require_handoff
+from src.orchestration.source_evidence import (retrieve_passages, require_handoff,
+                                               retrieve_iks_vector_passages)
 
 DOCS_DIR = BASE_DIR / "docs"
 DATA_DIR = BASE_DIR / "data"
@@ -1516,7 +1516,8 @@ class DynamicLiveCouncilRunner:
             rates = json.loads(raw_rates)
             self.dispatcher = BudgetedDispatcher(
                 ProviderRegistry(offline_mode=False), rates,
-                float(os.environ["COUNCIL_MAX_USD"]), int(os.environ["COUNCIL_MAX_CALLS"]))
+                float(os.environ["COUNCIL_MAX_USD"]), int(os.environ["COUNCIL_MAX_CALLS"]),
+                audit_path=DB_PATH, run_id=os.environ["COUNCIL_RUN_ID"])
         self.vector_store = vector_store or SutraVectorStore(collection_name="shandilya_100_sutras")
         self.review_store = review_store or ReviewStore(DB_PATH)
         self.example_registry = example_registry or ExampleRegistry(DB_PATH)
@@ -1539,11 +1540,45 @@ class DynamicLiveCouncilRunner:
         context. Returns a JSON object, or raises on malformed provider output.
         Audit the dispatch record and response hash to debug, not raw credentials.
         """
+        from src.agents.acceptance_policy import GATE_NAMES
+        contracts = {
+            "narada_specialist": ("Analyze the numbered Narada source faithfully; distinguish ancient teaching from contemporary enterprise application.",
+                                  '{"thesis":"source-grounded argument","source_reference":"exact source ID"}'),
+            "shandilya_specialist": ("Assess retrieved Shandilya candidates on doctrinal fit, explain rejection of forced matches and answer revision feedback.",
+                                     '{"review":"reasoned assessment","preferred_sutra_no":"candidate ID or none","rejected_reasons":["specific reason"]}'),
+            "bharatiya_jnana_specialist": ("Use actual registered DOC-01–04 and IKS passages; cite source IDs, versions and locations. Answer Sutrakar challenges without inventing citations or cases.",
+                                            '{"bridge":"source-grounded enterprise derivation","findings":[{"source_id":"ID","location":"source location","claim":"supported claim"}],"challenge_answers":["evidence-based answer"]}'),
+            "independent_validator": ("Independently evaluate the fifteen versioned gates. Every gate needs PASS, FAIL or HUMAN_REVIEW_REQUIRED and specific evidence. Missing proof is NOT_EVALUATED. A score cannot waive a failed gate; AI judgment never author-approves.",
+                                      json.dumps({"gates": {name: {"status": "PASS|FAIL|HUMAN_REVIEW_REQUIRED", "evidence": "specific source and draft evidence"} for name in GATE_NAMES}, "findings": []})),
+        }
+        if role == "sutrakar_master":
+            mode = payload.get("mode")
+            mode_contracts = {
+                "arbitrate": '{"accepted":true,"sutra_no":"selected candidate ID","reason":"substantive source fit"}',
+                "consult": '{"findings":["independent source finding"],"challenges":["question for researcher"]}',
+                "compose": '{"original_sanskrit_verse":"2-5 displayed Sanskrit words","padaccheda":"...","anvaya":"...","nirukta":"...","translation_en":"...","translation_mr":"...","comprehensive_bhashya_mr":"70-110 Marathi words","biographical_case_studies":[{"region":"EASTERN","person":"...","business":"...","provenance":"..."},{"region":"WESTERN","person":"...","business":"...","provenance":"..."}],"dos_and_donts":{"dos":["...","...","..."],"donts":["...","...","..."]},"business_assessment":{"context":"...","reader":"...","decision":"...","action":"...","source_rationale":"..."},"named_examples":[{"name":"...","polarity":"POSITIVE","location":"case"}],"sections":{"sources":"...","derivation":"...","sutra_meaning":"...","commentary":"...","cases_yoga":"...","dos_donts":"...","reflection":"..."}}',
+            }
+            if mode not in mode_contracts:
+                raise ValueError("Unknown Sutrakar mode")
+            instruction = ("Act as independent Sutrakar arbiter and author. Recheck Narada/Shandilya fit, research the sources independently, preserve the challenge response, and compose a short Udyam business aphorism with seven complete reader sections. Cases must be factual, two principal examples across East and West, with diverse people and businesses. Yoga must be cited and applied. No generic business buzzwords, invented sources or forced pairing. " + mode)
+            contract = mode_contracts[mode]
+        else:
+            if role not in contracts:
+                raise ValueError("Unknown council role")
+            instruction, contract = contracts[role]
         response = self.dispatcher.call(role, json.dumps(payload, ensure_ascii=False),
-                                        "Return one strict JSON object with the requested fields.")
+                                        f"{instruction}\nReturn exactly one JSON object matching this shape: {contract}")
         data = json.loads(response.content)
         if not isinstance(data, dict):
             raise ValueError(f"Non-object response from {role}")
+        required = ({"narada_specialist": ("thesis", "source_reference"),
+                     "shandilya_specialist": ("review", "preferred_sutra_no", "rejected_reasons"),
+                     "bharatiya_jnana_specialist": ("bridge", "findings"),
+                     "independent_validator": ("gates", "findings")}.get(role) or
+                    {"arbitrate": ("accepted", "reason"), "consult": ("findings", "challenges"),
+                     "compose": ("original_sanskrit_verse", "named_examples", "sections")}[payload["mode"]])
+        if any(field not in data for field in required):
+            raise ValueError(f"Malformed {role} response: missing required fields")
         return data
 
     def execute_live_council(self, target_count=10):
@@ -1562,8 +1597,9 @@ class DynamicLiveCouncilRunner:
                 "narada_specialist", "shandilya_specialist",
                 "bharatiya_jnana_specialist", "sutrakar_master", "independent_validator"])
         results = []
+        qualifying = 0
         for narada in self.narada_sutras:
-            if len(results) >= target_count:
+            if qualifying >= target_count:
                 break
             matches = self.vector_store.query_similar_sutras(
                 query_text=narada.get("sanskrit", ""), top_k=5)
@@ -1572,7 +1608,12 @@ class DynamicLiveCouncilRunner:
                           if str(item.get("sutra_no")) in numbers]
             if not candidates:
                 continue
-            passages = retrieve_passages(self.source_paths, narada["sanskrit"])
+            text_sources = {source_id: path for source_id, path in self.source_paths.items()
+                            if source_id != "IKS"}
+            passages = retrieve_passages(text_sources, narada["sanskrit"])
+            if "IKS" in self.source_paths:
+                passages.extend(retrieve_iks_vector_passages(
+                    self.vector_store.client, self.source_paths["IKS"], narada["sanskrit"]))
             def role_narada(source, feedback=None):
                 """Ask frozen Narada role for thesis; return structured response."""
                 return self._json_role("narada_specialist", {"source": source, "feedback": feedback})
@@ -1582,10 +1623,11 @@ class DynamicLiveCouncilRunner:
             def role_researcher(source, pairing, packet, feedback):
                 """Ask frozen researcher for bridge/findings using registered passages."""
                 return self._json_role("bharatiya_jnana_specialist", {"source": source, "pairing": pairing,
-                                                                        "passages": packet, "feedback": feedback})
+                                                                        "passages": packet, "allocated_examples": self.example_registry.allocated_entities(), "feedback": feedback})
             def role_sutrakar(mode, *inputs):
                 """Use one frozen Sutrakar model for arbitration, consultation and authoring."""
-                return self._json_role("sutrakar_master", {"mode": mode, "inputs": inputs})
+                return self._json_role("sutrakar_master", {"mode": mode, "inputs": inputs,
+                                                            "allocated_examples": self.example_registry.allocated_entities()})
             def role_validator(draft, research, packet, feedback, evidence):
                 """Ask independent frozen verifier for fifteen evidenced gate decisions."""
                 return self._json_role("independent_validator", {"draft": draft, "research": research,
@@ -1594,11 +1636,15 @@ class DynamicLiveCouncilRunner:
             service = CouncilService({"narada": role_narada, "shandilya": role_shandilya,
                                       "researcher": role_researcher, "sutrakar": role_sutrakar,
                                       "validator": role_validator}, self.review_store, self.example_registry)
-            result = service.run_unit(f"UDYAM-{len(results)+1:03d}", narada, candidates, passages)
+            unit_id = f"UDYAM-{narada.get('sutra_no')}"
+            result = service.run_unit(unit_id, narada, candidates, passages,
+                                      self.review_store.current_formulations(unit_id))
             results.append(result)
-        return {"status": "HUMAN_REVIEW_PENDING" if len(results) == target_count and
-                all(item["status"] == "HUMAN_REVIEW_PENDING" for item in results)
-                else "PARTIAL_BLOCKED", "requested": target_count, "units": results}
+            if result["status"] == "HUMAN_REVIEW_PENDING":
+                qualifying += 1
+        return {"status": "HUMAN_REVIEW_PENDING" if qualifying == target_count
+                else "PARTIAL_BLOCKED", "requested": target_count,
+                "qualifying": qualifying, "units": results}
 
 
 if __name__ == "__main__":

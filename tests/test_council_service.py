@@ -23,6 +23,9 @@ def make_draft(verse="सत्यं व्यवसायस्य मूल�
             "business_assessment": {key: key for key in
                                     ("context", "reader", "decision", "action", "source_rationale")},
             "named_examples": [{"name": "Person A", "polarity": "POSITIVE", "location": "case"}],
+            "sections": {key: "synthetic substantive text" for key in
+                         ("sources", "derivation", "sutra_meaning", "commentary",
+                          "cases_yoga", "dos_donts", "reflection")},
             "example_note": passage}
 
 

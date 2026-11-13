@@ -1,6 +1,7 @@
 """Verified passage packets from registered local manuscript and IKS sources."""
 
 import hashlib
+import json
 import re
 from pathlib import Path
 from typing import Dict, Iterable, List
@@ -35,6 +36,39 @@ def retrieve_passages(sources: Dict[str, Path], query: str, limit: int = 2) -> L
     if not result:
         raise ValueError("No relevant passage found in registered sources")
     return result
+
+
+def retrieve_iks_vector_passages(client: object, corpus_path: Path, query: str,
+                                 limit: int = 3) -> List[dict]:
+    """Retrieve IKS IDs semantically, then verify text against the local corpus.
+
+    ``client`` exposes the existing iks_canonical_library Chroma collection.
+    Returns versioned, located source passages; missing index, unknown IDs, or
+    malformed records raise. Reingest the corpus before retrying an index gap.
+    """
+    if not query.strip() or limit < 1 or not corpus_path.is_file():
+        raise ValueError("IKS corpus, query and positive result limit required")
+    raw = corpus_path.read_bytes()
+    records = json.loads(raw.decode("utf-8"))
+    by_id = {record["id"]: record for record in records}
+    collection = client.get_collection("iks_canonical_library")
+    if collection.count() < 1:
+        raise ValueError("IKS vector collection is empty")
+    result = collection.query(query_texts=[query], n_results=limit)
+    ids = (result or {}).get("ids", [[]])[0]
+    if not ids:
+        raise ValueError("IKS vector retrieval returned no passages")
+    passages = []
+    for record_id in ids:
+        record = by_id.get(record_id)
+        if not record or not all(record.get(key) for key in
+                                 ("tradition", "section", "verse_no", "sanskrit", "english_meaning")):
+            raise ValueError(f"IKS vector ID absent or incomplete in source: {record_id}")
+        passages.append({"source_id": f"IKS:{record_id}",
+                         "source_version": hashlib.sha256(raw).hexdigest(),
+                         "location": f"{record['tradition']}:{record['section']}:{record['verse_no']}",
+                         "text": f"{record['sanskrit']} — {record['english_meaning']}"})
+    return passages
 
 
 def require_handoff(packet: Iterable[dict], bridge: str, composition_prompt: str,

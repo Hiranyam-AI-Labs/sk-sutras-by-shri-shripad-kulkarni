@@ -234,3 +234,14 @@ class ExampleRegistry:
                         if not row or set(json.loads(row[0])) != prior:
                             raise ValueError(f"Unapproved book-wide example repeat: {identity}")
                     seen[identity] = chapter
+
+    def allocated_entities(self) -> list[dict]:
+        """List reserved and committed named entities for research and authorship.
+
+        Returns name/kind/chapter/state rows without private source text. SQLite
+        errors propagate; inspect the allocation table to debug stale advice.
+        """
+        with self._connection() as db:
+            rows = db.execute("SELECT e.canonical_name,e.kind,a.chapter,a.state FROM example_allocations a JOIN example_entities e ON e.identity=a.identity ORDER BY a.chapter").fetchall()
+        return [{"name": row[0], "kind": row[1], "chapter": row[2], "state": row[3]}
+                for row in rows]

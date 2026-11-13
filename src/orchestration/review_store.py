@@ -100,17 +100,58 @@ class ReviewStore:
             db.execute("UPDATE review_versions SET state='AI_VALIDATED' WHERE unit_id=? AND version=?",
                        (unit_id, version))
 
+    def get_version(self, unit_id: str, version: int) -> Dict[str, Any]:
+        """Read one exact stored version for authenticated editorial review.
+
+        Inputs identify unit/version. Returns content fingerprint and state;
+        missing versions raise ValueError. Inspect unit ID and version to debug,
+        never substitute a different current draft implicitly.
+        """
+        with self._connection() as db:
+            row = db.execute("SELECT content_json,content_sha256,gates_json,state FROM review_versions WHERE unit_id=? AND version=?",
+                             (unit_id, version)).fetchone()
+        if row is None:
+            raise ValueError("Review version not found")
+        return {"unit_id": unit_id, "version": version, "content": json.loads(row[0]),
+                "content_sha256": row[1], "gates": json.loads(row[2]), "state": row[3]}
+
+    def current_formulations(self, exclude_unit_id: str | None = None) -> list[str]:
+        """Return contemporary and historical Sanskrit for duplicate checks.
+
+        ``exclude_unit_id`` avoids treating a retry as its own duplicate.
+        Empty list means no stored candidates; inspect both manuscript tables
+        if a historical phrase appears to be missing.
+        """
+        with self._connection() as db:
+            rows = db.execute("SELECT content_json FROM review_versions v WHERE unit_id<>? AND version=(SELECT MAX(version) FROM review_versions WHERE unit_id=v.unit_id)",
+                              (exclude_unit_id or "",)).fetchall()
+            historical = []
+            if db.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='manuscript_units'").fetchone():
+                historical = [row[0] for row in db.execute(
+                    "SELECT original_sanskrit_verse FROM manuscript_units WHERE original_sanskrit_verse IS NOT NULL").fetchall()]
+        modern = [text for row in rows if isinstance((text := json.loads(row[0]).get("original_sanskrit_verse")), str) and text.strip()]
+        return modern + [text for text in historical if isinstance(text, str) and text.strip()]
+
     def approve(self, unit_id: str, version: int, kind: str, approver: str,
-                content_sha256: str) -> None:
+                content_sha256: str, example_registry: Any = None) -> None:
         """Bind scholar or author approval to an exact AI validated content hash.
 
-        ``kind`` is SCHOLAR or AUTHOR. Returns None; mismatch, invalid sequence,
-        and blank approver raise ValueError. Compare stored fingerprint and state
-        to debug stale review decisions.
+        ``kind`` is SCHOLAR or AUTHOR. The application supplies a registry for
+        AUTHOR so exact example reservations commit in the same transaction.
+        Mismatch, invalid sequence, and blank approver raise ValueError.
         """
         if kind not in {"SCHOLAR", "AUTHOR"} or not approver.strip():
             raise ValueError("Human approval kind and approver required")
         with self._connection() as db:
+            if kind == "AUTHOR" and example_registry is not None:
+                registry_path = Path(example_registry.path).resolve()
+                if registry_path != self.path.resolve():
+                    db.execute("ATTACH DATABASE ? AS examples_db", (str(registry_path),))
+                allocation_table = ("example_allocations" if registry_path == self.path.resolve()
+                                    else "examples_db.example_allocations")
+            else:
+                allocation_table = None
+            db.execute("BEGIN IMMEDIATE")
             row = db.execute("SELECT content_sha256,state FROM review_versions WHERE unit_id=? AND version=?",
                              (unit_id, version)).fetchone()
             newest = db.execute("SELECT MAX(version) FROM review_versions WHERE unit_id=?", (unit_id,)).fetchone()[0]
@@ -119,6 +160,12 @@ class ReviewStore:
             if kind == "AUTHOR" and not db.execute("SELECT 1 FROM review_approvals WHERE unit_id=? AND version=? AND kind='SCHOLAR'",
                                                     (unit_id, version)).fetchone():
                 raise ValueError("Scholar review required before author approval")
+            if allocation_table is not None:
+                changed = db.execute(
+                    f"UPDATE {allocation_table} SET state='COMMITTED' WHERE chapter=? AND content_sha256=? AND state='RESERVED'",
+                    (unit_id, content_sha256)).rowcount
+                if not changed:
+                    raise ValueError("Exact draft example reservations required for author approval")
             db.execute("INSERT INTO review_approvals VALUES (?,?,?,?,?)",
                        (unit_id, version, content_sha256, kind, approver))
             db.execute("UPDATE review_versions SET state=? WHERE unit_id=? AND version=?",
@@ -155,4 +202,33 @@ class ReviewStore:
             manifest = {"manifest_id": manifest_id, "units": entries}
             db.execute("INSERT INTO publication_manifests VALUES (?,?)",
                        (manifest_id, json.dumps(manifest, ensure_ascii=False)))
+        return manifest
+
+    def load_manifest(self, manifest_id: str, example_registry: Any) -> Dict[str, Any]:
+        """Reload a frozen manifest and recheck current approvals and allocations.
+
+        ``manifest_id`` identifies one stored edition; registry verifies named
+        examples. Returns the stored object. Missing or stale units raise rather
+        than silently exporting an obsolete draft.
+        """
+        with self._connection() as db:
+            row = db.execute("SELECT manifest_json FROM publication_manifests WHERE manifest_id=?",
+                             (manifest_id,)).fetchone()
+            if row is None:
+                raise ValueError("Frozen manifest not found")
+            manifest = json.loads(row[0])
+            for entry in manifest["units"]:
+                unit_id, version, digest = entry["unit_id"], entry["version"], entry["content_sha256"]
+                current = db.execute("SELECT MAX(version) FROM review_versions WHERE unit_id=?",
+                                     (unit_id,)).fetchone()[0]
+                approved = db.execute(
+                    "SELECT 1 FROM review_versions v JOIN review_approvals a ON a.unit_id=v.unit_id AND a.version=v.version "
+                    "WHERE v.unit_id=? AND v.version=? AND v.content_sha256=? AND v.state='AUTHOR_APPROVED' "
+                    "AND a.kind='AUTHOR' AND a.content_sha256=?",
+                    (unit_id, version, digest, digest)).fetchone()
+                if current != version or not approved or fingerprint(entry["content"]) != digest:
+                    raise ValueError(f"Frozen manifest unit is stale: {unit_id}")
+        if example_registry is None:
+            raise ValueError("Durable example registry required at export")
+        example_registry.verify_manifest(manifest["units"])
         return manifest

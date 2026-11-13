@@ -13,7 +13,7 @@ from typing import Any, Dict
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from src.api.routers import admin, cost, manuscript
+from src.api.routers import admin, cost, manuscript, review_v2
 
 app = FastAPI(
     title="SK Sutras by Shri Shripad Kulkarni: Four-Agent Platform API",
@@ -36,6 +36,7 @@ app.add_middleware(
 
 # Register modular API routers
 app.include_router(manuscript.router)
+app.include_router(review_v2.router)
 app.include_router(cost.router)
 app.include_router(admin.router)
 

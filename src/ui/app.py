@@ -222,16 +222,7 @@ def main() -> None:
 
             with col_b1:
                 if st.button("✅ सूत्र मंजूर करा (Approve for Book)", use_container_width=True):
-                    repo.update_manuscript_approval(chosen_unit["unit_id"], "APPROVED", approved_by=st.session_state["reviewer_name"])
-                    repo.record_audit_log(
-                        user_email=st.session_state["reviewer_name"],
-                        action="APPROVE_MANUSCRIPT_UNIT",
-                        entity_type="manuscript_unit",
-                        entity_id=chosen_unit["unit_id"],
-                        change_summary=f"Unit {chosen_unit['unit_id']} approved for final book compilation.",
-                    )
-                    st.success("सूत्र ग्रंथात समावेशासाठी यशस्वीरीत्या मंजूर करण्यात आले!")
-                    st.rerun()
+                    st.warning("या जुन्या नोंदीस थेट प्रकाशन मान्यता देता येत नाही. खालील अचूक आवृत्ती परीक्षण वापरा.")
 
             with col_b2:
                 if st.button("✏️ सुधारणा सुचवा (Request Revision)", use_container_width=True):
@@ -250,6 +241,40 @@ def main() -> None:
                     repo.update_manuscript_approval(chosen_unit["unit_id"], "REJECTED", approved_by=st.session_state["reviewer_name"])
                     st.error("हे सूत्र ग्रंथ रचनेतून वगळण्यात आले आहे.")
                     st.rerun()
+
+        st.markdown("### अचूक आवृत्ती मान्यता (Version-bound Scholarly Review)")
+        st.caption("प्रथम संस्कृत तज्ज्ञ आणि नंतर ग्रंथकार यांनी त्याच मजकुराच्या आवृत्तीला स्वतंत्र मान्यता द्यावी.")
+        from src.api.routers.review_v2 import HumanApproval, approve_exact_version, get_exact_version
+        review_unit_id = st.text_input("नवीन सूत्र नोंद क्रमांक", key="review_v2_unit_id")
+        review_version = st.number_input("मजकूर आवृत्ती", min_value=1, step=1, key="review_v2_version")
+        review_role = st.selectbox("परीक्षण भूमिका", ["SCHOLAR", "AUTHOR"], key="review_v2_role")
+        review_name = st.text_input("परीक्षकाचे नाव", key="review_v2_name")
+        review_secret = st.text_input("परीक्षक प्रवेश संकेत", type="password", key="review_v2_secret")
+        if st.button("आवृत्ती तपासा", use_container_width=True, key="review_v2_inspect"):
+            try:
+                exact = get_exact_version(review_unit_id, int(review_version), review_secret)
+                st.session_state["review_v2_inspected"] = exact
+            except Exception:
+                st.error("नोंद उपलब्ध नाही किंवा परीक्षक प्रवेश अमान्य आहे.")
+        inspected = st.session_state.get("review_v2_inspected")
+        if (inspected and inspected["unit_id"] == review_unit_id and
+                inspected["version"] == int(review_version)):
+            st.json({"unit_id": inspected["unit_id"], "version": inspected["version"],
+                     "state": inspected["state"], "content": inspected["content"],
+                     "gates": inspected["gates"]})
+        if st.button("या अचूक मजकुरास मान्यता द्या", use_container_width=True, key="review_v2_approve"):
+            try:
+                exact = get_exact_version(review_unit_id, int(review_version), review_secret)
+                if (not inspected or inspected["unit_id"] != review_unit_id or
+                        inspected["version"] != int(review_version) or
+                        inspected["content_sha256"] != exact["content_sha256"]):
+                    raise ValueError("Review exact content before approval")
+                decision = HumanApproval(kind=review_role, version=int(review_version),
+                                         content_sha256=exact["content_sha256"], reviewer_name=review_name)
+                result = approve_exact_version(review_unit_id, decision, review_secret)
+                st.success(f"मान्यता नोंदली: {result['state']}")
+            except Exception:
+                st.error("मान्यता नोंदली नाही; आवृत्ती, भूमिका आणि प्रवेश तपासा.")
 
     # --------------------------------------------------------------------------
     # TAB 4: Agent 4 Independent Validation Reports

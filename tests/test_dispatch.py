@@ -64,3 +64,19 @@ def test_budget_and_missing_usage_fail_closed():
     with pytest.raises(ValueError):
         incomplete.call("independent_validator", "prompt")
     assert incomplete.audit[0]["status"] == "FAILED"
+
+
+def test_reservation_survives_restart_and_blocks_repeat(tmp_path):
+    """One completed call consumes the run cap after a fresh dispatcher instance."""
+    path = tmp_path / "audit.db"
+    first_adapter = FakeAdapter()
+    first = BudgetedDispatcher(FakeRegistry(first_adapter), RATES, 1, 1,
+                               audit_path=path, run_id="run-one")
+    first.call("independent_validator", "prompt")
+    restarted_adapter = FakeAdapter()
+    restarted = BudgetedDispatcher(FakeRegistry(restarted_adapter), RATES, 1, 1,
+                                   audit_path=path, run_id="run-one")
+    with pytest.raises(ValueError):
+        restarted.call("independent_validator", "prompt")
+    assert restarted_adapter.calls == 0
+    assert restarted.calls == 1
