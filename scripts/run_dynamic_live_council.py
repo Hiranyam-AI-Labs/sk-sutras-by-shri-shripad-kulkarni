@@ -36,31 +36,11 @@ import shutil
 import sqlite3
 import sys
 import uuid
-import warnings
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Set, Tuple
 
-# Suppress all lifecycle and deprecation warnings for 100% clean console logs
-warnings.filterwarnings("ignore", category=FutureWarning)
-warnings.filterwarnings("ignore", category=DeprecationWarning)
-warnings.filterwarnings("ignore", category=UserWarning)
-
-# Configure Windows UTF-8 console output
-if sys.platform.startswith("win"):
-    try:
-        sys.stdout.reconfigure(encoding="utf-8")
-        sys.stderr.reconfigure(encoding="utf-8")
-    except Exception:
-        pass
-
-# Add project root to sys.path
 BASE_DIR = Path(__file__).resolve().parent.parent
-sys.path.insert(0, str(BASE_DIR))
-os.chdir(str(BASE_DIR))
-
-from src.credentials import sync_keys_to_environment
-sync_keys_to_environment(override=False)
 
 from src.providers.gemini_adapter import GeminiAdapter
 from src.providers.openai_adapter import OpenAIAdapter
@@ -71,24 +51,20 @@ from src.agents.validator_agent import (
     check_duplicate_or_near_duplicate,
     normalize_sutra_text,
 )
-from scripts.generate_clean_layman_manuscript import build_clean_layman_document
+from src.orchestration.source_evidence import retrieve_passages, require_handoff
 
 DOCS_DIR = BASE_DIR / "docs"
-DOCS_DIR.mkdir(parents=True, exist_ok=True)
 DATA_DIR = BASE_DIR / "data"
 RAW_DATA_DIR = DATA_DIR / "raw"
 SOURCES_DIR = DATA_DIR / "knowledge_repository" / "sources"
 LOGS_DIR = BASE_DIR / "logs"
-LOGS_DIR.mkdir(parents=True, exist_ok=True)
 DB_PATH = DATA_DIR / "manuscript.db"
 
-ARTIFACT_DIR = Path(r"C:\Users\deshp\.gemini\antigravity\brain\94293167-6c7d-4773-b091-412c085b8cdc")
-ARTIFACT_DIR.mkdir(parents=True, exist_ok=True)
 
 MANDATORY_FOOTER = "Proprietory and Confidential- Hiranyam AI Labs"
 
 
-class DynamicLiveCouncilRunner:
+class _DisabledLegacyCouncilRunner:
     """
     ----------------------------------------------------------------------------
     Class: DynamicLiveCouncilRunner
@@ -504,11 +480,23 @@ class DynamicLiveCouncilRunner:
         n_no = str(narada_sutra.get("sutra_no"))
         s_no = str(shandilya_sutra.get("sutra_no"))
 
-        # Permanent Foundational Documents
-        doc01_excerpt = "DOC-01 (Udyam Sutras Mahagrantha): उद्यमेन हि सिध्यन्ति कार्याणि न मनोरथैः। कौशलं धृतिः शक्तिः सहकार्यं च राष्ट्रवर्धनम्। (Exhorts diligence, mastery of craft, perseverance, and corporate nation-building)."
-        doc02_excerpt = "DOC-02 (Karyavritti 17): धर्मसंमतः अर्थलाभः। लोककल्याणार्थं वाणिज्यम्। निष्कामभावेन उद्योगपरिपालनम्। (Emphasizes lawful righteous wealth creation, ethical trade, and Karmayoga)."
-        doc03_excerpt = "DOC-03 (Karyavritti 05): स्वावलम्बनं परमं सुखम्। आत्मसंयमः संकटे धैर्यम्। (Exhorts self-reliance, rigorous self-discipline, and enduring patience in business crises)."
-        doc04_excerpt = "DOC-04 (Sant Tukaram Maharaj): 'जोडोनियां धन उत्तम व्यवहारे । उदास विचारे वेच करी ॥' (Wealth earned through impeccable integrity must be dispensed with detached social stewardship)."
+        # Registered passages retain source identity, file version and location.
+        registered = {source_id: SOURCES_DIR / filename for source_id, filename in {
+            "DOC-01": "DOC-01_SHRIMAD_UDYAM_SUTRANI_100.txt",
+            "DOC-02": "DOC-02_UDYAM_SUTRE_MANUSCRIPT_V17.txt",
+            "DOC-03": "DOC-03_UDYAM_SUTRE_MANUSCRIPT_V05.txt",
+            "DOC-04": "DOC-04_SANT_TUKARAM_MAHARAJ_DISCOURSE_AND_ABHANGAS.txt",
+        }.items()}
+        source_passages = retrieve_passages(
+            registered, f"{theme} {narada_sutra.get('sanskrit', '')} {shandilya_sutra.get('sanskrit', '')}"
+        )
+        excerpts = {source_id: "\n".join(
+            f"{item['source_id']} {item['source_version']} {item['location']}: {item['text']}"
+            for item in source_passages if item["source_id"] == source_id
+        ) for source_id in registered}
+        doc01_excerpt, doc02_excerpt, doc03_excerpt, doc04_excerpt = (
+            excerpts[source_id] for source_id in registered
+        )
 
         # Dynamic Semantic Retrieval from ChromaDB iks_canonical_library (20+ texts)
         iks_retrieved_entries = []
@@ -535,30 +523,7 @@ class DynamicLiveCouncilRunner:
             print(f"Warning: Dynamic IKS ChromaDB query fallback: {e}")
 
         if not iks_retrieved_entries:
-            iks_retrieved_entries = [
-                {
-                    "source": "Kautilya's Arthashastra",
-                    "citation": "Adhikarana 1, Adhyaya 19, Shloka 34",
-                    "verse": "अनुत्थाने ध्रुवो नाशः प्राप्तस्यानागतस्य च । प्राप्यते फलमुत्थानाल्लभते चार्थसम्पदम् ॥",
-                    "concept": "Dynamic industrious action (Utthana) as the guarantor of enterprise preservation.",
-                    "enterprise_principle": "Continuous market validation and relentless execution.",
-                },
-                {
-                    "source": "Patanjali Yoga Sutras",
-                    "citation": "Samadhi Pada 1.12-14",
-                    "verse": "अभ्यासवैराग्याभ्यां तन्निरोधः ॥ स तु दीर्घकालनैरन्तर्यसत्कारासेवितो दृढभूमिः ॥",
-                    "concept": "Chitta-vritti control and unshakeable psychological resilience.",
-                    "enterprise_principle": "Founder mental equilibrium, burnout mitigation, and long-term perseverance.",
-                },
-                {
-                    "source": "Bhagavad Gita",
-                    "citation": "Adhyaya 3, Shloka 20",
-                    "verse": "कर्मणैव हि संसिद्धिमास्थिता जनकादयः । लोकसंग्रहमेवापि संपश्यन्कर्तुमर्हसि ॥",
-                    "concept": "Lokasangraha - Universal social stewardship and ethical leadership.",
-                    "enterprise_principle": "Stakeholder capitalism and social trusteeship.",
-                },
-            ]
-
+            raise RuntimeError("No traceable IKS passages retrieved for this candidate")
         iks_formatted = "\n".join(
             f"• {e['source']} [{e['citation']}]: {e['verse']} — Concept: {e['concept']}"
             for e in iks_retrieved_entries
@@ -572,6 +537,7 @@ class DynamicLiveCouncilRunner:
                 f"Topic: {theme}\n"
                 f"Narada Devotional Premise (#{n_no}): {narada_sutra.get('sanskrit')}\n"
                 f"Shandilya Logical Premise (#{s_no}): {shandilya_sutra.get('sanskrit')}\n"
+                f"Registered source passages:\n{doc01_excerpt}\n{doc02_excerpt}\n{doc03_excerpt}\n{doc04_excerpt}\n"
                 f"Dynamically Retrieved Canonical IKS Verses:\n{iks_formatted}\n\n"
                 f"Synthesize an authoritative, concise research bridge (80-120 words) integrating these classical sources into enterprise ethics, leadership psychology, and trusteeship."
             )
@@ -588,12 +554,7 @@ class DynamicLiveCouncilRunner:
             )
             scholarly_bridge = a3_resp.content.strip()
         except Exception as e:
-            print(f"Warning: Agent 3 Claude research fallback: {e}")
-            scholarly_bridge = (
-                f"Under theme '{theme}', Narada #{n_no} provides devotional commitment, "
-                f"Shandilya #{s_no} provides rational due diligence, DOC-01/02/03 supply practical enterprise "
-                f"architecture, and retrieved IKS texts provide ethical trusteeship and psychological resilience."
-            )
+            raise RuntimeError("Independent source research failed; candidate blocked") from e
 
         research_summary = {
             "theme": theme,
@@ -605,6 +566,7 @@ class DynamicLiveCouncilRunner:
             "doc04_foundation": doc04_excerpt,
             "iks_scriptural_foundation": iks_formatted,
             "iks_retrieved_entries": iks_retrieved_entries,
+            "source_passages": source_passages,
             "scholarly_bridge": scholarly_bridge,
         }
         return research_summary
@@ -632,6 +594,7 @@ class DynamicLiveCouncilRunner:
             f"   - {research_notes['doc03_foundation']}\n"
             f"   - {research_notes['doc04_foundation']}\n"
             f"   - Dynamically Retrieved IKS Verses:\n{research_notes['iks_scriptural_foundation']}\n"
+            f"   - Independent research bridge: {research_notes['scholarly_bridge']}\n"
             f"4. Synthesis Theme: {theme}\n\n"
             f"CRITICAL EDITORIAL SPECIFICATIONS FROM SHRI SHRIPAD KULKARNI (STRICT BREVITY MANDATE):\n"
             f"CORE EDITORIAL AXIOM: 'सूत्र लहान, विचार महान, निरूपण सुटसुटीत, संक्षिप्त आणि आचरण व्यावहारिक.'\n\n"
@@ -671,6 +634,7 @@ class DynamicLiveCouncilRunner:
             f"}}"
         )
 
+        require_handoff(research_notes["source_passages"], research_notes["scholarly_bridge"], prompt, prompt)
         sys_prompt = (
             "You are the Master Sutrakar in Shri Shripad Kulkarni's council. "
             "You compose short, memorable Sanskrit sutras ('सूत्र लहान, विचार महान') and write crisp, concise, "
@@ -749,6 +713,8 @@ class DynamicLiveCouncilRunner:
             f"12. Actionable Practical Direction for Modern Founders\n"
             f"13. Zero-Defect Multilingual Delivery (Sanskrit, Marathi, English)\n\n"
             f"Sutra Data for Audit:\n{json.dumps(composed_data, ensure_ascii=False)}\n\n"
+            f"Independent research bridge: {research_notes['scholarly_bridge']}\n"
+            f"Registered source passages: {json.dumps(research_notes['source_passages'], ensure_ascii=False)}\n"
             f"Respond in strict JSON:\n"
             f"{{\n"
             f'  "verdict": "APPROVED" or "REJECTED",\n'
@@ -763,6 +729,7 @@ class DynamicLiveCouncilRunner:
             f"}}"
         )
 
+        require_handoff(research_notes["source_passages"], research_notes["scholarly_bridge"], prompt, prompt)
         sys_prompt = (
             "You are the Senior Lead QA and Classical Sanskrit Auditor for Shri Shripad Kulkarni's council. "
             "You rigorously uphold zero defects, verify short memorable sutra length, concise bhashya conciseness (under 120 words), "
@@ -784,7 +751,13 @@ class DynamicLiveCouncilRunner:
                 audit_res = json.loads(json_match.group(0))
                 verdict = audit_res.get("verdict", "REJECTED")
                 score = int(audit_res.get("overall_score", 0))
-                is_approved = (verdict == "APPROVED" and score >= 85)
+                # A model score is advisory; this legacy runner lacks durable
+                # fifteen-gate evidence and cannot grant author approval.
+                is_approved = False
+                audit_res["acceptance_blocker"] = (
+                    "Legacy live runner has no complete 15-gate evidence, "
+                    "scholar review, or version-bound author approval."
+                )
                 return is_approved, score, audit_res
         except Exception as e:
             print(f"Warning: JSON parse failed for Agent 5 audit: {e}")
@@ -803,6 +776,16 @@ class DynamicLiveCouncilRunner:
     # MASTER RUNNER: Dynamic Sequential Traversal Loop
     # ==========================================================================
     def execute_live_council(self, target_count: int = 10) -> List[Dict[str, Any]]:
+        """Reject live runs until the complete policy and human review workflow is wired.
+
+        ``target_count`` is the requested count; no units are returned or paid calls
+        made when preflight fails. Debug by checking the fifteen-gate policy and
+        version-bound approval implementation before re-enabling this entry point.
+        """
+        raise RuntimeError(
+            "Live council disabled: fifteen-gate evidence, durable example allocation, "
+            "revision routing, and human approvals are not integrated."
+        )
         approved_canon: List[Dict[str, Any]] = []
         print(f"\n================================================================================")
         print(f"STARTING DYNAMIC SEQUENTIAL FIVE-AGENT LIVE COUNCIL (CONCISE MODE)")
@@ -1506,26 +1489,118 @@ def generate_canonical_word_document(canon: List[Dict[str, Any]], output_path: P
 
     # Save to Docs and Brain Artifacts
     doc.save(str(output_path))
-    artifact_target = ARTIFACT_DIR / output_path.name
-    shutil.copyfile(str(output_path), str(artifact_target))
     print(f"\n[Generated Document Successfully]: {output_path}")
-    print(f"[Mirrored to Brain Artifact]: {artifact_target}")
+
+
+class DynamicLiveCouncilRunner:
+    """Production entry point backed by bounded service and budgeted dispatch."""
+
+    def __init__(self, dispatcher=None, vector_store=None, review_store=None,
+                 example_registry=None, narada_sutras=None, shandilya_sutras=None,
+                 source_paths=None):
+        """Inject test doubles or load project-owned corpus, vector and stores.
+
+        The dispatcher must preflight every role's model rate and run budget.
+        Missing configured rates or corpus raise before calls; inspect the
+        project paths and environment, never keys or raw payload logs.
+        """
+        from src.database.example_registry import ExampleRegistry
+        from src.orchestration.review_store import ReviewStore
+        from src.providers.dispatch import BudgetedDispatcher
+        from src.providers.registry import ProviderRegistry
+        self.dispatcher = dispatcher
+        if self.dispatcher is None:
+            raw_rates = os.getenv("COUNCIL_MODEL_RATES_JSON")
+            if not raw_rates:
+                raise ValueError("Dated per-model price estimates required before live execution")
+            rates = json.loads(raw_rates)
+            self.dispatcher = BudgetedDispatcher(
+                ProviderRegistry(offline_mode=False), rates,
+                float(os.environ["COUNCIL_MAX_USD"]), int(os.environ["COUNCIL_MAX_CALLS"]))
+        self.vector_store = vector_store or SutraVectorStore(collection_name="shandilya_100_sutras")
+        self.review_store = review_store or ReviewStore(DB_PATH)
+        self.example_registry = example_registry or ExampleRegistry(DB_PATH)
+        self.narada_sutras = narada_sutras if narada_sutras is not None else json.loads(
+            (RAW_DATA_DIR / "narada_bhakti_sutra.json").read_text(encoding="utf-8"))
+        self.shandilya_sutras = shandilya_sutras if shandilya_sutras is not None else json.loads(
+            (RAW_DATA_DIR / "shandilya_bhakti_sutra.json").read_text(encoding="utf-8"))
+        self.source_paths = source_paths or {source_id: SOURCES_DIR / filename for source_id, filename in {
+            "DOC-01": "DOC-01_SHRIMAD_UDYAM_SUTRANI_100.txt",
+            "DOC-02": "DOC-02_UDYAM_SUTRE_MANUSCRIPT_V17.txt",
+            "DOC-03": "DOC-03_UDYAM_SUTRE_MANUSCRIPT_V05.txt",
+            "DOC-04": "DOC-04_SANT_TUKARAM_MAHARAJ_DISCOURSE_AND_ABHANGAS.txt"}.items()}
+        if source_paths is None:
+            self.source_paths["IKS"] = SOURCES_DIR / "iks_canonical_corpus.json"
+
+    def _json_role(self, role, payload):
+        """Dispatch one structured request through budget control and parse JSON.
+
+        ``role`` is a frozen registry key; ``payload`` contains sanitized source
+        context. Returns a JSON object, or raises on malformed provider output.
+        Audit the dispatch record and response hash to debug, not raw credentials.
+        """
+        response = self.dispatcher.call(role, json.dumps(payload, ensure_ascii=False),
+                                        "Return one strict JSON object with the requested fields.")
+        data = json.loads(response.content)
+        if not isinstance(data, dict):
+            raise ValueError(f"Non-object response from {role}")
+        return data
+
+    def execute_live_council(self, target_count=10):
+        """Run at most ``target_count`` candidates to human-review eligibility.
+
+        Returns status and per-unit outcomes; shortfall is PARTIAL_BLOCKED.
+        Source/vector or budget failures raise before false completion. No human
+        approval, canonical overwrite, publication or provider call bypass occurs.
+        Inspect outcomes and dispatcher audit when diagnosing a stopped run.
+        """
+        from src.orchestration.council_service import CouncilService
+        if target_count < 1:
+            raise ValueError("Positive target count required")
+        if hasattr(self.dispatcher, "preflight_roles"):
+            self.dispatcher.preflight_roles([
+                "narada_specialist", "shandilya_specialist",
+                "bharatiya_jnana_specialist", "sutrakar_master", "independent_validator"])
+        results = []
+        for narada in self.narada_sutras:
+            if len(results) >= target_count:
+                break
+            matches = self.vector_store.query_similar_sutras(
+                query_text=narada.get("sanskrit", ""), top_k=5)
+            numbers = {str(item.get("metadata", {}).get("sutra_no")) for item in matches}
+            candidates = [item for item in self.shandilya_sutras
+                          if str(item.get("sutra_no")) in numbers]
+            if not candidates:
+                continue
+            passages = retrieve_passages(self.source_paths, narada["sanskrit"])
+            def role_narada(source, feedback=None):
+                """Ask frozen Narada role for thesis; return structured response."""
+                return self._json_role("narada_specialist", {"source": source, "feedback": feedback})
+            def role_shandilya(thesis, options, feedback=None):
+                """Ask frozen Shandilya role to assess actual vector candidates."""
+                return self._json_role("shandilya_specialist", {"thesis": thesis, "candidates": options, "feedback": feedback})
+            def role_researcher(source, pairing, packet, feedback):
+                """Ask frozen researcher for bridge/findings using registered passages."""
+                return self._json_role("bharatiya_jnana_specialist", {"source": source, "pairing": pairing,
+                                                                        "passages": packet, "feedback": feedback})
+            def role_sutrakar(mode, *inputs):
+                """Use one frozen Sutrakar model for arbitration, consultation and authoring."""
+                return self._json_role("sutrakar_master", {"mode": mode, "inputs": inputs})
+            def role_validator(draft, research, packet, feedback, evidence):
+                """Ask independent frozen verifier for fifteen evidenced gate decisions."""
+                return self._json_role("independent_validator", {"draft": draft, "research": research,
+                                                                   "passages": packet, "feedback": feedback,
+                                                                   "evidence": evidence})
+            service = CouncilService({"narada": role_narada, "shandilya": role_shandilya,
+                                      "researcher": role_researcher, "sutrakar": role_sutrakar,
+                                      "validator": role_validator}, self.review_store, self.example_registry)
+            result = service.run_unit(f"UDYAM-{len(results)+1:03d}", narada, candidates, passages)
+            results.append(result)
+        return {"status": "HUMAN_REVIEW_PENDING" if len(results) == target_count and
+                all(item["status"] == "HUMAN_REVIEW_PENDING" for item in results)
+                else "PARTIAL_BLOCKED", "requested": target_count, "units": results}
 
 
 if __name__ == "__main__":
-    runner = DynamicLiveCouncilRunner()
-    canon_sutras = runner.execute_live_council(target_count=10)
-
-    # Save canonical data file for deterministic re-rendering
-    canon_file = BASE_DIR / "scripts" / "ten_new_sutras_canonical_data.py"
-    with open(canon_file, "w", encoding="utf-8") as f:
-        f.write("# -*- coding: utf-8 -*-\n")
-        f.write("# Canonical Data for Ten New Udyog Sutras\n")
-        f.write("true = True\nfalse = False\nnull = None\n\n")
-        f.write("TEN_NEW_UDYOG_SUTRAS_CANON = " + json.dumps(canon_sutras, ensure_ascii=False, indent=2) + "\n")
-    print(f"[Canonical Data Written]: {canon_file}")
-
-    # Generate Layman Word Document with ZERO technical jargon
-    doc_output = DOCS_DIR / "UDYOG_SUTRAS_TEN_NEW_CANONICAL_MATCHING_AND_SHLOKAS.docx"
-    build_clean_layman_document(sutras=canon_sutras, output_path=doc_output)
-    print("[ALL TASKS COMPLETED SUCCESSFULLY]")
+    outcome = DynamicLiveCouncilRunner().execute_live_council(target_count=10)
+    print(json.dumps(outcome, ensure_ascii=False, indent=2))

@@ -456,99 +456,19 @@ class ValidatorAgent:
         revision_cycle: int = 1,
         known_existing_sutras: Optional[List[str]] = None
     ) -> Dict[str, Any]:
+        """Evaluate untrusted chapter fields using versioned fifteen-gate policy.
+
+        ``revision_cycle`` records retry context; ``known_existing_sutras`` supplies
+        canon for duplicate checks. Returns gate statuses and human-review eligibility,
+        never author approval. Missing evidence is NOT_EVALUATED; inspect issues and
+        gate keys for debugging. No network or persistence side effects occur.
         """
-        ------------------------------------------------------------------------
-        Method: validate_extended_udyog_sutra
-        ------------------------------------------------------------------------
-        Purpose:
-            Audits an extended Udyog Sutra chapter against all 13 qualitative gates
-            mandated by the Master Prompt:
-            1. Philosophical authenticity & cross-tradition synthesis
-            2. Sanskrit formulation & linguistic validity (no mandatory Anushtubh)
-            3. Padaccheda & Anvaya completeness
-            4. Word-by-word meaning precision
-            5. Multilingual translations (English & idiomatic Marathi)
-            6. Sant Tukaram Maharaj integration & oral discourse provenance
-            7. Business & Industry application across management/finance
-            8. Entrepreneurial psychology (18 key founder mindsets)
-            9. Do's and Don'ts (Positive, Prescriptive, Prohibitive)
-            10. Detailed commentary word count (minimum 500 words)
-            11. Global case studies (ancient, eastern, western)
-            12. Actionable operational guidance
-            13. Originality & anti-plagiarism verification against DOC-01/02/03/04
-        ------------------------------------------------------------------------
-        """
-        gates = {
-            "gate_1_philosophical_authenticity": "PASS",
-            "gate_2_sanskrit_formulation": "PASS",
-            "gate_3_padaccheda_anvaya": "PASS",
-            "gate_4_word_by_word_meaning": "PASS",
-            "gate_5_multilingual_translations": "PASS",
-            "gate_6_tukaram_maharaj_integration": "PASS",
-            "gate_7_business_application": "PASS",
-            "gate_8_entrepreneurial_psychology": "PASS",
-            "gate_9_dos_and_donts_framework": "PASS",
-            "gate_10_commentary_word_count": "PASS",
-            "gate_11_global_case_studies": "PASS",
-            "gate_12_practical_action_points": "PASS",
-            "gate_13_originality_anti_plagiarism": "PASS",
-        }
-        issues: List[str] = []
+        from src.agents.acceptance_policy import evaluate_policy
 
-        # Gate 3: Padaccheda and Anvaya
-        if not sutra_data.get("padaccheda") or not sutra_data.get("anvaya"):
-            gates["gate_3_padaccheda_anvaya"] = "FAIL"
-            issues.append("Missing required Padaccheda or Anvaya breakdown.")
-
-        # Gate 6: Tukaram Maharaj Integration
-        tukaram_ref = sutra_data.get("tukaram_connection", "")
-        if not tukaram_ref or len(tukaram_ref.strip()) < 50:
-            gates["gate_6_tukaram_maharaj_integration"] = "FAIL"
-            issues.append("Missing substantive Sant Tukaram Maharaj integration.")
-
-        # Gate 9: Do's and Don'ts
-        dos_donts = sutra_data.get("dos_and_donts", {})
-        if not dos_donts.get("dos") or not dos_donts.get("donts"):
-            gates["gate_9_dos_and_donts_framework"] = "FAIL"
-            issues.append("Missing Do's and Don'ts framework.")
-
-        # Gate 10: Conciseness & Brevity (Short sutra and concise, crisp commentary without bloat or padding)
-        commentary = sutra_data.get("detailed_commentary", "")
-        word_count = len(commentary.split())
-        # Enforces concise, focused commentary without excessive rambling (max 300 words)
-        if word_count > 300:
-            gates["gate_10_commentary_word_count"] = "FAIL"
-            issues.append(f"Commentary length ({word_count} words) exceeds concise mandate (maximum 300 words).")
-
-        # Gate 13: Originality and Multi-Layer Duplicate Detection across treatise
-        sanskrit = sutra_data.get("sanskrit", "") or sutra_data.get("original_sanskrit_verse", "")
-        if known_existing_sutras and sanskrit:
-            is_dup, match_text, sim_score = self.check_duplicate_or_near_duplicate(
-                candidate_sanskrit=sanskrit,
-                existing_sutras=known_existing_sutras,
-                similarity_threshold=0.85,
-            )
-            if is_dup:
-                gates["gate_13_originality_anti_plagiarism"] = "FAIL"
-                issues.append(
-                    f"Sanskrit formulation is a duplicate or near-duplicate (similarity {sim_score:.2f}) "
-                    f"of previously accepted canon: '{match_text}'"
-                )
-
-        passed_count = sum(1 for status in gates.values() if status == "PASS")
-        overall_status = "APPROVED" if passed_count == 13 else "NEEDS_REVISION"
-
-        return {
-            "sutra_no": sutra_data.get("sutra_no"),
-            "overall_status": overall_status,
-            "score": f"{passed_count}/13",
-            "passed_count": passed_count,
-            "revision_cycle": revision_cycle,
-            "gates": gates,
-            "issues": issues,
-            "commentary_word_count": word_count
-        }
-
+        report = evaluate_policy(sutra_data, existing_sutras=known_existing_sutras or ())
+        report.update(sutra_no=sutra_data.get("sutra_no"), revision_cycle=revision_cycle,
+                      score=f"{report['passed_count']}/15")
+        return report
 
 # ==============================================================================
 # Module-Level Convenience Functions for Classical Verification

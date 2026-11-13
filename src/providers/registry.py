@@ -101,16 +101,13 @@ class ProviderRegistry:
 
     def get_adapter(self, agent_role: str) -> BaseLLMAdapter:
         """
-        ------------------------------------------------------------------------
-        Method: get_adapter
-        ------------------------------------------------------------------------
-        Purpose:
-            Retrieves the active LLM adapter assigned to a specific agent role.
-        ------------------------------------------------------------------------
+        Return the adapter for a registered role. `agent_role` is a trusted role key;
+        an unknown key raises ValueError so a misrouted paid call cannot proceed.
+        Debug by comparing the role with the five ROLE_* constants, never by
+        inspecting credentials or raw prompts.
         """
         if agent_role not in self._adapters:
-            # Fallback to Agent 2 OpenAI adapter if unknown role
-            return self._adapters[self.ROLE_SHANDILYA]
+            raise ValueError(f"Unknown agent role: {agent_role}")
         return self._adapters[agent_role]
 
     def set_adapter(self, agent_role: str, adapter: BaseLLMAdapter) -> None:

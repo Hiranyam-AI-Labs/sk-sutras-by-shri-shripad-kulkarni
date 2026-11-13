@@ -15,20 +15,6 @@ from pathlib import Path
 from typing import Any, Optional
 from dotenv import load_dotenv
 
-# Load environment configuration from .env file if available
-try:
-    from dotenv import load_dotenv
-    load_dotenv()
-except ImportError:
-    pass
-
-# Synchronize API keys from dedicated separate files into environment if not already set
-try:
-    from src.credentials import get_api_key_for_provider, sync_keys_to_environment
-    sync_keys_to_environment(override=False)
-except ImportError:
-    pass
-
 # Root directory paths
 BASE_DIR: Path = Path(__file__).resolve().parent.parent
 DATA_DIR: Path = BASE_DIR / "data"
@@ -46,10 +32,7 @@ if _sqlite_env and not Path(_sqlite_env).is_absolute():
 else:
     SQLITE_DB_PATH: Path = Path(_sqlite_env or (DATA_DIR / "manuscript.db"))
 
-# Ensure necessary data directories exist
-DATA_DIR.mkdir(parents=True, exist_ok=True)
-RAW_DATA_DIR.mkdir(parents=True, exist_ok=True)
-OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+# Importing configuration never changes filesystem or credential state.
 
 
 # ==============================================================================
