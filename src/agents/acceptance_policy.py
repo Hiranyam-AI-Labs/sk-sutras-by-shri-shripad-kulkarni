@@ -5,6 +5,7 @@ Missing evidence remains NOT_EVALUATED. Legacy 13-gate scores have no authority.
 """
 
 import re
+import unicodedata
 from typing import Any, Dict, Iterable
 
 from src.agents.validator_agent import ValidatorAgent
@@ -31,12 +32,14 @@ def evaluate_policy(
     eligibility. Malformed evidence remains NOT_EVALUATED; deterministic defects
     become FAIL. Inspect ``issues`` and gate names to debug without raw prompts.
     """
-    assessments = assessments or {}
+    assessments = assessments if isinstance(assessments, dict) else {}
     gates = {name: "NOT_EVALUATED" for name in GATE_NAMES}
     issues = []
     for name in GATE_NAMES:
         item = assessments.get(name)
-        if isinstance(item, dict) and item.get("status") in {"PASS", "FAIL", "HUMAN_REVIEW_REQUIRED"} and isinstance(item.get("evidence"), str) and item["evidence"].strip():
+        if (isinstance(item, dict) and isinstance(item.get("status"), str) and
+                item["status"] in {"PASS", "FAIL", "HUMAN_REVIEW_REQUIRED"} and
+                isinstance(item.get("evidence"), str) and item["evidence"].strip()):
             gates[name] = item["status"]
 
     verse = chapter.get("original_sanskrit_verse", chapter.get("sanskrit", ""))
@@ -66,11 +69,45 @@ def evaluate_policy(
 
     cases = chapter.get("biographical_case_studies")
     if (not isinstance(cases, list) or len(cases) != 2 or
-            {case.get("region") for case in cases if isinstance(case, dict)} != {"EASTERN", "WESTERN"} or
+            {case.get("region") for case in cases if isinstance(case, dict) and
+             isinstance(case.get("region"), str)} != {"EASTERN", "WESTERN"} or
             any(not isinstance(case, dict) or not case.get("person") or
                 not case.get("business") or not case.get("provenance") for case in cases)):
         gates["principal_cases"] = "FAIL"
         issues.append("Exactly two sourced principal cases, one Eastern and one Western, are required.")
+    examples = chapter.get("named_examples")
+    inventory = set()
+    if isinstance(examples, list):
+        for example in examples:
+            if (isinstance(example, dict) and isinstance(example.get("name"), str) and
+                    example["name"].strip() and example.get("polarity") in {"POSITIVE", "NEGATIVE"} and
+                    isinstance(example.get("location"), str) and example["location"].strip()):
+                inventory.add(unicodedata.normalize("NFKC", example["name"]).casefold().strip())
+    principal = ({unicodedata.normalize("NFKC", case[key]).casefold().strip()
+                  for case in cases if isinstance(case, dict) for key in ("person", "business")
+                  if isinstance(case.get(key), str) and case[key].strip()}
+                 if isinstance(cases, list) else set())
+    mentions = chapter.get("example_mentions")
+    sections = chapter.get("sections")
+    mentioned = set()
+    mentions_valid = isinstance(mentions, list) and bool(mentions) and isinstance(sections, dict)
+    if mentions_valid:
+        for mention in mentions:
+            if not isinstance(mention, dict):
+                mentions_valid = False
+                break
+            name, location = mention.get("name"), mention.get("location")
+            text = sections.get(location) if isinstance(location, str) else None
+            if (not isinstance(name, str) or not name.strip() or
+                    not isinstance(text, str) or name not in text):
+                mentions_valid = False
+                break
+            mentioned.add(unicodedata.normalize("NFKC", name).casefold().strip())
+    if (not isinstance(examples, list) or len(inventory) != len(examples) or
+            not mentions_valid or not principal.issubset(mentioned) or
+            inventory != mentioned):
+        gates["example_diversity"] = "FAIL"
+        issues.append("Every named example and principal person/business needs a matching section mention and inventory entry.")
     guidance = chapter.get("dos_and_donts")
     if (not isinstance(guidance, dict) or
             not isinstance(guidance.get("dos"), list) or

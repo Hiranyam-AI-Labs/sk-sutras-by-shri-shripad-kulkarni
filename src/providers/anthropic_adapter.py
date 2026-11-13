@@ -173,6 +173,7 @@ class AnthropicAdapter(BaseLLMAdapter):
             client = anthropic.Anthropic(
                 api_key=self.api_key,
                 timeout=self.timeout_seconds,
+                max_retries=0,
                 default_headers=extra_headers if extra_headers else None,
             )
 
@@ -202,8 +203,10 @@ class AnthropicAdapter(BaseLLMAdapter):
             message = client.messages.create(**create_kwargs)
 
             raw_usage = message.usage
-            input_toks = getattr(raw_usage, "input_tokens", self.estimate_tokens(prompt))
-            output_toks = getattr(raw_usage, "output_tokens", 220)
+            input_toks = getattr(raw_usage, "input_tokens", None)
+            output_toks = getattr(raw_usage, "output_tokens", None)
+            if input_toks is None or output_toks is None:
+                raise ValueError("Anthropic provider usage unavailable")
             cached_read_toks = getattr(raw_usage, "cache_read_input_tokens", 0)
             cache_write_toks = getattr(raw_usage, "cache_creation_input_tokens", 0)
 

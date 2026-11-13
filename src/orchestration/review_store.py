@@ -46,7 +46,55 @@ class ReviewStore:
                     PRIMARY KEY(unit_id, version, kind));
                 CREATE TABLE IF NOT EXISTS publication_manifests (
                     manifest_id TEXT PRIMARY KEY, manifest_json TEXT NOT NULL);
+                CREATE TABLE IF NOT EXISTS council_run_units (
+                    run_id TEXT NOT NULL, unit_id TEXT NOT NULL,
+                    attempts INTEGER NOT NULL DEFAULT 0,
+                    outcome_json TEXT, PRIMARY KEY(run_id, unit_id));
             """)
+
+    def latest_state(self, unit_id: str) -> Dict[str, Any] | None:
+        """Return the latest stored version/state or None without changing it."""
+        with self._connection() as db:
+            row = db.execute("SELECT version,state FROM review_versions WHERE unit_id=? ORDER BY version DESC LIMIT 1",
+                             (unit_id,)).fetchone()
+        return {"version": row[0], "state": row[1]} if row else None
+
+    def run_progress(self, run_id: str, unit_id: str) -> Dict[str, Any] | None:
+        """Read durable attempt count and terminal outcome for one run unit."""
+        with self._connection() as db:
+            row = db.execute("SELECT attempts,outcome_json FROM council_run_units WHERE run_id=? AND unit_id=?",
+                             (run_id, unit_id)).fetchone()
+        return {"attempts": row[0], "outcome": json.loads(row[1]) if row[1] else None} if row else None
+
+    def start_attempt(self, run_id: str, unit_id: str, max_attempts: int) -> int:
+        """Reserve the next numbered attempt durably before any role call.
+
+        A crash consumes its attempt so a restart cannot silently replay paid
+        work. Completed units and exhausted limits raise ValueError.
+        """
+        if not run_id or not unit_id:
+            raise ValueError("Run and unit IDs required for durable attempt")
+        with self._connection() as db:
+            db.execute("BEGIN IMMEDIATE")
+            db.execute("INSERT OR IGNORE INTO council_run_units(run_id,unit_id) VALUES (?,?)",
+                       (run_id, unit_id))
+            attempts, outcome = db.execute(
+                "SELECT attempts,outcome_json FROM council_run_units WHERE run_id=? AND unit_id=?",
+                (run_id, unit_id)).fetchone()
+            if outcome or attempts >= max_attempts:
+                raise ValueError("Run unit already completed or attempt limit exhausted")
+            db.execute("UPDATE council_run_units SET attempts=? WHERE run_id=? AND unit_id=?",
+                       (attempts + 1, run_id, unit_id))
+        return attempts + 1
+
+    def finish_run_unit(self, run_id: str, unit_id: str, outcome: Dict[str, Any]) -> None:
+        """Persist an immutable terminal outcome for a run unit."""
+        with self._connection() as db:
+            changed = db.execute(
+                "UPDATE council_run_units SET outcome_json=? WHERE run_id=? AND unit_id=? AND outcome_json IS NULL",
+                (json.dumps(outcome, ensure_ascii=False), run_id, unit_id)).rowcount
+            if changed != 1:
+                raise ValueError("Run unit absent or already completed")
 
     @contextmanager
     def _connection(self):

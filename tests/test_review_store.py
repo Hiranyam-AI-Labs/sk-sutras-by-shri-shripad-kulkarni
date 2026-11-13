@@ -55,3 +55,15 @@ def test_failed_gate_blocks_ai_validation():
         version = store.save_draft("one", {"score": 99}, report("FAIL"))
         with pytest.raises(ValueError):
             store.mark_ai_validated("one", version)
+
+
+def test_interrupted_run_keeps_revision_limit_across_store_restart():
+    """A crash consumes its attempt and a new handle cannot restart from one."""
+    with tempfile.TemporaryDirectory() as folder:
+        path = Path(folder) / "reviews.db"
+        first = ReviewStore(path)
+        assert first.start_attempt("pilot", "one", 3) == 1
+        assert ReviewStore(path).start_attempt("pilot", "one", 3) == 2
+        assert ReviewStore(path).start_attempt("pilot", "one", 3) == 3
+        with pytest.raises(ValueError, match="limit exhausted"):
+            ReviewStore(path).start_attempt("pilot", "one", 3)

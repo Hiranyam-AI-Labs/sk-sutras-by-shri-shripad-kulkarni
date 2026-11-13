@@ -10,7 +10,7 @@ from src.agents.acceptance_policy import GATE_NAMES
 from src.database.example_registry import ExampleRegistry
 from src.orchestration.review_store import ReviewStore
 from src.providers.dispatch import BudgetedDispatcher
-from tests.test_council_service import make_draft
+from tests.test_council_service import make_draft, register_case_examples
 
 
 class FakeVector:
@@ -34,7 +34,7 @@ class FakeDispatch:
         self.calls.append((role, payload))
         if role == "sutrakar_master":
             mode = payload["mode"]
-            data = ({"accepted": True, "reason": "substantiated"} if mode == "arbitrate" else
+            data = ({"accepted": True, "sutra_no": "1", "reason": "substantiated"} if mode == "arbitrate" else
                     {"findings": ["independent"], "challenges": ["check source"]} if mode == "consult"
                     else make_draft())
         elif role == "bharatiya_jnana_specialist":
@@ -58,7 +58,7 @@ def test_actual_runner_uses_five_roles_and_never_auto_approves():
         source.write_text("source ethics business passage", encoding="utf-8")
         dispatch = FakeDispatch()
         examples = ExampleRegistry(path / "examples.db")
-        examples.register("Person A", "PERSON", "Record A")
+        register_case_examples(examples)
         runner = DynamicLiveCouncilRunner(
             dispatcher=dispatch, vector_store=FakeVector(),
             review_store=ReviewStore(path / "review.db"), example_registry=examples,
@@ -81,7 +81,7 @@ def test_requested_shortfall_is_explicit():
         source = path / "doc.txt"
         source.write_text("source ethics business passage", encoding="utf-8")
         examples = ExampleRegistry(path / "examples.db")
-        examples.register("Person A", "PERSON", "Record A")
+        register_case_examples(examples)
         runner = DynamicLiveCouncilRunner(
             dispatcher=FakeDispatch(), vector_store=FakeVector(),
             review_store=ReviewStore(path / "review.db"), example_registry=examples,
@@ -160,7 +160,7 @@ def test_iks_packet_uses_vector_ids_verified_against_local_corpus():
         vector.client = Client()
         dispatch = FakeDispatch()
         examples = ExampleRegistry(path / "examples.db")
-        examples.register("Person A", "PERSON", "Record A")
+        register_case_examples(examples)
         runner = DynamicLiveCouncilRunner(
             dispatcher=dispatch, vector_store=vector,
             review_store=ReviewStore(path / "review.db"), example_registry=examples,
@@ -171,3 +171,25 @@ def test_iks_packet_uses_vector_ids_verified_against_local_corpus():
         research = [payload for role, payload in dispatch.calls
                     if role == "bharatiya_jnana_specialist"]
         assert any(p["source_id"] == "IKS:iks-1" for p in research[0]["passages"])
+
+
+def test_restart_reuses_completed_unit_without_new_provider_calls():
+    """A second process with the same run ID cannot replay an eligible chapter."""
+    with tempfile.TemporaryDirectory() as folder:
+        path = Path(folder)
+        source = path / "doc.txt"
+        source.write_text("source ethics business passage", encoding="utf-8")
+        examples = ExampleRegistry(path / "examples.db")
+        register_case_examples(examples)
+        first_dispatch = FakeDispatch()
+        args = dict(vector_store=FakeVector(), review_store=ReviewStore(path / "review.db"),
+                    example_registry=examples,
+                    narada_sutras=[{"sutra_no": 1, "sanskrit": "source ethics"}],
+                    shandilya_sutras=[{"sutra_no": 1, "sanskrit": "matching source"}],
+                    source_paths={"DOC-01": source}, run_id="pilot-one")
+        assert DynamicLiveCouncilRunner(dispatcher=first_dispatch, **args).execute_live_council(1)["qualifying"] == 1
+        restarted_dispatch = FakeDispatch()
+        outcome = DynamicLiveCouncilRunner(dispatcher=restarted_dispatch, **args).execute_live_council(1)
+        assert outcome["qualifying"] == 1
+        assert restarted_dispatch.calls == []
+        assert args["review_store"].latest_state("UDYAM-1")["version"] == 1

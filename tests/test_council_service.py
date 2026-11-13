@@ -22,11 +22,23 @@ def make_draft(verse="सत्यं व्यवसायस्य मूल�
             "dos_and_donts": {"dos": ["one", "two", "three"], "donts": ["one", "two", "three"]},
             "business_assessment": {key: key for key in
                                     ("context", "reader", "decision", "action", "source_rationale")},
-            "named_examples": [{"name": "Person A", "polarity": "POSITIVE", "location": "case"}],
-            "sections": {key: "synthetic substantive text" for key in
-                         ("sources", "derivation", "sutra_meaning", "commentary",
-                          "cases_yoga", "dos_donts", "reflection")},
+            "named_examples": [{"name": name, "polarity": "POSITIVE", "location": "case"}
+                               for name in ("Person A", "Firm A", "Person B", "Firm B")],
+            "example_mentions": [{"name": name, "location": "cases_yoga"}
+                                 for name in ("Person A", "Firm A", "Person B", "Firm B")],
+            "sections": {"sources": "Verified ethics passage", "derivation": "synthetic derivation",
+                         "sutra_meaning": f"{verse} — Truth is foundational",
+                         "commentary": "शब्द " * 80,
+                         "cases_yoga": "Person A at Firm A; Person B at Firm B. Yoga is applied.",
+                         "dos_donts": "one; two; three", "reflection": "synthetic reflection"},
             "example_note": passage}
+
+
+def register_case_examples(registry):
+    """Register the four synthetic principal case identities for allocation tests."""
+    for name, kind in (("Person A", "PERSON"), ("Firm A", "BUSINESS"),
+                       ("Person B", "PERSON"), ("Firm B", "BUSINESS")):
+        registry.register(name, kind, "Synthetic record")
 
 
 def make_roles(drafts, role_calls):
@@ -50,7 +62,7 @@ def make_roles(drafts, role_calls):
         """Arbitrate independently or compose the next candidate draft."""
         role_calls.append(f"sutrakar:{mode}")
         if mode == "arbitrate":
-            return {"accepted": True}
+            return {"accepted": True, "sutra_no": "1"}
         if mode == "consult":
             return {"findings": ["independent analysis"], "challenges": ["test source fit"]}
         return drafts.pop(0)
@@ -60,6 +72,7 @@ def make_roles(drafts, role_calls):
         assert evidence_context["bridge"] == "Bridge"
         assert evidence_context["passages"] == passages
         assert evidence_context["challenge_response"]["findings"]
+        assert evidence_context["selected_shandilya"]["sanskrit"] == "match"
         role_calls.append("validator")
         return {"gates": {name: {"status": "PASS", "evidence": "Inspected synthetic fixture"}
                           for name in GATE_NAMES}}
@@ -72,12 +85,12 @@ def test_five_roles_revise_and_pause_for_human():
     """A failed first draft persists, revises, then stops before human approval."""
     with tempfile.TemporaryDirectory() as folder:
         registry = ExampleRegistry(Path(folder) / "examples.db")
-        registry.register("Person A", "PERSON", "Record A")
+        register_case_examples(registry)
         store = ReviewStore(Path(folder) / "reviews.db")
         calls = []
         roles = make_roles([make_draft("दीर्घं नूतनं वाक्यं अनेकानि पदानि युक्तम्"), make_draft()], calls)
         result = CouncilService(roles, store, registry).run_unit(
-            "chapter-1", {"sanskrit": "source"}, [{"sanskrit": "match"}],
+            "chapter-1", {"sanskrit": "source"}, [{"sutra_no": 1, "sanskrit": "match"}],
             [{"source_id": "DOC-01", "text": "Verified ethics passage"}])
         assert result["status"] == "HUMAN_REVIEW_PENDING"
         assert result["version"] == 2
@@ -95,7 +108,7 @@ def test_shortfall_is_explicit_and_no_false_approval():
         bad = "अत्यन्तं दीर्घं वाक्यं अनेकपदानि समाहितानि पुनरपि"
         result = CouncilService(make_roles([make_draft(bad), make_draft(bad)], calls),
                                 store, registry, max_attempts=2).run_unit(
-            "chapter-1", {"sanskrit": "source"}, [{"sanskrit": "match"}],
+            "chapter-1", {"sanskrit": "source"}, [{"sutra_no": 1, "sanskrit": "match"}],
             [{"source_id": "DOC-01", "text": "Verified ethics passage"}])
         assert result["status"] == "PARTIAL_BLOCKED"
         assert [item["version"] for item in result["history"]] == [1, 2]
@@ -121,8 +134,26 @@ def test_existing_canon_duplicate_cannot_pass():
                                  ReviewStore(Path(folder) / "reviews.db"),
                                  ExampleRegistry(Path(folder) / "examples.db"), max_attempts=1)
         result = service.run_unit("chapter-1", {"sanskrit": "source"},
-                                  [{"sanskrit": "match"}],
+                                  [{"sutra_no": 1, "sanskrit": "match"}],
                                   [{"source_id": "DOC-01", "text": "Verified ethics passage"}],
                                   [draft["original_sanskrit_verse"]])
         assert result["status"] == "PARTIAL_BLOCKED"
         assert result["history"][0]["status"] == "NEEDS_REVISION"
+
+
+def test_unretrieved_shandilya_selection_blocks_before_research():
+    """An accepted but unindexed pair cannot enter composition or verification."""
+    with tempfile.TemporaryDirectory() as folder:
+        calls = []
+        roles = make_roles([make_draft()], calls)
+        def wrong_pair(mode, *args):
+            """Return a selected source ID absent from retrieval."""
+            return {"accepted": True, "sutra_no": "other"}
+        roles["sutrakar"] = wrong_pair
+        service = CouncilService(roles, ReviewStore(Path(folder) / "reviews.db"),
+                                 ExampleRegistry(Path(folder) / "examples.db"))
+        with pytest.raises(ValueError, match="outside retrieved"):
+            service.run_unit("one", {"sanskrit": "source"},
+                             [{"sutra_no": 1, "sanskrit": "match"}],
+                             [{"source_id": "DOC-01", "text": "source"}])
+        assert "researcher" not in calls

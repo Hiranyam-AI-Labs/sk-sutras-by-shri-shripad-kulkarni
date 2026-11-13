@@ -157,7 +157,7 @@ class OpenAIAdapter(BaseLLMAdapter):
         # When authorized live mode is triggered by owner
         try:
             from openai import OpenAI
-            client = OpenAI(api_key=self.api_key, timeout=self.timeout_seconds)
+            client = OpenAI(api_key=self.api_key, timeout=self.timeout_seconds, max_retries=0)
             messages = []
             if system_prompt:
                 messages.append({"role": "system", "content": system_prompt})
@@ -173,8 +173,9 @@ class OpenAIAdapter(BaseLLMAdapter):
             )
 
             raw_usage = completion.usage
-            input_toks = raw_usage.prompt_tokens if raw_usage else self.estimate_tokens(prompt)
-            output_toks = raw_usage.completion_tokens if raw_usage else 200
+            if raw_usage is None or raw_usage.prompt_tokens is None or raw_usage.completion_tokens is None:
+                raise ValueError("OpenAI provider usage unavailable")
+            input_toks, output_toks = raw_usage.prompt_tokens, raw_usage.completion_tokens
             cached_toks = 0
             if raw_usage and hasattr(raw_usage, "prompt_tokens_details") and raw_usage.prompt_tokens_details:
                 cached_toks = getattr(raw_usage.prompt_tokens_details, "cached_tokens", 0)

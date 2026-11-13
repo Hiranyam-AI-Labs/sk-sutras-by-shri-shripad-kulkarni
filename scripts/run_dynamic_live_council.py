@@ -1497,7 +1497,7 @@ class DynamicLiveCouncilRunner:
 
     def __init__(self, dispatcher=None, vector_store=None, review_store=None,
                  example_registry=None, narada_sutras=None, shandilya_sutras=None,
-                 source_paths=None):
+                 source_paths=None, run_id=None):
         """Inject test doubles or load project-owned corpus, vector and stores.
 
         The dispatcher must preflight every role's model rate and run budget.
@@ -1518,6 +1518,7 @@ class DynamicLiveCouncilRunner:
                 ProviderRegistry(offline_mode=False), rates,
                 float(os.environ["COUNCIL_MAX_USD"]), int(os.environ["COUNCIL_MAX_CALLS"]),
                 audit_path=DB_PATH, run_id=os.environ["COUNCIL_RUN_ID"])
+        self.run_id = run_id or getattr(self.dispatcher, "run_id", None)
         self.vector_store = vector_store or SutraVectorStore(collection_name="shandilya_100_sutras")
         self.review_store = review_store or ReviewStore(DB_PATH)
         self.example_registry = example_registry or ExampleRegistry(DB_PATH)
@@ -1556,11 +1557,11 @@ class DynamicLiveCouncilRunner:
             mode_contracts = {
                 "arbitrate": '{"accepted":true,"sutra_no":"selected candidate ID","reason":"substantive source fit"}',
                 "consult": '{"findings":["independent source finding"],"challenges":["question for researcher"]}',
-                "compose": '{"original_sanskrit_verse":"2-5 displayed Sanskrit words","padaccheda":"...","anvaya":"...","nirukta":"...","translation_en":"...","translation_mr":"...","comprehensive_bhashya_mr":"70-110 Marathi words","biographical_case_studies":[{"region":"EASTERN","person":"...","business":"...","provenance":"..."},{"region":"WESTERN","person":"...","business":"...","provenance":"..."}],"dos_and_donts":{"dos":["...","...","..."],"donts":["...","...","..."]},"business_assessment":{"context":"...","reader":"...","decision":"...","action":"...","source_rationale":"..."},"named_examples":[{"name":"...","polarity":"POSITIVE","location":"case"}],"sections":{"sources":"...","derivation":"...","sutra_meaning":"...","commentary":"...","cases_yoga":"...","dos_donts":"...","reflection":"..."}}',
+                "compose": '{"original_sanskrit_verse":"2-5 displayed Sanskrit words","padaccheda":"...","anvaya":"...","nirukta":"...","translation_en":"...","translation_mr":"...","comprehensive_bhashya_mr":"70-110 Marathi words","biographical_case_studies":[{"region":"EASTERN","person":"...","business":"...","provenance":"..."},{"region":"WESTERN","person":"...","business":"...","provenance":"..."}],"dos_and_donts":{"dos":["...","...","..."],"donts":["...","...","..."]},"business_assessment":{"context":"...","reader":"...","decision":"...","action":"...","source_rationale":"..."},"named_examples":[{"name":"each person and business","polarity":"POSITIVE","location":"case"}],"example_mentions":[{"name":"exact name","location":"cases_yoga"}],"sections":{"sources":"...","derivation":"...","sutra_meaning":"include original_sanskrit_verse","commentary":"include comprehensive_bhashya_mr verbatim","cases_yoga":"include both principal persons and businesses plus yoga application","dos_donts":"include all six guidance strings verbatim","reflection":"..."}}',
             }
             if mode not in mode_contracts:
                 raise ValueError("Unknown Sutrakar mode")
-            instruction = ("Act as independent Sutrakar arbiter and author. Recheck Narada/Shandilya fit, research the sources independently, preserve the challenge response, and compose a short Udyam business aphorism with seven complete reader sections. Cases must be factual, two principal examples across East and West, with diverse people and businesses. Yoga must be cited and applied. No generic business buzzwords, invented sources or forced pairing. " + mode)
+            instruction = ("Act as independent Sutrakar arbiter and author. Recheck Narada/Shandilya fit, research the sources independently, preserve the challenge response, and compose a short Udyam business aphorism with seven complete reader sections. Cases must be factual, two principal examples across East and West, with diverse people and businesses. List every named person and business in named_examples and example_mentions, including any named example in guidance. Each example_mentions location must name a section containing that exact name. The displayed verse, commentary, cases, and all six guidance items must contain the exact validated structured text. Yoga must be cited and applied. No generic business buzzwords, invented sources or forced pairing. " + mode)
             contract = mode_contracts[mode]
         else:
             if role not in contracts:
@@ -1576,7 +1577,7 @@ class DynamicLiveCouncilRunner:
                      "bharatiya_jnana_specialist": ("bridge", "findings"),
                      "independent_validator": ("gates", "findings")}.get(role) or
                     {"arbitrate": ("accepted", "reason"), "consult": ("findings", "challenges"),
-                     "compose": ("original_sanskrit_verse", "named_examples", "sections")}[payload["mode"]])
+                     "compose": ("original_sanskrit_verse", "named_examples", "example_mentions", "sections")}[payload["mode"]])
         if any(field not in data for field in required):
             raise ValueError(f"Malformed {role} response: missing required fields")
         return data
@@ -1601,6 +1602,33 @@ class DynamicLiveCouncilRunner:
         for narada in self.narada_sutras:
             if qualifying >= target_count:
                 break
+            unit_id = f"UDYAM-{narada.get('sutra_no')}"
+            progress = self.review_store.run_progress(self.run_id, unit_id) if self.run_id else None
+            latest = self.review_store.latest_state(unit_id)
+            if progress and progress["outcome"]:
+                result = progress["outcome"]
+                if (result.get("version") and
+                        (not latest or result["version"] != latest["version"])):
+                    results.append({"unit_id": unit_id, "status": "STALE_RUN_OUTCOME_BLOCKED"})
+                    continue
+                results.append(result)
+                qualifying += result["status"] == "HUMAN_REVIEW_PENDING"
+                continue
+            if latest and latest["state"] in {"AI_VALIDATED", "SCHOLAR_REVIEWED", "AUTHOR_APPROVED"}:
+                result = {"unit_id": unit_id, "version": latest["version"],
+                          "status": "HUMAN_REVIEW_PENDING" if progress else "ALREADY_REVIEWED"}
+                if progress:
+                    self.review_store.finish_run_unit(self.run_id, unit_id, result)
+                    qualifying += 1
+                results.append(result)
+                continue
+            if latest and not progress:
+                results.append({"unit_id": unit_id, "status": "EXISTING_DRAFT_BLOCKED"})
+                continue
+            if progress and progress["attempts"] >= 3:
+                results.append({"unit_id": unit_id, "status": "PARTIAL_BLOCKED",
+                                "reason": "Durable revision limit exhausted"})
+                continue
             matches = self.vector_store.query_similar_sutras(
                 query_text=narada.get("sanskrit", ""), top_k=5)
             numbers = {str(item.get("metadata", {}).get("sutra_no")) for item in matches}
@@ -1636,9 +1664,8 @@ class DynamicLiveCouncilRunner:
             service = CouncilService({"narada": role_narada, "shandilya": role_shandilya,
                                       "researcher": role_researcher, "sutrakar": role_sutrakar,
                                       "validator": role_validator}, self.review_store, self.example_registry)
-            unit_id = f"UDYAM-{narada.get('sutra_no')}"
             result = service.run_unit(unit_id, narada, candidates, passages,
-                                      self.review_store.current_formulations(unit_id))
+                                      self.review_store.current_formulations(unit_id), self.run_id)
             results.append(result)
             if result["status"] == "HUMAN_REVIEW_PENDING":
                 qualifying += 1

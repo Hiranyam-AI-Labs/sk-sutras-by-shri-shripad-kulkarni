@@ -16,9 +16,31 @@ module = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(module)
 
 
+def book_content():
+    """Build a synthetic edition whose displayed fields equal approved fields."""
+    return {"original_sanskrit_verse": "सत्यं कार्यम्",
+            "comprehensive_bhashya_mr": "Synthetic approved commentary.",
+            "biographical_case_studies": [
+                {"person": "Founder One", "business": "Firm One"},
+                {"person": "Founder Two", "business": "Firm Two"}],
+            "dos_and_donts": {"dos": ["Do one", "Do two", "Do three"],
+                               "donts": ["Avoid one", "Avoid two", "Avoid three"]},
+            "named_examples": [{"name": name, "polarity": "POSITIVE", "location": "case"}
+                               for name in ("Founder One", "Firm One", "Founder Two", "Firm Two")],
+            "example_mentions": [{"name": name, "location": "cases_yoga"}
+                                 for name in ("Founder One", "Firm One", "Founder Two", "Firm Two")],
+            "sections": {"sources": "Synthetic sources evidence.",
+                         "derivation": "Synthetic derivation evidence.",
+                         "sutra_meaning": "सत्यं कार्यम्. Synthetic meaning.",
+                         "commentary": "Synthetic approved commentary.",
+                         "cases_yoga": "Founder One and Firm One; Founder Two and Firm Two. Synthetic yoga.",
+                         "dos_donts": "Do one; Do two; Do three; Avoid one; Avoid two; Avoid three.",
+                         "reflection": "Synthetic reflection evidence."}}
+
+
 def test_missing_section_or_stale_content_blocks_export(tmp_path):
     """A valid gate score never supplies missing substantive text."""
-    content = {"sections": {key: "verified text" for key in module.SECTION_KEYS}}
+    content = book_content()
     entry = {"unit_id": "one", "content": content, "content_sha256": fingerprint(content),
              "gates": {key: "PASS" for key in GATE_NAMES}}
     manifest = {"manifest_id": "book", "units": [entry]}
@@ -31,6 +53,16 @@ def test_missing_section_or_stale_content_blocks_export(tmp_path):
     assert not (tmp_path / "invalid.json").exists()
 
 
+def test_displayed_text_must_match_validated_structured_fields():
+    """A passing gate report cannot export a different verse or commentary."""
+    content = book_content()
+    content["sections"]["sutra_meaning"] = "Different verse."
+    entry = {"unit_id": "one", "content": content, "content_sha256": fingerprint(content),
+             "gates": {key: "PASS" for key in GATE_NAMES}}
+    with pytest.raises(ValueError, match="Displayed manuscript"):
+        module.validate_manifest({"units": [entry]})
+
+
 def test_frozen_manifest_renders_word_and_pdf_without_filler(tmp_path):
     """Only a stored author-approved edition with committed examples can render."""
     from docx import Document
@@ -41,9 +73,10 @@ def test_frozen_manifest_renders_word_and_pdf_without_filler(tmp_path):
         pytest.skip("Local Devanagari font unavailable")
     path = tmp_path / "edition.db"
     store, registry = ReviewStore(path), ExampleRegistry(path)
-    registry.register("Founder One", "PERSON", "synthetic source")
-    content = {"sections": {key: f"Synthetic {key} evidence." for key in module.SECTION_KEYS},
-               "named_examples": [{"name": "Founder One", "polarity": "POSITIVE", "location": "case"}]}
+    for name, kind in (("Founder One", "PERSON"), ("Firm One", "BUSINESS"),
+                       ("Founder Two", "PERSON"), ("Firm Two", "BUSINESS")):
+        registry.register(name, kind, "synthetic source")
+    content = book_content()
     report = {"policy_version": POLICY_VERSION,
               "gates": {key: "PASS" for key in GATE_NAMES}}
     version = store.save_draft("one", content, report)

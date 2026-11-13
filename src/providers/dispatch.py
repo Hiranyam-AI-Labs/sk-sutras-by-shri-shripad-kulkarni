@@ -2,7 +2,9 @@
 
 import hashlib
 import json
+import math
 import sqlite3
+import time
 import uuid
 from datetime import datetime, timezone
 from pathlib import Path
@@ -16,23 +18,30 @@ class BudgetedDispatcher:
 
     def __init__(self, registry: ProviderRegistry, rates: Mapping[str, Dict[str, Any]],
                  max_usd: float, max_calls: int, audit_path: Path | None = None,
-                 run_id: str = "default"):
+                 run_id: str = "default", max_elapsed_seconds: int = 600):
         """Bind frozen role adapters and explicit per-million model rates.
 
         ``rates`` are keyed provider:model with input/output/effective_date and
         treated as estimates. Reject nonpositive caps. Inspect model
         key and reserve calculation to debug pre-call budget errors.
         """
-        if max_usd <= 0 or max_calls < 1:
+        if (not isinstance(max_usd, (int, float)) or not math.isfinite(max_usd) or
+                max_usd <= 0 or max_calls < 1 or max_elapsed_seconds < 1):
             raise ValueError("Positive run cost and call caps required")
         for key, rate in rates.items():
             if (not isinstance(rate, dict) or not rate.get("effective_date") or
                     not isinstance(rate.get("input"), (int, float)) or
                     not isinstance(rate.get("output"), (int, float)) or
+                    not math.isfinite(rate["input"]) or not math.isfinite(rate["output"]) or
                     rate["input"] < 0 or rate["output"] < 0):
                 raise ValueError(f"Invalid dated model rate: {key}")
-        self.registry, self.rates = registry, rates
+        self.registry = registry
+        self.rates = {key: dict(value) for key, value in rates.items()}
+        self._adapters: dict[str, Any] = {}
+        self._role_models: dict[str, tuple[str, str, int]] = {}
         self.max_usd, self.max_calls = max_usd, max_calls
+        self.max_elapsed_seconds = max_elapsed_seconds
+        self.deadline = time.time() + max_elapsed_seconds
         self.reserved_usd = 0.0
         self.calls = 0
         self.audit: list[Dict[str, Any]] = []
@@ -41,6 +50,18 @@ class BudgetedDispatcher:
         if self.audit_path is not None:
             with sqlite3.connect(self.audit_path) as db:
                 db.execute("CREATE TABLE IF NOT EXISTS council_dispatch_audit (call_id TEXT PRIMARY KEY, run_id TEXT NOT NULL, reservation_usd REAL NOT NULL, status TEXT NOT NULL, record_json TEXT NOT NULL)")
+                db.execute("CREATE TABLE IF NOT EXISTS council_run_config (run_id TEXT PRIMARY KEY, config_sha256 TEXT NOT NULL)")
+                db.execute("CREATE TABLE IF NOT EXISTS council_role_config (run_id TEXT NOT NULL, role TEXT NOT NULL, provider TEXT NOT NULL, model_id TEXT NOT NULL, max_tokens INTEGER NOT NULL, PRIMARY KEY(run_id,role))")
+                db.execute("CREATE TABLE IF NOT EXISTS council_run_deadline (run_id TEXT PRIMARY KEY, deadline REAL NOT NULL)")
+                db.execute("INSERT OR IGNORE INTO council_run_deadline VALUES (?,?)", (run_id, self.deadline))
+                self.deadline = db.execute("SELECT deadline FROM council_run_deadline WHERE run_id=?", (run_id,)).fetchone()[0]
+                config = {"rates": self.rates, "max_usd": self.max_usd,
+                          "max_calls": self.max_calls, "max_elapsed_seconds": max_elapsed_seconds}
+                digest = hashlib.sha256(json.dumps(config, sort_keys=True).encode()).hexdigest()
+                db.execute("INSERT OR IGNORE INTO council_run_config VALUES (?,?)", (run_id, digest))
+                stored = db.execute("SELECT config_sha256 FROM council_run_config WHERE run_id=?", (run_id,)).fetchone()[0]
+                if stored != digest:
+                    raise ValueError("Durable run pricing or budget configuration changed")
                 row = db.execute("SELECT COUNT(*),COALESCE(SUM(reservation_usd),0) FROM council_dispatch_audit WHERE run_id=?", (run_id,)).fetchone()
                 self.calls, self.reserved_usd = row
 
@@ -51,9 +72,16 @@ class BudgetedDispatcher:
         roles, missing rates or insufficient minimum reservation raise. Inspect
         model keys and cap configuration to debug without exposing credentials.
         """
+        if time.time() >= self.deadline:
+            raise ValueError("Run wall-clock deadline exhausted")
         minimum = 0.0
         for role in roles:
             adapter = self.registry.get_adapter(role)
+            model = (adapter.provider_name, adapter.model_id, adapter.max_tokens)
+            if role in self._role_models and self._role_models[role] != model:
+                raise ValueError("Frozen role model changed during run")
+            self._adapters[role], self._role_models[role] = adapter, model
+            self._freeze_role(role, model)
             key = f"{adapter.provider_name}:{adapter.model_id}"
             if key not in self.rates:
                 raise ValueError(f"Missing dated price estimate for {key}")
@@ -72,13 +100,24 @@ class BudgetedDispatcher:
         No HTTP status or actual bill amount is inferred. Inspect call role,
         model, timestamps and status, never credentials or raw prompts.
         """
-        adapter = self.registry.get_adapter(role)
+        if time.time() >= self.deadline:
+            raise ValueError("Run wall-clock deadline exhausted before provider call")
+        adapter = self._adapters.get(role)
+        if adapter is None:
+            adapter = self.registry.get_adapter(role)
+            self._adapters[role] = adapter
+            self._role_models[role] = (adapter.provider_name, adapter.model_id, adapter.max_tokens)
+        if (adapter.provider_name, adapter.model_id, adapter.max_tokens) != self._role_models[role]:
+            raise ValueError("Frozen role adapter configuration changed")
+        self._freeze_role(role, self._role_models[role])
         key = f"{adapter.provider_name}:{adapter.model_id}"
         if key not in self.rates:
             raise ValueError(f"Missing dated price estimate for {key}")
         input_rate, output_rate = self.rates[key]["input"], self.rates[key]["output"]
         projected = (adapter.estimate_tokens(system_prompt + prompt) * input_rate +
                      adapter.max_tokens * output_rate) / 1_000_000
+        if not math.isfinite(projected) or projected < 0:
+            raise ValueError("Invalid model cost reservation")
         if self.calls >= self.max_calls or self.reserved_usd + projected > self.max_usd:
             raise ValueError("Run budget or call limit exceeded before provider call")
         call_id = str(uuid.uuid4())
@@ -116,6 +155,18 @@ class BudgetedDispatcher:
             record.update(status="FAILED", error_type=type(exc).__name__)
             self._persist_result(call_id, record)
             raise
+
+    def _freeze_role(self, role: str, model: tuple[str, str, int]) -> None:
+        """Bind a role's exact provider, model ID and token ceiling across restarts."""
+        if self.audit_path is None:
+            return
+        with sqlite3.connect(self.audit_path) as db:
+            db.execute("INSERT OR IGNORE INTO council_role_config VALUES (?,?,?,?,?)",
+                       (self.run_id, role, *model))
+            stored = db.execute("SELECT provider,model_id,max_tokens FROM council_role_config WHERE run_id=? AND role=?",
+                                (self.run_id, role)).fetchone()
+            if tuple(stored) != model:
+                raise ValueError("Durable role model assignment changed")
 
     def _persist_result(self, call_id: str, record: Dict[str, Any]) -> None:
         """Update one reserved call with observed status and sanitized metadata.

@@ -8,6 +8,7 @@ import uuid
 from pathlib import Path
 from typing import Any, Dict
 
+from src.agents.acceptance_policy import GATE_NAMES
 from src.orchestration.review_store import fingerprint
 
 
@@ -36,8 +37,38 @@ def validate_manifest(manifest: Dict[str, Any]) -> Dict[str, Any]:
         ):
             raise ValueError(f"Seven substantive sections missing: {entry.get('unit_id')}")
         gates = entry.get("gates")
-        if not isinstance(gates, dict) or len(gates) != 15 or any(v != "PASS" for v in gates.values()):
+        if not isinstance(gates, dict) or set(gates) != set(GATE_NAMES) or any(v != "PASS" for v in gates.values()):
             raise ValueError("All fifteen versioned gates required")
+        verse = content.get("original_sanskrit_verse")
+        commentary = content.get("comprehensive_bhashya_mr")
+        cases = content.get("biographical_case_studies")
+        guidance = content.get("dos_and_donts")
+        if (not isinstance(verse, str) or not verse.strip() or verse not in sections["sutra_meaning"] or
+                not isinstance(commentary, str) or not commentary.strip() or
+                commentary not in sections["commentary"] or
+                not isinstance(cases, list) or len(cases) != 2 or
+                any(not isinstance(case, dict) or not all(
+                    isinstance(case.get(key), str) and case[key] in sections["cases_yoga"]
+                    for key in ("person", "business")) for case in cases) or
+                not isinstance(guidance, dict) or any(
+                    not isinstance(guidance.get(kind), list) or len(guidance[kind]) != 3 or
+                    any(not isinstance(item, str) or item not in sections["dos_donts"]
+                        for item in guidance[kind]) for kind in ("dos", "donts"))):
+            raise ValueError(f"Displayed manuscript text differs from validated fields: {entry.get('unit_id')}")
+        examples, mentions = content.get("named_examples"), content.get("example_mentions")
+        if (not isinstance(examples, list) or not isinstance(mentions, list) or
+                not examples or not mentions or
+                any(not isinstance(item, dict) or not isinstance(item.get("name"), str)
+                    for item in examples + mentions)):
+            raise ValueError("Named example inventory and section mentions required")
+        inventoried = {item["name"].strip().casefold() for item in examples}
+        mentioned = {item["name"].strip().casefold() for item in mentions}
+        principal = {case[key].strip().casefold() for case in cases for key in ("person", "business")}
+        if (inventoried != mentioned or not principal.issubset(mentioned) or
+                any(not isinstance(item.get("location"), str) or
+                    not isinstance(sections.get(item["location"]), str) or
+                    item["name"] not in sections[item["location"]] for item in mentions)):
+            raise ValueError("Uninventoried or unlocated named examples in approved text")
     return manifest
 
 

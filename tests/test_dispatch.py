@@ -80,3 +80,33 @@ def test_reservation_survives_restart_and_blocks_repeat(tmp_path):
         restarted.call("independent_validator", "prompt")
     assert restarted_adapter.calls == 0
     assert restarted.calls == 1
+
+
+def test_nonfinite_prices_and_changed_run_config_fail_before_call(tmp_path):
+    """Nonfinite rates and altered restart settings cannot bypass a cost cap."""
+    for bad in (float("nan"), float("inf"), float("-inf")):
+        with pytest.raises(ValueError):
+            BudgetedDispatcher(FakeRegistry(FakeAdapter()), RATES, bad, 10)
+        with pytest.raises(ValueError):
+            BudgetedDispatcher(FakeRegistry(FakeAdapter()),
+                               {"openai:gpt-4o": {**RATES["openai:gpt-4o"], "input": bad}}, 1, 10)
+    path = tmp_path / "run.db"
+    BudgetedDispatcher(FakeRegistry(FakeAdapter()), RATES, 1, 10,
+                       audit_path=path, run_id="fixed")
+    with pytest.raises(ValueError, match="configuration changed"):
+        BudgetedDispatcher(FakeRegistry(FakeAdapter()), RATES, 2, 10,
+                           audit_path=path, run_id="fixed")
+
+
+def test_role_model_stays_frozen_across_restart(tmp_path):
+    """One run ID cannot substitute a new model after preflight."""
+    path = tmp_path / "roles.db"
+    first = BudgetedDispatcher(FakeRegistry(FakeAdapter()), RATES, 1, 10,
+                               audit_path=path, run_id="fixed")
+    first.preflight_roles(["independent_validator"])
+    changed = FakeAdapter()
+    changed.model_id = "different"
+    restarted = BudgetedDispatcher(FakeRegistry(changed), RATES, 1, 10,
+                                   audit_path=path, run_id="fixed")
+    with pytest.raises(ValueError, match="Durable role model"):
+        restarted.preflight_roles(["independent_validator"])

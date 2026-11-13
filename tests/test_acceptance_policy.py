@@ -47,3 +47,15 @@ def test_verifier_failure_survives_objective_length_pass():
     result = evaluate_policy(draft, assessments)
     assert result["gates"]["bhashya_length"] == "FAIL"
     assert result["gates"]["short_formulation"] == "FAIL"
+
+
+def test_malformed_assessments_and_missing_case_inventory_fail_closed():
+    """Malformed verifier data and omitted principal businesses never pass."""
+    assert evaluate_policy({}, ["not a gate map"])["gates"]["narada_fidelity"] == "NOT_EVALUATED"
+    draft = {"biographical_case_studies": [
+        {"region": "EASTERN", "person": "Person A", "business": "Firm A", "provenance": "record"},
+        {"region": "WESTERN", "person": "Person B", "business": "Firm B", "provenance": "record"}],
+        "named_examples": [{"name": "Person A", "polarity": "POSITIVE", "location": "case"}]}
+    result = evaluate_policy(draft, {name: {"status": "PASS", "evidence": "synthetic"}
+                                     for name in GATE_NAMES})
+    assert result["gates"]["example_diversity"] == "FAIL"

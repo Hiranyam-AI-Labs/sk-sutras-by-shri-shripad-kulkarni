@@ -9,6 +9,8 @@ All notable changes, architectural updates, and releases for **SK Sutras - by Sh
 - Added durable per-run provider call and estimated budget records across restarts. No live provider call or billing claim was made during implementation.
 - Added a Word/PDF renderer that reads a frozen approved edition and refuses stale or incomplete content. Synthetic output passed offline text and PDF page checks; a real edition has not been published.
 - Offline focused regression: 38 passing tests. Controlled live UAT and human scholarly approval remain required before release.
+- Follow-up integrity checks require the selected Shandilya source record, preserve per-unit attempts across restarts, reconcile displayed book text with approved fields, and reject missing named-example inventory or nonfinite run prices. The expanded offline regression passes 45 tests.
+- A bounded live pilot was authorized, but the project credential lookup, local Chroma index and historical database are absent from this checkout. No live call or model substitution was made.
 
 ## [v0.8.1-editorial-refinement] - 2026-11-11
 
