@@ -46,14 +46,13 @@ class CouncilService:
                            if isinstance(item, dict) and item.get("sutra_no") and item.get("sanskrit")}
         if len(candidate_by_id) != len(candidates):
             raise ValueError("Every Shandilya candidate needs a unique ID and source text")
-        first_attempt = self.review_store.start_attempt(run_id, unit_id, self.max_attempts) if run_id else 1
+        progress = self.review_store.run_progress(run_id, unit_id) if run_id else None
+        first_attempt = progress["attempts"] + 1 if progress else 1
         thesis = self.roles["narada"](narada)
         review = self.roles["shandilya"](thesis, candidates)
         feedback: Dict[str, Any] = {}
         history = []
         for attempt in range(first_attempt, self.max_attempts + 1):
-            if run_id and attempt > first_attempt:
-                self.review_store.start_attempt(run_id, unit_id, self.max_attempts)
             # The arbiter is reengaged on a rejected pair or material source finding.
             arbitration = self.roles["sutrakar"]("arbitrate", thesis, review, feedback)
             if not isinstance(arbitration, dict) or arbitration.get("accepted") is not True:
@@ -83,6 +82,8 @@ class CouncilService:
             evidence_context = {"passages": passages, "selected_shandilya": candidate_by_id[chosen_id],
                                 "bridge": research["bridge"],
                                 "consultation": consultation, "challenge_response": challenged_research}
+            if run_id:
+                self.review_store.start_attempt(run_id, unit_id, self.max_attempts)
             draft = self.roles["sutrakar"]("compose", thesis, arbitration, research, feedback, evidence_context)
             if not isinstance(draft, dict):
                 raise ValueError("Structured composition required")

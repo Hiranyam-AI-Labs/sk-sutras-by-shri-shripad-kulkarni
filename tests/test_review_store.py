@@ -67,3 +67,14 @@ def test_interrupted_run_keeps_revision_limit_across_store_restart():
         assert ReviewStore(path).start_attempt("pilot", "one", 3) == 3
         with pytest.raises(ValueError, match="limit exhausted"):
             ReviewStore(path).start_attempt("pilot", "one", 3)
+
+
+def test_one_time_precomposition_correction_requires_no_draft():
+    """Technical call history can be reclassified once, with a durable record."""
+    with tempfile.TemporaryDirectory() as folder:
+        store = ReviewStore(Path(folder) / "reviews.db")
+        store.start_attempt("pilot", "one", 3)
+        assert store.correct_precomposition_attempts("pilot", "one") == 1
+        assert ReviewStore(store.path).run_progress("pilot", "one")["attempts"] == 0
+        with pytest.raises(ValueError, match="uncorrected"):
+            store.correct_precomposition_attempts("pilot", "one")

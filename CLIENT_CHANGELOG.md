@@ -6,11 +6,12 @@ All notable changes, architectural updates, and releases for **SK Sutras - by Sh
 
 - Added a fifteen-gate, five-role drafting path that stops at human review. It retrieves source passages and indexed IKS records, stores draft versions, and reports an explicit eligible count or shortfall.
 - Added authenticated scholar and author decisions bound to exact draft versions and content hashes. Author approval commits the matching named-example reservations; publication rechecks them.
-- Added durable per-run provider call and estimated budget records across restarts. No live provider call or billing claim was made during implementation.
+- Added durable per-run provider call and estimated budget records across restarts. The bounded live pilot below used these controls; provider invoice cost remains unknown.
 - Added a Word/PDF renderer that reads a frozen approved edition and refuses stale or incomplete content. Synthetic output passed offline text and PDF page checks; a real edition has not been published.
-- Offline focused regression: 38 passing tests. Controlled live UAT and human scholarly approval remain required before release.
+- Initial offline focused regression: 38 passing tests. Controlled live UAT and human scholarly approval remain required before release.
 - Follow-up integrity checks require the selected Shandilya source record, preserve per-unit attempts across restarts, reconcile displayed book text with approved fields, and reject missing named-example inventory or nonfinite run prices. The expanded offline regression passes 45 tests.
-- A bounded live pilot was authorized, but the project credential lookup, local Chroma index and historical database are absent from this checkout. No live call or model substitution was made.
+- The supplied key paths, workspace ID path and database/index ZIP enabled a one-candidate live pilot on an isolated copy. Exact configured Google, OpenAI and Anthropic models returned successful responses. Eleven calls were audited (eight successful, three failed); USD 0.5883 in estimated reservations were consumed, while invoice cost is unknown. The run expired after a Sutrakar consultation timeout, before composition or independent validation. No draft, human approval or publication resulted.
+- Replaced contaminated DOC-01–03 text extracts from the supplied original Word manuscripts, tightened source retrieval and historical example checks, corrected precomposition attempt accounting, and added bounded per-role timeouts and a single Google SDK HTTP attempt. Focused offline regression: 54 passing tests. A new authorized run window is required to continue live UAT.
 
 ## [v0.8.1-editorial-refinement] - 2026-11-11
 

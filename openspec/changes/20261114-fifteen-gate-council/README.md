@@ -17,11 +17,11 @@ Status: implementation milestone, not a release. Governance baseline: 2026.11.11
 
 ## Scope and evidence
 
-Capabilities: AI workflow, API/data boundary, publication. Existing Python, SQLite, LangGraph and provider adapters retained. Word/PDF use the declared `python-docx` and `reportlab` dependencies. Current test results are recorded in `docs/IMPLEMENTATION_STATUS_20261113.md`. No real provider call, deployment or historical manuscript rewrite occurred.
+Capabilities: AI workflow, API/data boundary, publication. Existing Python, SQLite, LangGraph and provider adapters retained. Word/PDF use the declared `python-docx` and `reportlab` dependencies. Current test and bounded live-pilot results are recorded in `docs/IMPLEMENTATION_STATUS_20261113.md`. The pilot used an isolated historical database copy; no deployment or canonical manuscript overwrite occurred.
 
 ## Remaining work before release
 
-- Validate actual source relevance and Sanskrit, confirm current model prices and run controlled UAT with the client's spend cap. The user authorized a bounded live pilot, but this checkout has no configured provider keys, local Chroma index or historical SQLite database; no live call was attempted.
+- Complete controlled UAT under a new authorized spend and time window. The first bounded pilot reached all three providers but timed out before composition or independent verification; source relevance and Sanskrit quality of any eventual draft require review.
 - Complete scholar and author review of real drafts, freeze a full edition, and verify long-form Word/PDF pagination and assembled-book diversity. LibreOffice is unavailable for local Word page rendering.
 - Reconcile actual provider billing if and when billing metadata is supplied; current audit stores only available usage and estimated reservations.
 

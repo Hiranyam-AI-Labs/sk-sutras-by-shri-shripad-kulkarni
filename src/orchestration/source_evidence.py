@@ -3,8 +3,28 @@
 import hashlib
 import json
 import re
+import unicodedata
 from pathlib import Path
 from typing import Dict, Iterable, List
+
+
+def _terms(value: str) -> set[str]:
+    """Return Unicode letter/mark tokens including Devanagari vowel signs.
+
+    ``value`` is untrusted source or query text; punctuation separates terms.
+    Empty or short fragments are ignored. Inspect the original paragraph if a
+    Sanskrit quotation has unexpectedly poor retrieval rank.
+    """
+    words, current = [], []
+    for char in value.casefold():
+        if unicodedata.category(char)[0] in {"L", "M", "N"}:
+            current.append(char)
+        elif current:
+            words.append("".join(current))
+            current = []
+    if current:
+        words.append("".join(current))
+    return {word for word in words if len(word) > 2}
 
 
 def retrieve_passages(sources: Dict[str, Path], query: str, limit: int = 2) -> List[dict]:
@@ -17,18 +37,25 @@ def retrieve_passages(sources: Dict[str, Path], query: str, limit: int = 2) -> L
     """
     if not query.strip() or limit < 1 or not sources:
         raise ValueError("Registered sources, nonblank query, and positive limit required")
-    terms = {word.casefold() for word in re.findall(r"\w+", query) if len(word) > 2}
+    terms = _terms(query)
     result = []
     for source_id, path in sources.items():
         if not path.is_file():
             raise FileNotFoundError(path)
         raw = path.read_bytes()
+        if b"Command output:" in raw or b"Traceback (most recent call last)" in raw:
+            raise ValueError(f"Registered source contains tool-output contamination: {source_id}")
         content = raw.decode("utf-8")
         paragraphs = [p.strip() for p in re.split(r"\n\s*\n", content) if p.strip()]
         ranked = []
         for number, paragraph in enumerate(paragraphs, 1):
-            score = len(terms & {w.casefold() for w in re.findall(r"\w+", paragraph)})
-            if score:
+            if (len(paragraph) < 15 or paragraph.lower().startswith(("http://", "https://")) or
+                    "Command output:" in paragraph or "Traceback (most recent call last)" in paragraph):
+                continue
+            overlap = terms & _terms(paragraph)
+            score = sum(3 if any("\u0900" <= char <= "\u097f" for char in word) else 1
+                        for word in overlap)
+            if score >= 2:
                 ranked.append((score, number, paragraph))
         for _, number, passage in sorted(ranked, key=lambda item: (-item[0], item[1]))[:limit]:
             result.append({"source_id": source_id, "source_version": hashlib.sha256(raw).hexdigest(),

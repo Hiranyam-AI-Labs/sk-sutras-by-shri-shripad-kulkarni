@@ -157,3 +157,22 @@ def test_unretrieved_shandilya_selection_blocks_before_research():
                              [{"sutra_no": 1, "sanskrit": "match"}],
                              [{"source_id": "DOC-01", "text": "source"}])
         assert "researcher" not in calls
+
+
+def test_precomposition_failure_does_not_consume_composition_attempt():
+    """A malformed research response uses call budget but no draft revision slot."""
+    with tempfile.TemporaryDirectory() as folder:
+        store = ReviewStore(Path(folder) / "reviews.db")
+        roles = make_roles([make_draft()], [])
+
+        def invalid_research(source, pairing, passages, feedback):
+            """Simulate a provider response lacking the required research bridge."""
+            return {"findings": []}
+
+        roles["researcher"] = invalid_research
+        service = CouncilService(roles, store, ExampleRegistry(Path(folder) / "examples.db"))
+        with pytest.raises(ValueError, match="research bridge"):
+            service.run_unit("one", {"sanskrit": "source"},
+                             [{"sutra_no": 1, "sanskrit": "match"}],
+                             [{"source_id": "DOC-01", "text": "source"}], run_id="pilot")
+        assert store.run_progress("pilot", "one") is None

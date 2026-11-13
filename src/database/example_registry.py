@@ -78,7 +78,25 @@ class ExampleRegistry:
                     left_identity TEXT NOT NULL, right_identity TEXT NOT NULL,
                     relationship TEXT NOT NULL,
                     PRIMARY KEY(left_identity,right_identity));
+                CREATE TABLE IF NOT EXISTS historical_example_uses (
+                    chapter TEXT NOT NULL, identity TEXT NOT NULL,
+                    provenance TEXT NOT NULL, PRIMARY KEY(chapter,identity));
             """)
+
+    def mark_historical(self, chapter: str, name: str, kind: str, provenance: str,
+                        aliases: Iterable[str] = ()) -> None:
+        """Seed a prior approved example into a copied pilot registry.
+
+        The caller provides an exact historical chapter and source provenance.
+        Aliases identify the same person or business. This never alters the
+        original archive and causes later reuse to require author exception.
+        """
+        if not chapter.strip() or not provenance.strip():
+            raise ValueError("Historical example needs chapter and provenance")
+        identity = self.register(name, kind, provenance, aliases)
+        with self._connection() as db:
+            db.execute("INSERT OR IGNORE INTO historical_example_uses VALUES (?,?,?)",
+                       (chapter, identity, provenance))
 
     def register(self, name: str, kind: str, provenance: str, aliases: Iterable[str] = ()) -> str:
         """Register a person or business with provenance and known aliases.
@@ -169,6 +187,9 @@ class ExampleRegistry:
                     prior = {row[0] for row in db.execute(
                         f"SELECT DISTINCT chapter FROM example_allocations WHERE identity IN ({','.join('?' for _ in [identity,*related])}) AND chapter<>?",
                         (identity, *related, chapter)).fetchall()}
+                    prior.update(row[0] for row in db.execute(
+                        f"SELECT DISTINCT chapter FROM historical_example_uses WHERE identity IN ({','.join('?' for _ in [identity,*related])}) AND chapter<>?",
+                        (identity, *related, chapter)).fetchall())
                     exception = db.execute("SELECT prior_chapters FROM example_exceptions WHERE chapter=? AND identity=? AND content_sha256=?",
                                            (chapter, identity, content_sha256)).fetchone()
                     if prior and (not exception or set(json.loads(exception[0])) != prior):
@@ -228,6 +249,9 @@ class ExampleRegistry:
                         (identity, identity)).fetchall()}
                     prior = {prior_chapter for prior_identity, prior_chapter in seen.items()
                              if prior_identity == identity or prior_identity in related}
+                    prior.update(row[0] for row in db.execute(
+                        f"SELECT DISTINCT chapter FROM historical_example_uses WHERE identity IN ({','.join('?' for _ in [identity,*related])})",
+                        (identity, *related)).fetchall())
                     if prior:
                         row = db.execute("SELECT prior_chapters FROM example_exceptions WHERE chapter=? AND identity=? AND content_sha256=?",
                                          (chapter, identity, digest)).fetchone()
@@ -243,5 +267,6 @@ class ExampleRegistry:
         """
         with self._connection() as db:
             rows = db.execute("SELECT e.canonical_name,e.kind,a.chapter,a.state FROM example_allocations a JOIN example_entities e ON e.identity=a.identity ORDER BY a.chapter").fetchall()
+            rows += db.execute("SELECT e.canonical_name,e.kind,h.chapter,'HISTORICAL' FROM historical_example_uses h JOIN example_entities e ON e.identity=h.identity ORDER BY h.chapter").fetchall()
         return [{"name": row[0], "kind": row[1], "chapter": row[2], "state": row[3]}
                 for row in rows]

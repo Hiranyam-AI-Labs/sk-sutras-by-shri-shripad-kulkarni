@@ -8,6 +8,14 @@ Description: LangGraph multi-agent orchestration pipeline. Implements batch
 ================================================================================
 """
 
-from src.orchestration.graph import build_sutra_synthesis_graph
+def build_sutra_synthesis_graph(*args, **kwargs):
+    """Build the legacy LangGraph only when explicitly requested.
+
+    Arguments pass through to the graph factory and its result is returned.
+    Import or graph errors propagate; inspect the graph module for debugging.
+    Importing the review workflow must never initialize the legacy file logger.
+    """
+    from src.orchestration.graph import build_sutra_synthesis_graph as build
+    return build(*args, **kwargs)
 
 __all__ = ["build_sutra_synthesis_graph"]

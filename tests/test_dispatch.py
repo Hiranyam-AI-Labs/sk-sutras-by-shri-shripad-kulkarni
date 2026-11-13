@@ -110,3 +110,32 @@ def test_role_model_stays_frozen_across_restart(tmp_path):
                                    audit_path=path, run_id="fixed")
     with pytest.raises(ValueError, match="Durable role model"):
         restarted.preflight_roles(["independent_validator"])
+
+
+def test_role_timeout_is_clamped_to_run_deadline_and_restored():
+    """A configured long role timeout cannot outlive the run window."""
+    adapter = FakeAdapter()
+    adapter.timeout_seconds = 60.0
+    observed = []
+    original_generate = adapter.generate
+
+    def capture_timeout(prompt, system_prompt):
+        observed.append(adapter.timeout_seconds)
+        return original_generate(prompt, system_prompt)
+
+    adapter.generate = capture_timeout
+    dispatcher = BudgetedDispatcher(FakeRegistry(adapter), RATES, 1, 2,
+                                    max_elapsed_seconds=10,
+                                    role_timeouts={"independent_validator": 120.0})
+    dispatcher.call("independent_validator", "prompt")
+    assert 0 < observed[0] <= 10
+    assert adapter.timeout_seconds == 60.0
+    assert dispatcher.audit[0]["effective_timeout_seconds"] == observed[0]
+
+
+def test_invalid_role_timeout_fails_before_call():
+    """NaN, infinity and nonpositive timeout settings cannot reach an SDK."""
+    for value in (float("nan"), float("inf"), 0, -1):
+        with pytest.raises(ValueError, match="Role timeouts"):
+            BudgetedDispatcher(FakeRegistry(FakeAdapter()), RATES, 1, 1,
+                               role_timeouts={"independent_validator": value})

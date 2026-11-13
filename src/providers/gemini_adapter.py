@@ -165,7 +165,13 @@ class GeminiAdapter(BaseLLMAdapter):
             from google import genai
             from google.genai import types
 
-            client = genai.Client(api_key=self.api_key)
+            client = genai.Client(
+                api_key=self.api_key,
+                http_options=types.HttpOptions(
+                    timeout=max(1, int(self.timeout_seconds * 1000)),
+                    retry_options=types.HttpRetryOptions(attempts=1),
+                ),
+            )
             config = types.GenerateContentConfig(
                 temperature=self.temperature,
                 max_output_tokens=self.max_tokens,
@@ -183,7 +189,7 @@ class GeminiAdapter(BaseLLMAdapter):
             if input_toks is None or output_toks is None:
                 raise ValueError("Gemini provider usage unavailable")
             cached_toks = (
-                getattr(raw_usage, "cached_content_token_count", 0)
+                getattr(raw_usage, "cached_content_token_count", 0) or 0
                 if raw_usage
                 else 0
             )

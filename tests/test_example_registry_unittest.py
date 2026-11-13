@@ -16,6 +16,18 @@ ExampleRegistry = module.ExampleRegistry
 class ExampleRegistryTests(unittest.TestCase):
     """Exercise durable identity and cross-chapter reservation boundaries."""
 
+    def test_historical_seed_blocks_alias_reuse(self):
+        """A copied prior-edition name remains unavailable to a new chapter."""
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder) / "examples.db"
+            registry = ExampleRegistry(path)
+            registry.mark_historical("legacy-1", "Jamsetji Tata", "PERSON",
+                                     "approved prior edition", aliases=["जमशेदजी टाटा"])
+            self.assertEqual(registry.allocated_entities()[0]["state"], "HISTORICAL")
+            with self.assertRaisesRegex(ValueError, "Cross-chapter"):
+                ExampleRegistry(path).reserve("new", [
+                    {"name": "जमशेदजी टाटा", "polarity": "POSITIVE", "location": "case"}], "new-hash")
+
     def test_alias_repeat_restart_and_same_chapter(self):
         """A new handle retains allocations; alias reuse across chapters fails."""
         with tempfile.TemporaryDirectory() as folder:

@@ -50,7 +50,33 @@ class ReviewStore:
                     run_id TEXT NOT NULL, unit_id TEXT NOT NULL,
                     attempts INTEGER NOT NULL DEFAULT 0,
                     outcome_json TEXT, PRIMARY KEY(run_id, unit_id));
+                CREATE TABLE IF NOT EXISTS council_attempt_corrections (
+                    run_id TEXT NOT NULL, unit_id TEXT NOT NULL,
+                    prior_attempts INTEGER NOT NULL, reason TEXT NOT NULL,
+                    PRIMARY KEY(run_id, unit_id));
             """)
+
+    def correct_precomposition_attempts(self, run_id: str, unit_id: str) -> int:
+        """Reclassify old precomposition technical calls without resetting budget.
+
+        This one-time migration applies only when no draft version exists and no
+        terminal outcome was recorded. It records the prior count for audit and
+        returns it; any actual composition blocks correction.
+        """
+        with self._connection() as db:
+            db.execute("BEGIN IMMEDIATE")
+            row = db.execute("SELECT attempts,outcome_json FROM council_run_units WHERE run_id=? AND unit_id=?",
+                             (run_id, unit_id)).fetchone()
+            if (row is None or row[1] or not row[0] or
+                    db.execute("SELECT 1 FROM review_versions WHERE unit_id=? LIMIT 1", (unit_id,)).fetchone() or
+                    db.execute("SELECT 1 FROM council_attempt_corrections WHERE run_id=? AND unit_id=?",
+                               (run_id, unit_id)).fetchone()):
+                raise ValueError("Precomposition correction requires uncomposed, uncorrected run unit")
+            db.execute("INSERT INTO council_attempt_corrections VALUES (?,?,?,?)",
+                       (run_id, unit_id, row[0], "technical provider/schema failures before composition"))
+            db.execute("UPDATE council_run_units SET attempts=0 WHERE run_id=? AND unit_id=?",
+                       (run_id, unit_id))
+        return row[0]
 
     def latest_state(self, unit_id: str) -> Dict[str, Any] | None:
         """Return the latest stored version/state or None without changing it."""

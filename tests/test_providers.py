@@ -9,6 +9,7 @@ Description: QA unit tests verifying the unified provider adapter framework,
 """
 
 import pytest
+from types import SimpleNamespace
 from src.providers.anthropic_adapter import AnthropicAdapter
 from src.providers.base import ProviderAuthenticationError
 from src.providers.gemini_adapter import GeminiAdapter
@@ -27,6 +28,31 @@ def test_gemini_adapter_offline_mode() -> None:
     assert "Narada Specialist Exposition" in response.content
     assert response.usage.input_tokens > 0
     assert response.usage.output_tokens > 0
+
+
+def test_gemini_live_usage_allows_absent_cache_counter(monkeypatch) -> None:
+    """A provider's optional null cache count is zero, not a usage validation failure."""
+    genai = pytest.importorskip("google.genai")
+
+    class FakeClient:
+        """Expose a synthetic SDK response without network traffic."""
+
+        def __init__(self, api_key, http_options):
+            """Accept the synthetic credential without retaining it."""
+            assert http_options.retry_options.attempts == 1
+            assert http_options.timeout == 60000
+            self.models = SimpleNamespace(generate_content=self.generate_content)
+
+        def generate_content(self, **kwargs):
+            """Return observed prompt/output counts and a null optional cache count."""
+            return SimpleNamespace(text="valid response", candidates=[], usage_metadata=SimpleNamespace(
+                prompt_token_count=10, candidates_token_count=3,
+                cached_content_token_count=None))
+
+    monkeypatch.setattr(genai, "Client", FakeClient)
+    response = GeminiAdapter(api_key="synthetic", offline_mode=False).generate("prompt")
+    assert response.usage.cached_input_tokens == 0
+    assert response.usage.total_tokens == 13
 
 
 def test_openai_adapter_offline_mode() -> None:

@@ -1517,7 +1517,8 @@ class DynamicLiveCouncilRunner:
             self.dispatcher = BudgetedDispatcher(
                 ProviderRegistry(offline_mode=False), rates,
                 float(os.environ["COUNCIL_MAX_USD"]), int(os.environ["COUNCIL_MAX_CALLS"]),
-                audit_path=DB_PATH, run_id=os.environ["COUNCIL_RUN_ID"])
+                audit_path=DB_PATH, run_id=os.environ["COUNCIL_RUN_ID"],
+                role_timeouts=json.loads(os.getenv("COUNCIL_ROLE_TIMEOUTS_JSON", "{}")))
         self.run_id = run_id or getattr(self.dispatcher, "run_id", None)
         self.vector_store = vector_store or SutraVectorStore(collection_name="shandilya_100_sutras")
         self.review_store = review_store or ReviewStore(DB_PATH)
@@ -1547,7 +1548,7 @@ class DynamicLiveCouncilRunner:
                                   '{"thesis":"source-grounded argument","source_reference":"exact source ID"}'),
             "shandilya_specialist": ("Assess retrieved Shandilya candidates on doctrinal fit, explain rejection of forced matches and answer revision feedback.",
                                      '{"review":"reasoned assessment","preferred_sutra_no":"candidate ID or none","rejected_reasons":["specific reason"]}'),
-            "bharatiya_jnana_specialist": ("Use actual registered DOC-01–04 and IKS passages; cite source IDs, versions and locations. Answer Sutrakar challenges without inventing citations or cases.",
+            "bharatiya_jnana_specialist": ("Use actual registered DOC-01–04 and IKS passages; cite source IDs, versions and locations. Answer Sutrakar challenges without inventing citations or cases. Keep the JSON below 900 output tokens, use brief claim summaries and do not copy source passages into the response.",
                                             '{"bridge":"source-grounded enterprise derivation","findings":[{"source_id":"ID","location":"source location","claim":"supported claim"}],"challenge_answers":["evidence-based answer"]}'),
             "independent_validator": ("Independently evaluate the fifteen versioned gates. Every gate needs PASS, FAIL or HUMAN_REVIEW_REQUIRED and specific evidence. Missing proof is NOT_EVALUATED. A score cannot waive a failed gate; AI judgment never author-approves.",
                                       json.dumps({"gates": {name: {"status": "PASS|FAIL|HUMAN_REVIEW_REQUIRED", "evidence": "specific source and draft evidence"} for name in GATE_NAMES}, "findings": []})),
@@ -1561,7 +1562,7 @@ class DynamicLiveCouncilRunner:
             }
             if mode not in mode_contracts:
                 raise ValueError("Unknown Sutrakar mode")
-            instruction = ("Act as independent Sutrakar arbiter and author. Recheck Narada/Shandilya fit, research the sources independently, preserve the challenge response, and compose a short Udyam business aphorism with seven complete reader sections. Cases must be factual, two principal examples across East and West, with diverse people and businesses. List every named person and business in named_examples and example_mentions, including any named example in guidance. Each example_mentions location must name a section containing that exact name. The displayed verse, commentary, cases, and all six guidance items must contain the exact validated structured text. Yoga must be cited and applied. No generic business buzzwords, invented sources or forced pairing. " + mode)
+            instruction = ("Act as independent Sutrakar arbiter and author. Recheck Narada/Shandilya fit, research the sources independently, preserve the challenge response, and compose a short Udyam business aphorism with seven complete reader sections. For arbitrate/consult, return concise JSON only. Cases must be factual, two principal examples across East and West, with diverse people and businesses. List every named person and business in named_examples and example_mentions, including any named example in guidance. Each example_mentions location must name a section containing that exact name. The displayed verse, commentary, cases, and all six guidance items must contain the exact validated structured text. Yoga must be cited and applied. No generic business buzzwords, invented sources or forced pairing. " + mode)
             contract = mode_contracts[mode]
         else:
             if role not in contracts:
@@ -1569,7 +1570,17 @@ class DynamicLiveCouncilRunner:
             instruction, contract = contracts[role]
         response = self.dispatcher.call(role, json.dumps(payload, ensure_ascii=False),
                                         f"{instruction}\nReturn exactly one JSON object matching this shape: {contract}")
-        data = json.loads(response.content)
+        raw = response.content.strip()
+        if raw.startswith("```"):
+            raw = raw.split("\n", 1)[-1]
+            if raw.rstrip().endswith("```"):
+                raw = raw.rstrip()[:-3].rstrip()
+        start = raw.find("{")
+        if start < 0:
+            raise ValueError(f"Non-JSON response from {role}")
+        data, end = json.JSONDecoder().raw_decode(raw[start:])
+        if raw[start + end:].strip():
+            raise ValueError(f"Trailing non-JSON response from {role}")
         if not isinstance(data, dict):
             raise ValueError(f"Non-object response from {role}")
         required = ({"narada_specialist": ("thesis", "source_reference"),
@@ -1629,8 +1640,12 @@ class DynamicLiveCouncilRunner:
                 results.append({"unit_id": unit_id, "status": "PARTIAL_BLOCKED",
                                 "reason": "Durable revision limit exhausted"})
                 continue
+            meaning = narada.get("initial_meaning") or {}
+            query = " ".join(part for part in (
+                narada.get("sanskrit", ""), narada.get("theme", ""),
+                meaning.get("en", "") if isinstance(meaning, dict) else "") if part)
             matches = self.vector_store.query_similar_sutras(
-                query_text=narada.get("sanskrit", ""), top_k=5)
+                query_text=query, top_k=5)
             numbers = {str(item.get("metadata", {}).get("sutra_no")) for item in matches}
             candidates = [item for item in self.shandilya_sutras
                           if str(item.get("sutra_no")) in numbers]
@@ -1638,10 +1653,10 @@ class DynamicLiveCouncilRunner:
                 continue
             text_sources = {source_id: path for source_id, path in self.source_paths.items()
                             if source_id != "IKS"}
-            passages = retrieve_passages(text_sources, narada["sanskrit"])
+            passages = retrieve_passages(text_sources, query)
             if "IKS" in self.source_paths:
                 passages.extend(retrieve_iks_vector_passages(
-                    self.vector_store.client, self.source_paths["IKS"], narada["sanskrit"]))
+                    self.vector_store.client, self.source_paths["IKS"], query))
             def role_narada(source, feedback=None):
                 """Ask frozen Narada role for thesis; return structured response."""
                 return self._json_role("narada_specialist", {"source": source, "feedback": feedback})

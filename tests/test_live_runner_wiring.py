@@ -24,9 +24,10 @@ class FakeVector:
 class FakeDispatch:
     """Capture role dispatch and supply only structured synthetic responses."""
 
-    def __init__(self):
-        """Start a zero-call fake; no credentials or network are used."""
+    def __init__(self, fenced_roles=()):
+        """Start a zero-call fake; optionally wrap role JSON in code fences."""
         self.calls = []
+        self.fenced_roles = set(fenced_roles)
 
     def call(self, role, prompt, system_prompt):
         """Answer each role and stage with a deterministic JSON object."""
@@ -47,7 +48,8 @@ class FakeDispatch:
                     if role == "narada_specialist" else
                     {"review": "Synthetic candidate review", "preferred_sutra_no": "1",
                      "rejected_reasons": []})
-        return SimpleNamespace(content=json.dumps(data, ensure_ascii=False))
+        content = json.dumps(data, ensure_ascii=False)
+        return SimpleNamespace(content=f"```json\n{content}\n```" if role in self.fenced_roles else content)
 
 
 def test_actual_runner_uses_five_roles_and_never_auto_approves():
@@ -89,6 +91,24 @@ def test_requested_shortfall_is_explicit():
             shandilya_sutras=[{"sutra_no": 1, "sanskrit": "matching source"}],
             source_paths={"DOC-01": source})
         assert runner.execute_live_council(10)["status"] == "PARTIAL_BLOCKED"
+
+
+def test_fenced_role_json_is_parsed_without_weakening_required_fields():
+    """Provider markdown fences around complete JSON do not abort the council."""
+    with tempfile.TemporaryDirectory() as folder:
+        path = Path(folder)
+        source = path / "doc.txt"
+        source.write_text("source ethics business passage", encoding="utf-8")
+        examples = ExampleRegistry(path / "examples.db")
+        register_case_examples(examples)
+        runner = DynamicLiveCouncilRunner(
+            dispatcher=FakeDispatch(fenced_roles={"bharatiya_jnana_specialist"}),
+            vector_store=FakeVector(), review_store=ReviewStore(path / "review.db"),
+            example_registry=examples,
+            narada_sutras=[{"sutra_no": 1, "sanskrit": "source ethics"}],
+            shandilya_sutras=[{"sutra_no": 1, "sanskrit": "matching source"}],
+            source_paths={"DOC-01": source})
+        assert runner.execute_live_council(1)["qualifying"] == 1
 
 
 def test_budget_preflight_blocks_before_first_role_call():

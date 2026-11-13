@@ -18,7 +18,8 @@ class BudgetedDispatcher:
 
     def __init__(self, registry: ProviderRegistry, rates: Mapping[str, Dict[str, Any]],
                  max_usd: float, max_calls: int, audit_path: Path | None = None,
-                 run_id: str = "default", max_elapsed_seconds: int = 600):
+                 run_id: str = "default", max_elapsed_seconds: int = 600,
+                 role_timeouts: Mapping[str, float] | None = None):
         """Bind frozen role adapters and explicit per-million model rates.
 
         ``rates`` are keyed provider:model with input/output/effective_date and
@@ -35,12 +36,16 @@ class BudgetedDispatcher:
                     not math.isfinite(rate["input"]) or not math.isfinite(rate["output"]) or
                     rate["input"] < 0 or rate["output"] < 0):
                 raise ValueError(f"Invalid dated model rate: {key}")
+        if any(not isinstance(value, (int, float)) or not math.isfinite(value) or value <= 0
+               for value in (role_timeouts or {}).values()):
+            raise ValueError("Role timeouts must be positive finite seconds")
         self.registry = registry
         self.rates = {key: dict(value) for key, value in rates.items()}
         self._adapters: dict[str, Any] = {}
         self._role_models: dict[str, tuple[str, str, int]] = {}
         self.max_usd, self.max_calls = max_usd, max_calls
         self.max_elapsed_seconds = max_elapsed_seconds
+        self.role_timeouts = dict(role_timeouts or {})
         self.deadline = time.time() + max_elapsed_seconds
         self.reserved_usd = 0.0
         self.calls = 0
@@ -56,7 +61,8 @@ class BudgetedDispatcher:
                 db.execute("INSERT OR IGNORE INTO council_run_deadline VALUES (?,?)", (run_id, self.deadline))
                 self.deadline = db.execute("SELECT deadline FROM council_run_deadline WHERE run_id=?", (run_id,)).fetchone()[0]
                 config = {"rates": self.rates, "max_usd": self.max_usd,
-                          "max_calls": self.max_calls, "max_elapsed_seconds": max_elapsed_seconds}
+                          "max_calls": self.max_calls, "max_elapsed_seconds": max_elapsed_seconds,
+                          "role_timeouts": self.role_timeouts}
                 digest = hashlib.sha256(json.dumps(config, sort_keys=True).encode()).hexdigest()
                 db.execute("INSERT OR IGNORE INTO council_run_config VALUES (?,?)", (run_id, digest))
                 stored = db.execute("SELECT config_sha256 FROM council_run_config WHERE run_id=?", (run_id,)).fetchone()[0]
@@ -140,6 +146,16 @@ class BudgetedDispatcher:
             self.calls += 1
             self.reserved_usd += projected
         self.audit.append(record)
+        original_timeout = getattr(adapter, "timeout_seconds", None)
+        remaining = self.deadline - time.time()
+        if remaining <= 0:
+            record.update(status="FAILED", error_type="RunDeadlineExceeded")
+            self._persist_result(call_id, record)
+            raise ValueError("Run deadline exhausted after reservation")
+        if original_timeout is not None:
+            requested_timeout = self.role_timeouts.get(role, original_timeout)
+            adapter.timeout_seconds = min(requested_timeout, remaining)
+            record["effective_timeout_seconds"] = adapter.timeout_seconds
         try:
             response = adapter.generate(prompt=prompt, system_prompt=system_prompt)
             usage = response.usage
@@ -155,6 +171,9 @@ class BudgetedDispatcher:
             record.update(status="FAILED", error_type=type(exc).__name__)
             self._persist_result(call_id, record)
             raise
+        finally:
+            if original_timeout is not None:
+                adapter.timeout_seconds = original_timeout
 
     def _freeze_role(self, role: str, model: tuple[str, str, int]) -> None:
         """Bind a role's exact provider, model ID and token ceiling across restarts."""
