@@ -98,7 +98,8 @@ class BudgetedDispatcher:
         if self.max_calls < len(roles) or self.max_usd < minimum:
             raise ValueError("Budget cannot fund one five-role pass")
 
-    def call(self, role: str, prompt: str, system_prompt: str = "") -> Any:
+    def call(self, role: str, prompt: str, system_prompt: str = "",
+             max_output_tokens: int | None = None) -> Any:
         """Reserve worst-case cost before invoking one configured role adapter.
 
         Returns ProviderResponse; unknown rates, exhausted budget, missing usage,
@@ -116,12 +117,18 @@ class BudgetedDispatcher:
         if (adapter.provider_name, adapter.model_id, adapter.max_tokens) != self._role_models[role]:
             raise ValueError("Frozen role adapter configuration changed")
         self._freeze_role(role, self._role_models[role])
+        if (max_output_tokens is not None and
+                (isinstance(max_output_tokens, bool) or
+                 not isinstance(max_output_tokens, int) or
+                 not 1 <= max_output_tokens <= 64000)):
+            raise ValueError("Invalid per-call output token ceiling")
+        output_ceiling = max_output_tokens or adapter.max_tokens
         key = f"{adapter.provider_name}:{adapter.model_id}"
         if key not in self.rates:
             raise ValueError(f"Missing dated price estimate for {key}")
         input_rate, output_rate = self.rates[key]["input"], self.rates[key]["output"]
         projected = (adapter.estimate_tokens(system_prompt + prompt) * input_rate +
-                     adapter.max_tokens * output_rate) / 1_000_000
+                     output_ceiling * output_rate) / 1_000_000
         if not math.isfinite(projected) or projected < 0:
             raise ValueError("Invalid model cost reservation")
         if self.calls >= self.max_calls or self.reserved_usd + projected > self.max_usd:
@@ -130,6 +137,7 @@ class BudgetedDispatcher:
         record = {"role": role, "provider": adapter.provider_name, "model_id": adapter.model_id,
                   "rate_effective_date": self.rates[key]["effective_date"],
                   "timestamp": datetime.now(timezone.utc).isoformat(), "estimated_reservation_usd": projected,
+                  "max_output_tokens": output_ceiling,
                   "http_status": None, "actual_cost_usd": None, "status": "STARTED"}
         if self.audit_path is not None:
             # BEGIN IMMEDIATE serializes multi-process budget reservations. Failed
@@ -147,6 +155,7 @@ class BudgetedDispatcher:
             self.reserved_usd += projected
         self.audit.append(record)
         original_timeout = getattr(adapter, "timeout_seconds", None)
+        original_max_tokens = adapter.max_tokens
         remaining = self.deadline - time.time()
         if remaining <= 0:
             record.update(status="FAILED", error_type="RunDeadlineExceeded")
@@ -156,10 +165,18 @@ class BudgetedDispatcher:
             requested_timeout = self.role_timeouts.get(role, original_timeout)
             adapter.timeout_seconds = min(requested_timeout, remaining)
             record["effective_timeout_seconds"] = adapter.timeout_seconds
+        adapter.max_tokens = output_ceiling
         try:
             response = adapter.generate(prompt=prompt, system_prompt=system_prompt)
             usage = response.usage
             if not response.content or response.was_truncated or usage is None or usage.total_tokens <= 0:
+                record.update(finish_reason=response.finish_reason,
+                              was_truncated=bool(response.was_truncated),
+                              content_present=bool(response.content),
+                              usage_present=usage is not None)
+                if usage is not None:
+                    record.update(input_tokens=usage.input_tokens,
+                                  output_tokens=usage.output_tokens)
                 raise ValueError("Provider response incomplete or usage unavailable")
             record.update(status="SUCCESS", finish_reason=response.finish_reason,
                           input_tokens=usage.input_tokens, output_tokens=usage.output_tokens,
@@ -172,6 +189,7 @@ class BudgetedDispatcher:
             self._persist_result(call_id, record)
             raise
         finally:
+            adapter.max_tokens = original_max_tokens
             if original_timeout is not None:
                 adapter.timeout_seconds = original_timeout
 

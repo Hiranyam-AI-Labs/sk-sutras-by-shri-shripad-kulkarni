@@ -1564,12 +1564,43 @@ class DynamicLiveCouncilRunner:
                 raise ValueError("Unknown Sutrakar mode")
             instruction = ("Act as independent Sutrakar arbiter and author. Recheck Narada/Shandilya fit, research the sources independently, preserve the challenge response, and compose a short Udyam business aphorism with seven complete reader sections. For arbitrate/consult, return concise JSON only. Cases must be factual, two principal examples across East and West, with diverse people and businesses. List every named person and business in named_examples and example_mentions, including any named example in guidance. Each example_mentions location must name a section containing that exact name. The displayed verse, commentary, cases, and all six guidance items must contain the exact validated structured text. Yoga must be cited and applied. No generic business buzzwords, invented sources or forced pairing. " + mode)
             contract = mode_contracts[mode]
+            if mode == "compose":
+                instruction += (" Output one complete JSON object. "
+                                "Keep each section focused while including all required structured "
+                                "fields, exact repeated text, two factual case identities and "
+                                "source citations. Do not add prose outside JSON.")
         else:
             if role not in contracts:
                 raise ValueError("Unknown council role")
             instruction, contract = contracts[role]
-        response = self.dispatcher.call(role, json.dumps(payload, ensure_ascii=False),
-                                        f"{instruction}\nReturn exactly one JSON object matching this shape: {contract}")
+        required = ({"narada_specialist": ("thesis", "source_reference"),
+                     "shandilya_specialist": ("review", "preferred_sutra_no", "rejected_reasons"),
+                     "bharatiya_jnana_specialist": ("bridge", "findings"),
+                     "independent_validator": ("gates", "findings")}.get(role) or
+                    {"arbitrate": ("accepted", "reason"), "consult": ("findings", "challenges"),
+                     "compose": ("original_sanskrit_verse", "named_examples", "example_mentions", "sections")}[payload["mode"]])
+        prompt = json.dumps(payload, ensure_ascii=False)
+        system_prompt = f"{instruction}\nReturn exactly one JSON object matching this shape: {contract}"
+        cacheable = role != "independent_validator" and not (role == "sutrakar_master" and payload.get("mode") == "compose")
+        checkpoint_key = None
+        if cacheable and self.run_id:
+            registry = getattr(self.dispatcher, "registry", None)
+            adapter = registry.get_adapter(role) if registry is not None else None
+            source_hashes = {identity: hashlib.sha256(path.read_bytes()).hexdigest()
+                             for identity, path in self.source_paths.items()}
+            identity = {"role": role, "provider": getattr(adapter, "provider_name", "injected"),
+                        "model_id": getattr(adapter, "model_id", "injected"),
+                        "prompt": prompt, "system_prompt": system_prompt,
+                        "source_sha256": source_hashes}
+            checkpoint_key = hashlib.sha256(json.dumps(identity, sort_keys=True, ensure_ascii=False).encode()).hexdigest()
+            cached = self.review_store.stage_checkpoint(self.run_id, role, checkpoint_key)
+            if cached is not None:
+                if any(field not in cached for field in required):
+                    raise ValueError(f"Malformed cached {role} response")
+                return cached
+        call_kwargs = ({"max_output_tokens": int(os.getenv("COUNCIL_COMPOSE_MAX_OUTPUT_TOKENS", "16384"))}
+                       if role == "sutrakar_master" and payload.get("mode") == "compose" else {})
+        response = self.dispatcher.call(role, prompt, system_prompt, **call_kwargs)
         raw = response.content.strip()
         if raw.startswith("```"):
             raw = raw.split("\n", 1)[-1]
@@ -1583,14 +1614,10 @@ class DynamicLiveCouncilRunner:
             raise ValueError(f"Trailing non-JSON response from {role}")
         if not isinstance(data, dict):
             raise ValueError(f"Non-object response from {role}")
-        required = ({"narada_specialist": ("thesis", "source_reference"),
-                     "shandilya_specialist": ("review", "preferred_sutra_no", "rejected_reasons"),
-                     "bharatiya_jnana_specialist": ("bridge", "findings"),
-                     "independent_validator": ("gates", "findings")}.get(role) or
-                    {"arbitrate": ("accepted", "reason"), "consult": ("findings", "challenges"),
-                     "compose": ("original_sanskrit_verse", "named_examples", "example_mentions", "sections")}[payload["mode"]])
         if any(field not in data for field in required):
             raise ValueError(f"Malformed {role} response: missing required fields")
+        if checkpoint_key is not None:
+            self.review_store.save_stage_checkpoint(self.run_id, role, checkpoint_key, data)
         return data
 
     def execute_live_council(self, target_count=10):

@@ -27,12 +27,14 @@ class FakeDispatch:
     def __init__(self, fenced_roles=()):
         """Start a zero-call fake; optionally wrap role JSON in code fences."""
         self.calls = []
+        self.output_ceilings = []
         self.fenced_roles = set(fenced_roles)
 
-    def call(self, role, prompt, system_prompt):
+    def call(self, role, prompt, system_prompt, **kwargs):
         """Answer each role and stage with a deterministic JSON object."""
         payload = json.loads(prompt)
         self.calls.append((role, payload))
+        self.output_ceilings.append((role, payload.get("mode"), kwargs.get("max_output_tokens")))
         if role == "sutrakar_master":
             mode = payload["mode"]
             data = ({"accepted": True, "sutra_no": "1", "reason": "substantiated"} if mode == "arbitrate" else
@@ -73,7 +75,33 @@ def test_actual_runner_uses_five_roles_and_never_auto_approves():
         assert {role for role, _ in dispatch.calls} == {
             "narada_specialist", "shandilya_specialist", "bharatiya_jnana_specialist",
             "sutrakar_master", "independent_validator"}
+        assert ("sutrakar_master", "compose", 16384) in dispatch.output_ceilings
         assert len([1 for role, _ in dispatch.calls if role == "bharatiya_jnana_specialist"]) == 2
+
+
+def test_precomposition_checkpoint_replays_only_exact_source_request():
+    """A restarted run reuses validated output; a source edit requires fresh dispatch."""
+    with tempfile.TemporaryDirectory() as folder:
+        path = Path(folder)
+        source = path / "source.txt"
+        source.write_text("first source", encoding="utf-8")
+        dispatch = FakeDispatch()
+        review = ReviewStore(path / "review.db")
+
+        def runner():
+            return DynamicLiveCouncilRunner(
+                dispatcher=dispatch, vector_store=FakeVector(), review_store=review,
+                example_registry=ExampleRegistry(path / "examples.db"),
+                narada_sutras=[], shandilya_sutras=[], source_paths={"DOC-01": source},
+                run_id="checkpoint-run")
+
+        payload = {"source": {"sutra_no": 1, "sanskrit": "first source"}}
+        first = runner()._json_role("narada_specialist", payload)
+        assert runner()._json_role("narada_specialist", payload) == first
+        assert len(dispatch.calls) == 1
+        source.write_text("revised source", encoding="utf-8")
+        runner()._json_role("narada_specialist", payload)
+        assert len(dispatch.calls) == 2
 
 
 def test_requested_shortfall_is_explicit():

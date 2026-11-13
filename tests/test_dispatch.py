@@ -64,6 +64,9 @@ def test_budget_and_missing_usage_fail_closed():
     with pytest.raises(ValueError):
         incomplete.call("independent_validator", "prompt")
     assert incomplete.audit[0]["status"] == "FAILED"
+    assert incomplete.audit[0]["usage_present"] is True
+    assert incomplete.audit[0]["content_present"] is True
+    assert incomplete.audit[0]["output_tokens"] == 2
 
 
 def test_reservation_survives_restart_and_blocks_repeat(tmp_path):
@@ -139,3 +142,40 @@ def test_invalid_role_timeout_fails_before_call():
         with pytest.raises(ValueError, match="Role timeouts"):
             BudgetedDispatcher(FakeRegistry(FakeAdapter()), RATES, 1, 1,
                                role_timeouts={"independent_validator": value})
+
+
+def test_per_call_output_ceiling_is_reserved_and_restored():
+    """A large composition ceiling changes its reservation and SDK limit only for one call."""
+    adapter = FakeAdapter()
+    observed = []
+    original_generate = adapter.generate
+
+    def capture_ceiling(prompt, system_prompt):
+        observed.append(adapter.max_tokens)
+        return original_generate(prompt, system_prompt)
+
+    adapter.generate = capture_ceiling
+    dispatcher = BudgetedDispatcher(FakeRegistry(adapter), RATES, 1, 2)
+    dispatcher.call("independent_validator", "prompt", max_output_tokens=16000)
+    assert observed == [16000]
+    assert adapter.max_tokens == 100
+    assert dispatcher.audit[0]["max_output_tokens"] == 16000
+    assert dispatcher.audit[0]["estimated_reservation_usd"] > 0.16
+
+
+def test_truncated_response_is_failed_with_usage_metadata():
+    """A max-token response never becomes an accepted draft or a fabricated bill."""
+    adapter = FakeAdapter()
+    adapter.generate = lambda prompt, system_prompt: SimpleNamespace(
+        content="partial", was_truncated=True, finish_reason="max_tokens",
+        usage=SimpleNamespace(input_tokens=12, output_tokens=100,
+                              total_tokens=112, actual_cost_usd=None))
+    dispatcher = BudgetedDispatcher(FakeRegistry(adapter), RATES, 1, 1)
+    with pytest.raises(ValueError, match="incomplete"):
+        dispatcher.call("independent_validator", "prompt")
+    record = dispatcher.audit[0]
+    assert record["status"] == "FAILED"
+    assert record["was_truncated"] is True
+    assert record["finish_reason"] == "max_tokens"
+    assert record["output_tokens"] == 100
+    assert record["actual_cost_usd"] is None

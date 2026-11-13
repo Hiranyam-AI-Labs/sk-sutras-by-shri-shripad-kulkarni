@@ -79,6 +79,33 @@ def test_anthropic_adapter_offline_mode() -> None:
     assert response.usage.input_tokens > 0
 
 
+def test_anthropic_live_request_receives_composition_ceiling(monkeypatch) -> None:
+    """The larger dispatcher ceiling reaches the unchanged Claude model SDK call."""
+    anthropic = pytest.importorskip("anthropic")
+    observed = {}
+
+    class FakeClient:
+        def __init__(self, **kwargs):
+            assert kwargs["max_retries"] == 0
+            self.messages = SimpleNamespace(create=self.create)
+
+        def create(self, **kwargs):
+            observed.update(kwargs)
+            return SimpleNamespace(content=[SimpleNamespace(type="text", text="{}")],
+                                   stop_reason="end_turn",
+                                   usage=SimpleNamespace(input_tokens=5, output_tokens=2,
+                                                         cache_read_input_tokens=0,
+                                                         cache_creation_input_tokens=0))
+
+    monkeypatch.setattr(anthropic, "Anthropic", FakeClient)
+    adapter = AnthropicAdapter(api_key="synthetic", offline_mode=False,
+                               model_id="claude-sonnet-5-5")
+    adapter.max_tokens = 16384
+    adapter.generate("prompt")
+    assert observed["model"] == "claude-sonnet-5-5"
+    assert observed["max_tokens"] == 16384
+
+
 def test_provider_authentication_error_when_online_without_key() -> None:
     """Verifies that attempting live execution without an API key raises ProviderAuthenticationError."""
     adapter = OpenAIAdapter(api_key=None, offline_mode=False)

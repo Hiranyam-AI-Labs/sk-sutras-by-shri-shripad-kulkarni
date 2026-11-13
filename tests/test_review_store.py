@@ -15,6 +15,23 @@ spec.loader.exec_module(module)
 ReviewStore, fingerprint = module.ReviewStore, module.fingerprint
 
 
+def test_stage_checkpoint_rejects_tampered_response():
+    """A persisted role output is reused only when its stored hash still matches."""
+    with tempfile.TemporaryDirectory() as folder:
+        store = ReviewStore(Path(folder) / "review.db")
+        store.save_stage_checkpoint("run", "narada_specialist", "request-hash",
+                                    {"thesis": "grounded", "source_reference": "Narada 1"})
+        assert store.stage_checkpoint("run", "narada_specialist", "request-hash")["thesis"] == "grounded"
+        import sqlite3
+        from contextlib import closing
+        with closing(sqlite3.connect(store.path)) as db:
+            db.execute("UPDATE council_stage_checkpoints SET response_json=? WHERE run_id=?",
+                       ('{"thesis":"tampered"}', "run"))
+            db.commit()
+        with pytest.raises(ValueError, match="integrity"):
+            store.stage_checkpoint("run", "narada_specialist", "request-hash")
+
+
 def report(status="PASS"):
     """Return synthetic complete policy evidence for storage boundary tests."""
     return {"policy_version": POLICY_VERSION, "gates": {name: status for name in GATE_NAMES}}

@@ -54,7 +54,38 @@ class ReviewStore:
                     run_id TEXT NOT NULL, unit_id TEXT NOT NULL,
                     prior_attempts INTEGER NOT NULL, reason TEXT NOT NULL,
                     PRIMARY KEY(run_id, unit_id));
+                CREATE TABLE IF NOT EXISTS council_stage_checkpoints (
+                    run_id TEXT NOT NULL, role TEXT NOT NULL,
+                    request_sha256 TEXT NOT NULL, response_json TEXT NOT NULL,
+                    response_sha256 TEXT NOT NULL,
+                    PRIMARY KEY(run_id, role, request_sha256));
             """)
+
+    def stage_checkpoint(self, run_id: str, role: str, request_sha256: str) -> Dict[str, Any] | None:
+        """Read a validated precomposition output only when its exact request key matches."""
+        with self._connection() as db:
+            row = db.execute("SELECT response_json,response_sha256 FROM council_stage_checkpoints "
+                             "WHERE run_id=? AND role=? AND request_sha256=?",
+                             (run_id, role, request_sha256)).fetchone()
+        if row is None:
+            return None
+        if hashlib.sha256(row[0].encode("utf-8")).hexdigest() != row[1]:
+            raise ValueError("Stage checkpoint integrity mismatch")
+        value = json.loads(row[0])
+        if not isinstance(value, dict):
+            raise ValueError("Stage checkpoint is not an object")
+        return value
+
+    def save_stage_checkpoint(self, run_id: str, role: str, request_sha256: str,
+                              response: Dict[str, Any]) -> None:
+        """Persist one schema-checked role output without credentials or raw prompts."""
+        payload = json.dumps(response, sort_keys=True, ensure_ascii=False, separators=(",", ":"))
+        digest = hashlib.sha256(payload.encode("utf-8")).hexdigest()
+        with self._connection() as db:
+            db.execute("INSERT OR IGNORE INTO council_stage_checkpoints VALUES (?,?,?,?,?)",
+                       (run_id, role, request_sha256, payload, digest))
+        if self.stage_checkpoint(run_id, role, request_sha256) != response:
+            raise ValueError("Conflicting stage checkpoint")
 
     def correct_precomposition_attempts(self, run_id: str, unit_id: str) -> int:
         """Reclassify old precomposition technical calls without resetting budget.
