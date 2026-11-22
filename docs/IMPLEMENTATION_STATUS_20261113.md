@@ -60,3 +60,15 @@ The runtime now supports a separately reserved per-call composition output ceili
 - A Sanskrit scholar and the author must review any future eligible exact draft. Long-form Word rendering remains blocked locally by absent LibreOffice. Historical manuscripts have not been retroactively certified; historical example identity coverage is partial.
 
 Status: source and integration fixes committed locally; live pilot observed across all three providers but did not reach validation. No release or production-readiness claim.
+
+
+## Reliability correction and completed live generation, 14 November
+
+The subsequent user-approved loop produced one new chapter in three locally retained
+unapproved versions using all five unchanged models. The final regression suite passed
+64 tests. Latest assessed version: 7 PASS and 8 HUMAN_REVIEW_REQUIRED, no FAIL; full
+AI eligibility and human acceptance remain unachieved. Total new reservations
+USD 2.71725725, cumulative pilot reservations USD 4.34144425; actual invoices unknown.
+No automatic approval or publication occurred. See
+[reliability evidence](RELIABILITY_FIXES_20261114.md) and `../LOOP-ENGINEERING.md` for
+source-handoff corrections, exact artifacts, call-cap stop and author-review next steps.

@@ -36,8 +36,8 @@ class CouncilService:
 
         Inputs are one unit, source candidate records, verified passage packet and
         existing canon. Returns AI review eligibility or explicit blocked/rejected
-        outcome with persisted attempt versions. Role failures propagate after a
-        draft exists; missing sources block before calls. Inspect attempt issues,
+        outcome with persisted attempt versions. Complete drafts persist before
+        verification; role failures propagate with the saved draft left unapproved; missing sources block before calls. Inspect attempt issues,
         role error and stored versions for diagnostics, not raw provider secrets.
         """
         if not unit_id or not narada.get("sanskrit") or not candidates or not passages:
@@ -49,6 +49,8 @@ class CouncilService:
         progress = self.review_store.run_progress(run_id, unit_id) if run_id else None
         first_attempt = progress["attempts"] + 1 if progress else 1
         thesis = self.roles["narada"](narada)
+        if isinstance(thesis, dict):
+            thesis = {**thesis, "canonical_narada": narada}
         review = self.roles["shandilya"](thesis, candidates)
         feedback: Dict[str, Any] = {}
         history = []
@@ -79,7 +81,7 @@ class CouncilService:
             # Evidence is assembled before either model call, independent of the
             # draft returned by the author. Injected roles must put this context
             # into their actual request and may not infer it from model output.
-            evidence_context = {"passages": passages, "selected_shandilya": candidate_by_id[chosen_id],
+            evidence_context = {"narada": narada, "existing_formulations": list(existing_sutras), "passages": passages, "selected_shandilya": candidate_by_id[chosen_id],
                                 "bridge": research["bridge"],
                                 "consultation": consultation, "challenge_response": challenged_research}
             if run_id:
@@ -87,11 +89,14 @@ class CouncilService:
             draft = self.roles["sutrakar"]("compose", thesis, arbitration, research, feedback, evidence_context)
             if not isinstance(draft, dict):
                 raise ValueError("Structured composition required")
+            # Persist the complete composition before a fallible external verifier.
+            pending_report = evaluate_policy(draft, {}, existing_sutras)
+            version = self.review_store.save_draft(unit_id, draft, pending_report)
             assessment = self.roles["validator"](draft, research, passages, feedback, evidence_context)
             if not isinstance(assessment, dict) or not isinstance(assessment.get("gates"), dict):
                 raise ValueError("Structured verifier gate evidence required")
             report = evaluate_policy(draft, assessment["gates"], existing_sutras)
-            version = self.review_store.save_draft(unit_id, draft, report)
+            self.review_store.record_assessment(unit_id, version, report)
             history.append({"attempt": attempt, "version": version,
                             "status": report["overall_status"], "issues": report["issues"]})
             if report["overall_status"] == "AI_VALIDATED_FOR_HUMAN_REVIEW":
@@ -103,6 +108,16 @@ class CouncilService:
                 else:
                     from src.orchestration.review_store import fingerprint
                     try:
+                        # Enroll sourced candidate identities only after independent
+                        # gates pass; provenance remains AI-proposed pending humans.
+                        for case in draft.get("biographical_case_studies", []):
+                            provenance = "AI-proposed case, pending human review: " + case["provenance"]
+                            for key, kind in (("person", "PERSON"), ("business", "BUSINESS")):
+                                try:
+                                    self.example_registry.resolve(case[key])
+                                except ValueError:
+                                    self.example_registry.register(case[key], kind, provenance)
+                            self.example_registry.relate(case["person"], case["business"], "principal case association")
                         self.example_registry.reserve(unit_id, examples, fingerprint(draft))
                     except ValueError as exc:
                         feedback = {"example_diversity": str(exc)}

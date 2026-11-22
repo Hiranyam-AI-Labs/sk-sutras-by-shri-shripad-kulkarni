@@ -95,15 +95,18 @@ class BudgetedDispatcher:
             if input_rate < 0 or output_rate < 0:
                 raise ValueError("Negative model rate")
             minimum += adapter.max_tokens * output_rate / 1_000_000
-        if self.max_calls < len(roles) or self.max_usd < minimum:
+        if self.max_calls - self.calls < len(roles) or self.max_usd - self.reserved_usd < minimum:
             raise ValueError("Budget cannot fund one five-role pass")
 
     def call(self, role: str, prompt: str, system_prompt: str = "",
-             max_output_tokens: int | None = None) -> Any:
+             max_output_tokens: int | None = None,
+             allow_truncated: bool = False) -> Any:
         """Reserve worst-case cost before invoking one configured role adapter.
 
         Returns ProviderResponse; unknown rates, exhausted budget, missing usage,
         truncated output or adapter errors raise and remain visible in audit.
+        Only bounded composition recovery may request allow_truncated; partial
+        content is retained locally and never treated as a completed response.
         No HTTP status or actual bill amount is inferred. Inspect call role,
         model, timestamps and status, never credentials or raw prompts.
         """
@@ -169,7 +172,13 @@ class BudgetedDispatcher:
         try:
             response = adapter.generate(prompt=prompt, system_prompt=system_prompt)
             usage = response.usage
-            if not response.content or response.was_truncated or usage is None or usage.total_tokens <= 0:
+            raw_usage = getattr(usage, "raw_usage", None)
+            if raw_usage:
+                # Preserve only supplied usage metadata in this new call's audit.
+                # JSON round-trip detaches nested data and rejects non-JSON/NaN;
+                # absent/empty metadata leaves legacy records exactly unchanged.
+                record["raw_usage"] = json.loads(json.dumps(raw_usage, allow_nan=False))
+            if not response.content or (response.was_truncated and not allow_truncated) or usage is None or usage.total_tokens <= 0:
                 record.update(finish_reason=response.finish_reason,
                               was_truncated=bool(response.was_truncated),
                               content_present=bool(response.content),
@@ -178,7 +187,11 @@ class BudgetedDispatcher:
                     record.update(input_tokens=usage.input_tokens,
                                   output_tokens=usage.output_tokens)
                 raise ValueError("Provider response incomplete or usage unavailable")
-            record.update(status="SUCCESS", finish_reason=response.finish_reason,
+            if response.was_truncated and self.audit_path is not None:
+                with sqlite3.connect(self.audit_path) as db:
+                    db.execute("CREATE TABLE IF NOT EXISTS council_partial_outputs (call_id TEXT PRIMARY KEY, run_id TEXT NOT NULL, content TEXT NOT NULL)")
+                    db.execute("INSERT INTO council_partial_outputs VALUES (?,?,?)", (call_id, self.run_id, response.content))
+            record.update(status="INCOMPLETE" if response.was_truncated else "SUCCESS", finish_reason=response.finish_reason,
                           input_tokens=usage.input_tokens, output_tokens=usage.output_tokens,
                           response_sha256=hashlib.sha256(response.content.encode("utf-8")).hexdigest(),
                           actual_cost_usd=usage.actual_cost_usd)

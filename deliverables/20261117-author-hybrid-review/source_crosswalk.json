@@ -1,0 +1,2240 @@
+{
+  "scope": "Available 28/50/105 source comparison consolidated with latest 100-author-entry edition; old IDs preserved",
+  "main_entries": 104,
+  "old_records_accounted": 134,
+  "records": [
+    {
+      "source_id": "S28-001",
+      "original_formula": "सः त्वस्मिन् उद्यमे परानुरक्तिरूपः अनन्यव्यवसायः॥ १ ॥",
+      "source_file": "Udyam_Sutras_Sampurna_Granth_Final.docx",
+      "source_paragraph": 11,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "V19-002",
+      "final_number": 7,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S28-002",
+      "original_formula": "यत् प्राप्य उद्यमी न किञ्चित् वाञ्छति न शोचति न द्वेष्टि॥ २ ॥",
+      "source_file": "Udyam_Sutras_Sampurna_Granth_Final.docx",
+      "source_paragraph": 18,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "N100-089",
+      "final_number": 9,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S28-003",
+      "original_formula": "उद्यमः एव परमात्मा इति निश्चयः आलम्बनम्॥ ३ ॥",
+      "source_file": "Udyam_Sutras_Sampurna_Granth_Final.docx",
+      "source_paragraph": 25,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "V19-002",
+      "final_number": 7,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged. The absolute identification of business with God is not adopted as a literal doctrinal claim."
+    },
+    {
+      "source_id": "S28-004",
+      "original_formula": "अनन्यचिन्तनेन उद्यमसिद्धिः भवति॥ ४ ॥",
+      "source_file": "Udyam_Sutras_Sampurna_Granth_Final.docx",
+      "source_paragraph": 32,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "V19-002",
+      "final_number": 7,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S28-005",
+      "original_formula": "प्रतिक्षणवर्धमानं नवसृजनम् उद्यमस्य अमृतत्वम्॥ ५ ॥",
+      "source_file": "Udyam_Sutras_Sampurna_Granth_Final.docx",
+      "source_paragraph": 41,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "N100-036",
+      "final_number": 73,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S28-006",
+      "original_formula": "सृष्टिकर्तृवत् नवीननिर्माणे उद्योजकेन रमणीयम्॥ ६ ॥",
+      "source_file": "Udyam_Sutras_Sampurna_Granth_Final.docx",
+      "source_paragraph": 48,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "N100-036",
+      "final_number": 73,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S28-007",
+      "original_formula": "जडतां त्यक्त्वा प्रज्ञाबलेन नूतनमार्गः अन्वेषणीयः॥ ७ ॥",
+      "source_file": "Udyam_Sutras_Sampurna_Granth_Final.docx",
+      "source_paragraph": 55,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "N100-048",
+      "final_number": 74,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S28-008",
+      "original_formula": "अनुभवरूपं ज्ञानं नवोन्मेषस्य जननी॥ ८ ॥",
+      "source_file": "Udyam_Sutras_Sampurna_Granth_Final.docx",
+      "source_paragraph": 62,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "S105-015",
+      "final_number": 18,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S28-009",
+      "original_formula": "स्वावलम्बनेन आत्मोत्कर्षः ततः राष्ट्रसमृद्धिः लोकसंग्रहार्थम्॥ ९ ॥",
+      "source_file": "Udyam_Sutras_Sampurna_Granth_Final.docx",
+      "source_paragraph": 71,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "N100-037",
+      "final_number": 83,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S28-010",
+      "original_formula": "पराश्रयत्यागः एव स्वतन्त्रोद्यमस्य प्रथमं सोपानम्॥ १० ॥",
+      "source_file": "Udyam_Sutras_Sampurna_Granth_Final.docx",
+      "source_paragraph": 78,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "N100-037",
+      "final_number": 83,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S28-011",
+      "original_formula": "आत्मबलेन कृतः पुरुषार्थः कदापि न विफलः भवति॥ ११ ॥",
+      "source_file": "Udyam_Sutras_Sampurna_Granth_Final.docx",
+      "source_paragraph": 85,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "N100-002",
+      "final_number": 2,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S28-012",
+      "original_formula": "स्वदेशसम्पदः उपयोगेन आत्मनिर्भरता साध्या॥ १२ ॥",
+      "source_file": "Udyam_Sutras_Sampurna_Granth_Final.docx",
+      "source_paragraph": 92,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "S105-058",
+      "final_number": 84,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S28-013",
+      "original_formula": "योगः कर्मसु कौशलम् इति उद्यमस्य मूलमन्त्रः॥ १३ ॥",
+      "source_file": "Udyam_Sutras_Sampurna_Granth_Final.docx",
+      "source_paragraph": 101,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "N100-003",
+      "final_number": 12,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S28-014",
+      "original_formula": "फलासक्तिं विहाय सततं कर्मणि निष्ठा विधेया॥ १४ ॥",
+      "source_file": "Udyam_Sutras_Sampurna_Granth_Final.docx",
+      "source_paragraph": 108,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "N100-089",
+      "final_number": 9,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S28-015",
+      "original_formula": "आलस्यं प्रमादं च त्यक्त्वा कालस्य सदुपयोगः कर्तव्यः॥ १५ ॥",
+      "source_file": "Udyam_Sutras_Sampurna_Granth_Final.docx",
+      "source_paragraph": 115,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "N100-011",
+      "final_number": 77,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S28-016",
+      "original_formula": "विवेकेन प्रमाणेन च व्यावसायिकनिर्णयः ग्राह्यः॥ १६ ॥",
+      "source_file": "Udyam_Sutras_Sampurna_Granth_Final.docx",
+      "source_paragraph": 122,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "N100-061",
+      "final_number": 15,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S28-017",
+      "original_formula": "ऐश्वर्यं वीर्यं यशः श्रीः ज्ञानं वैराग्यं च उद्यमस्य षड्गुणाः॥ १७ ॥",
+      "source_file": "Udyam_Sutras_Sampurna_Granth_Final.docx",
+      "source_paragraph": 131,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "N100-005",
+      "final_number": 10,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged. Six divine attributes are not imposed as a validated business assessment scale; the author should review this omitted metaphysical enumeration."
+    },
+    {
+      "source_id": "S28-018",
+      "original_formula": "धर्मेण अर्थार्जनं कर्तव्यं न तु अधर्मेण कदाचन॥ १८ ॥",
+      "source_file": "Udyam_Sutras_Sampurna_Granth_Final.docx",
+      "source_paragraph": 138,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "N100-049",
+      "final_number": 88,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S28-019",
+      "original_formula": "सत्यं पारदर्शकता च ग्राहकविश्वासस्य आधारस्तम्भौ॥ १९ ॥",
+      "source_file": "Udyam_Sutras_Sampurna_Granth_Final.docx",
+      "source_paragraph": 145,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "N100-018",
+      "final_number": 47,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S28-020",
+      "original_formula": "स्थितप्रज्ञतया लाभालाभौ समौ कृत्वा उद्यमः पालनीयः॥ २० ॥",
+      "source_file": "Udyam_Sutras_Sampurna_Granth_Final.docx",
+      "source_paragraph": 152,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "N100-089",
+      "final_number": 9,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S28-021",
+      "original_formula": "अहंकारः लोभः मोहः च उद्यमविनाशस्य कारणानि॥ २१ ॥",
+      "source_file": "Udyam_Sutras_Sampurna_Granth_Final.docx",
+      "source_paragraph": 161,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "S105-036",
+      "final_number": 91,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S28-022",
+      "original_formula": "संकटकाले धैर्येण बुद्ध्या च मार्गः निष्कासनीयः॥ २२ ॥",
+      "source_file": "Udyam_Sutras_Sampurna_Granth_Final.docx",
+      "source_paragraph": 168,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "N100-033",
+      "final_number": 78,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S28-023",
+      "original_formula": "दुःसङ्गः सर्वथा त्याज्यः सत्सङ्गेन च उन्नतिः साध्या॥ २३ ॥",
+      "source_file": "Udyam_Sutras_Sampurna_Granth_Final.docx",
+      "source_paragraph": 175,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "S105-035",
+      "final_number": 58,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S28-024",
+      "original_formula": "पराजयात् शिक्षा गृहीत्वा पुनः द्विगुणोत्साहेन प्रयतितव्यम्॥ २४ ॥",
+      "source_file": "Udyam_Sutras_Sampurna_Granth_Final.docx",
+      "source_paragraph": 182,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "S105-072",
+      "final_number": 79,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S28-025",
+      "original_formula": "उद्योजकेन सहकारिणां परिवारवत् पालनं कर्तव्यम्॥ २५ ॥",
+      "source_file": "Udyam_Sutras_Sampurna_Granth_Final.docx",
+      "source_paragraph": 191,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "N100-074",
+      "final_number": 53,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S28-026",
+      "original_formula": "अर्जितस्य वित्तस्य उचितदानेन समाजऋणं परिशोधनीयम्॥ २६ ॥",
+      "source_file": "Udyam_Sutras_Sampurna_Granth_Final.docx",
+      "source_paragraph": 198,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "N100-050",
+      "final_number": 102,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S28-027",
+      "original_formula": "स्वोद्यमेन अनेकजनानां जीविकाप्रदानं महायज्ञः एव॥ २७ ॥",
+      "source_file": "Udyam_Sutras_Sampurna_Granth_Final.docx",
+      "source_paragraph": 205,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "S105-070",
+      "final_number": 98,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S28-028",
+      "original_formula": "आत्मकल्याणात् राष्ट्रनिर्माणं यत्र सिद्ध्यति सः परमः उद्यमयोगः॥ २८ ॥",
+      "source_file": "Udyam_Sutras_Sampurna_Granth_Final.docx",
+      "source_paragraph": 212,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "N100-022",
+      "final_number": 103,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S105-000",
+      "original_formula": "अथातो उद्यमं व्याख्यास्यामः",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 30,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "N100-001",
+      "final_number": 1,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S105-001",
+      "original_formula": "उद्यमस्य मूलं ध्येयशुद्धिस्य दृढनिश्चयः",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 31,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "N100-001",
+      "final_number": 1,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S105-002",
+      "original_formula": "ग्राहके परमप्रेमरूपा सेवा",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 32,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "N100-069",
+      "final_number": 44,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S105-003",
+      "original_formula": "अमृतस्वरूपा च गुणवत्ता",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 33,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "N100-086",
+      "final_number": 34,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S105-004",
+      "original_formula": "यल्लब्ध्वा उद्यमी तृप्तो भवति",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 34,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "N100-089",
+      "final_number": 9,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S105-005",
+      "original_formula": "न शोचति न द्वेष्टि",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 35,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "N100-089",
+      "final_number": 9,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S105-006",
+      "original_formula": "आत्मारामो भवति",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 36,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "N100-089",
+      "final_number": 9,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S105-007",
+      "original_formula": "सा न कामयमाना लोभवर्जिता",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 37,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "N100-053",
+      "final_number": 11,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S105-008",
+      "original_formula": "व्यापारन्यासः कर्तव्यनिष्ठा",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 38,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "V19-002",
+      "final_number": 7,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S105-009",
+      "original_formula": "तस्मिन्ननन्यता तद्विरोधिषूदासीनता",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 39,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "V19-002",
+      "final_number": 7,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S105-010",
+      "original_formula": "अन्याश्रयाणां त्यागः",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 40,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "N100-037",
+      "final_number": 83,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S105-011",
+      "original_formula": "न हि कश्चित्क्षणमपि जातु तिष्ठत्यकर्मकृत्",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 41,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "N100-002",
+      "final_number": 2,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S105-012",
+      "original_formula": "योगः कर्मसु कौशलम्",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 42,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "N100-003",
+      "final_number": 12,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S105-013",
+      "original_formula": "कालस्य महत्त्वं जानीयात्",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 43,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "N100-011",
+      "final_number": 77,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S105-014",
+      "original_formula": "नित्यनूतनं अन्वेषणम्",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 44,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "N100-036",
+      "final_number": 73,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S105-015",
+      "original_formula": "अल्पप्रयोगेण सत्यपरीक्षणम्",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 45,
+      "disposition": "RETAIN_EXISTING_FORMULA",
+      "target_id": "S105-015",
+      "final_number": 18,
+      "reason": "Existing formulation retained as a main entry."
+    },
+    {
+      "source_id": "S105-016",
+      "original_formula": "समस्यायां अवसरं पश्येत्",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 46,
+      "disposition": "RETAIN_EXISTING_FORMULA",
+      "target_id": "S105-016",
+      "final_number": 4,
+      "reason": "Existing formulation retained as a main entry."
+    },
+    {
+      "source_id": "S105-017",
+      "original_formula": "सत्यमेव जयते व्यवहारे",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 47,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "N100-018",
+      "final_number": 47,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S105-018",
+      "original_formula": "विश्वासो हि परमं धनम्",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 48,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "N100-038",
+      "final_number": 45,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S105-019",
+      "original_formula": "वचनबद्धता धर्मः",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 49,
+      "disposition": "RETAIN_EXISTING_FORMULA",
+      "target_id": "S105-019",
+      "final_number": 46,
+      "reason": "Existing formulation retained as a main entry."
+    },
+    {
+      "source_id": "S105-020",
+      "original_formula": "दोषनिवारणं सततम्",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 50,
+      "disposition": "RETAIN_EXISTING_FORMULA",
+      "target_id": "S105-020",
+      "final_number": 35,
+      "reason": "Existing formulation retained as a main entry."
+    },
+    {
+      "source_id": "S105-021",
+      "original_formula": "अर्थमूलं इदं सर्वम्",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 51,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "N100-012",
+      "final_number": 27,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S105-022",
+      "original_formula": "द्रव्यप्रवाहस्य रक्षणम्",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 52,
+      "disposition": "RETAIN_EXISTING_FORMULA",
+      "target_id": "S105-022",
+      "final_number": 29,
+      "reason": "Existing formulation retained as a main entry."
+    },
+    {
+      "source_id": "S105-023",
+      "original_formula": "अनावश्यकं ऋणं वर्जयेत्",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 53,
+      "disposition": "RETAIN_EXISTING_FORMULA",
+      "target_id": "S105-023",
+      "final_number": 30,
+      "reason": "Existing formulation retained as a main entry."
+    },
+    {
+      "source_id": "S105-024",
+      "original_formula": "आपदर्थे धनं रक्षेत्",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 54,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "N100-014",
+      "final_number": 28,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S105-025",
+      "original_formula": "मितव्ययेन समृद्धिः",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 55,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "N100-066",
+      "final_number": 38,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S105-026",
+      "original_formula": "लेखाशुद्धिः अनिवार्यः",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 56,
+      "disposition": "RETAIN_EXISTING_FORMULA",
+      "target_id": "S105-026",
+      "final_number": 67,
+      "reason": "Existing formulation retained as a main entry."
+    },
+    {
+      "source_id": "S105-027",
+      "original_formula": "स्ववर्तनस्य परीक्षणम्",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 57,
+      "disposition": "RETAIN_EXISTING_FORMULA",
+      "target_id": "S105-027",
+      "final_number": 80,
+      "reason": "Existing formulation retained as a main entry."
+    },
+    {
+      "source_id": "S105-028",
+      "original_formula": "स्वधनं संस्थाधनं च पृथक्",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 58,
+      "disposition": "RETAIN_EXISTING_FORMULA",
+      "target_id": "S105-028",
+      "final_number": 31,
+      "reason": "Existing formulation retained as a main entry."
+    },
+    {
+      "source_id": "S105-029",
+      "original_formula": "न्याय्यमूल्येन विक्रयः",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 59,
+      "disposition": "RETAIN_EXISTING_FORMULA",
+      "target_id": "S105-029",
+      "final_number": 32,
+      "reason": "Existing formulation retained as a main entry."
+    },
+    {
+      "source_id": "S105-030",
+      "original_formula": "लाभात् पुनः सृजनम्",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 60,
+      "disposition": "RETAIN_EXISTING_FORMULA",
+      "target_id": "S105-030",
+      "final_number": 33,
+      "reason": "Existing formulation retained as a main entry."
+    },
+    {
+      "source_id": "S105-031",
+      "original_formula": "संघशक्तिः कलौ युगे",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 61,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "N100-010",
+      "final_number": 49,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S105-032",
+      "original_formula": "यद्यदाचरति श्रेष्ठः",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 62,
+      "disposition": "RETAIN_EXISTING_FORMULA",
+      "target_id": "S105-032",
+      "final_number": 57,
+      "reason": "Existing formulation retained as a main entry."
+    },
+    {
+      "source_id": "S105-033",
+      "original_formula": "श्रमस्य सन्मानः कर्तव्यः",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 63,
+      "disposition": "RETAIN_EXISTING_FORMULA",
+      "target_id": "S105-033",
+      "final_number": 52,
+      "reason": "Existing formulation retained as a main entry."
+    },
+    {
+      "source_id": "S105-034",
+      "original_formula": "योग्यस्य योग्यं कर्म",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 64,
+      "disposition": "RETAIN_EXISTING_FORMULA",
+      "target_id": "S105-034",
+      "final_number": 50,
+      "reason": "Existing formulation retained as a main entry."
+    },
+    {
+      "source_id": "S105-035",
+      "original_formula": "सज्जनसङ्गेन विवेकः",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 65,
+      "disposition": "RETAIN_EXISTING_FORMULA",
+      "target_id": "S105-035",
+      "final_number": 58,
+      "reason": "Existing formulation retained as a main entry."
+    },
+    {
+      "source_id": "S105-036",
+      "original_formula": "अहंकारः विनाशाय",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 66,
+      "disposition": "RETAIN_EXISTING_FORMULA",
+      "target_id": "S105-036",
+      "final_number": 91,
+      "reason": "Existing formulation retained as a main entry."
+    },
+    {
+      "source_id": "S105-037",
+      "original_formula": "ज्ञानसंपदः रक्षणम्",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 67,
+      "disposition": "RETAIN_EXISTING_FORMULA",
+      "target_id": "S105-037",
+      "final_number": 70,
+      "reason": "Existing formulation retained as a main entry."
+    },
+    {
+      "source_id": "S105-038",
+      "original_formula": "विवादे संवादः श्रेयान्",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 68,
+      "disposition": "RETAIN_EXISTING_FORMULA",
+      "target_id": "S105-038",
+      "final_number": 81,
+      "reason": "Existing formulation retained as a main entry."
+    },
+    {
+      "source_id": "S105-039",
+      "original_formula": "निरन्तरं प्रशिक्षणम्",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 69,
+      "disposition": "RETAIN_EXISTING_FORMULA",
+      "target_id": "S105-039",
+      "final_number": 51,
+      "reason": "Existing formulation retained as a main entry."
+    },
+    {
+      "source_id": "S105-040",
+      "original_formula": "नेतृत्वस्य हस्तांतरणम्",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 70,
+      "disposition": "RETAIN_EXISTING_FORMULA",
+      "target_id": "S105-040",
+      "final_number": 99,
+      "reason": "Existing formulation retained as a main entry."
+    },
+    {
+      "source_id": "S105-041",
+      "original_formula": "क्षेत्रज्ञता आवश्यकः",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 71,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "N100-047",
+      "final_number": 17,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S105-042",
+      "original_formula": "न्याय्यं शासनं संस्थायाः",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 72,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "S105-079",
+      "final_number": 54,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S105-043",
+      "original_formula": "साधनानां सुयोगः",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 73,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "N100-066",
+      "final_number": 38,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S105-044",
+      "original_formula": "सहकारिभिः दृढबन्धः",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 74,
+      "disposition": "RETAIN_EXISTING_FORMULA",
+      "target_id": "S105-044",
+      "final_number": 64,
+      "reason": "Existing formulation retained as a main entry."
+    },
+    {
+      "source_id": "S105-045",
+      "original_formula": "सत्येन प्रचारः कार्यः",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 75,
+      "disposition": "RETAIN_EXISTING_FORMULA",
+      "target_id": "S105-045",
+      "final_number": 39,
+      "reason": "Existing formulation retained as a main entry."
+    },
+    {
+      "source_id": "S105-046",
+      "original_formula": "ग्राहकवाणी मार्गदर्शिका",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 76,
+      "disposition": "RETAIN_EXISTING_FORMULA",
+      "target_id": "S105-046",
+      "final_number": 20,
+      "reason": "Existing formulation retained as a main entry."
+    },
+    {
+      "source_id": "S105-047",
+      "original_formula": "संकटस्य पूर्वचिन्तनम्",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 77,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "N100-087",
+      "final_number": 25,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S105-048",
+      "original_formula": "आपत्काले धैर्यं न त्यजेत्",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 78,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "N100-033",
+      "final_number": 78,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S105-049",
+      "original_formula": "कालानुरूपं परिवर्तनम्",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 79,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "N100-048",
+      "final_number": 74,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S105-050",
+      "original_formula": "शक्तिमतिक्रम्य न विस्तरेत्",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 80,
+      "disposition": "RETAIN_EXISTING_FORMULA",
+      "target_id": "S105-050",
+      "final_number": 26,
+      "reason": "Existing formulation retained as a main entry."
+    },
+    {
+      "source_id": "S105-051",
+      "original_formula": "विधिपालनं अनिवार्यम्",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 81,
+      "disposition": "RETAIN_EXISTING_FORMULA",
+      "target_id": "S105-051",
+      "final_number": 66,
+      "reason": "Existing formulation retained as a main entry."
+    },
+    {
+      "source_id": "S105-052",
+      "original_formula": "लिखितं प्रमाणम्",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 82,
+      "disposition": "RETAIN_EXISTING_FORMULA",
+      "target_id": "S105-052",
+      "final_number": 65,
+      "reason": "Existing formulation retained as a main entry."
+    },
+    {
+      "source_id": "S105-053",
+      "original_formula": "तज्ज्ञानां सल्लां गृह्णीयात्",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 83,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "S105-035",
+      "final_number": 58,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged. Mixed-language or damaged original Sanskrit is not carried into the main formula."
+    },
+    {
+      "source_id": "S105-054",
+      "original_formula": "मर्यादापालनं सर्वत्र",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 84,
+      "disposition": "RETAIN_EXISTING_FORMULA",
+      "target_id": "S105-054",
+      "final_number": 90,
+      "reason": "Existing formulation retained as a main entry."
+    },
+    {
+      "source_id": "S105-055",
+      "original_formula": "श्रमेण सह विश्रान्तिः",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 85,
+      "disposition": "RETAIN_EXISTING_FORMULA",
+      "target_id": "S105-055",
+      "final_number": 82,
+      "reason": "Existing formulation retained as a main entry."
+    },
+    {
+      "source_id": "S105-056",
+      "original_formula": "दोषस्वीकारः उन्नतिहेतुः",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 86,
+      "disposition": "RETAIN_EXISTING_FORMULA",
+      "target_id": "S105-056",
+      "final_number": 37,
+      "reason": "Existing formulation retained as a main entry."
+    },
+    {
+      "source_id": "S105-057",
+      "original_formula": "यन्त्रविद्यायाः सदुपयोगः",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 87,
+      "disposition": "RETAIN_EXISTING_FORMULA",
+      "target_id": "S105-057",
+      "final_number": 69,
+      "reason": "Existing formulation retained as a main entry."
+    },
+    {
+      "source_id": "S105-058",
+      "original_formula": "स्वदेशीय साधनानां विकासः",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 88,
+      "disposition": "RETAIN_EXISTING_FORMULA",
+      "target_id": "S105-058",
+      "final_number": 84,
+      "reason": "Existing formulation retained as a main entry."
+    },
+    {
+      "source_id": "S105-059",
+      "original_formula": "प्रकृतेः संरक्षणं धर्मः",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 89,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "N100-098",
+      "final_number": 95,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S105-060",
+      "original_formula": "सुरक्षा प्रथमा कर्तव्या",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 90,
+      "disposition": "RETAIN_EXISTING_FORMULA",
+      "target_id": "S105-060",
+      "final_number": 96,
+      "reason": "Existing formulation retained as a main entry."
+    },
+    {
+      "source_id": "S105-061",
+      "original_formula": "गुणैः स्पर्धां कुर्यात्",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 91,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "N100-039",
+      "final_number": 41,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S105-062",
+      "original_formula": "सहभागिनां स्पष्टाः नियमाः",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 92,
+      "disposition": "RETAIN_EXISTING_FORMULA",
+      "target_id": "S105-062",
+      "final_number": 62,
+      "reason": "Existing formulation retained as a main entry."
+    },
+    {
+      "source_id": "S105-063",
+      "original_formula": "मोहजालं परित्यजेत्",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 93,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "N100-053",
+      "final_number": 11,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S105-064",
+      "original_formula": "प्रमाणैः निर्णयः कार्यः",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 94,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "N100-061",
+      "final_number": 15,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S105-065",
+      "original_formula": "ग्राहकस्य दीर्घसंबंधः",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 95,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "N100-038",
+      "final_number": 45,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S105-066",
+      "original_formula": "संस्कृत्या वर्धते संस्था",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 96,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "N100-079",
+      "final_number": 92,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S105-067",
+      "original_formula": "समाजात् लब्धं समाजाय दद्यात्",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 97,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "N100-050",
+      "final_number": 102,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S105-068",
+      "original_formula": "दानेन शोभते श्रीः",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 98,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "N100-050",
+      "final_number": 102,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S105-069",
+      "original_formula": "ग्रामोद्योगेन राष्ट्रबलम्",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 99,
+      "disposition": "RETAIN_EXISTING_FORMULA",
+      "target_id": "S105-069",
+      "final_number": 97,
+      "reason": "Existing formulation retained as a main entry."
+    },
+    {
+      "source_id": "S105-070",
+      "original_formula": "रोजगारनिर्मित्या राष्ट्रसेवा",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 100,
+      "disposition": "RETAIN_EXISTING_FORMULA",
+      "target_id": "S105-070",
+      "final_number": 98,
+      "reason": "Existing formulation retained as a main entry."
+    },
+    {
+      "source_id": "S105-071",
+      "original_formula": "सूचनासुरक्षा परमं कवचम्",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 101,
+      "disposition": "RETAIN_EXISTING_FORMULA",
+      "target_id": "S105-071",
+      "final_number": 71,
+      "reason": "Existing formulation retained as a main entry."
+    },
+    {
+      "source_id": "S105-072",
+      "original_formula": "पतनात् पुनः उत्थानम्",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 102,
+      "disposition": "RETAIN_EXISTING_FORMULA",
+      "target_id": "S105-072",
+      "final_number": 79,
+      "reason": "Existing formulation retained as a main entry."
+    },
+    {
+      "source_id": "S105-073",
+      "original_formula": "शोधेन नवनिर्माणम्",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 103,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "N100-036",
+      "final_number": 73,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S105-074",
+      "original_formula": "अनावश्यकसंग्रहं त्यजेत्",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 104,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "N100-066",
+      "final_number": 38,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S105-075",
+      "original_formula": "मधुरं सत्यं च वदेत्",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 105,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "S105-038",
+      "final_number": 81,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S105-076",
+      "original_formula": "कुटुम्बोद्योगे नियमबद्धता",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 106,
+      "disposition": "RETAIN_EXISTING_FORMULA",
+      "target_id": "S105-076",
+      "final_number": 100,
+      "reason": "Existing formulation retained as a main entry."
+    },
+    {
+      "source_id": "S105-077",
+      "original_formula": "वर्तमानं भविष्यं च चिन्तयेत्",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 107,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "N100-068",
+      "final_number": 22,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S105-078",
+      "original_formula": "अधिकारविभागेन कार्यसिद्धिः",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 108,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "N100-021",
+      "final_number": 56,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S105-079",
+      "original_formula": "पक्षपातवर्जितं शासनम्",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 109,
+      "disposition": "RETAIN_EXISTING_FORMULA",
+      "target_id": "S105-079",
+      "final_number": 54,
+      "reason": "Existing formulation retained as a main entry."
+    },
+    {
+      "source_id": "S105-080",
+      "original_formula": "सातत्येन महद् कार्यम्",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 110,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "N100-002",
+      "final_number": 2,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S105-081",
+      "original_formula": "स्वाभिमानेन उद्यमः",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 111,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "N100-037",
+      "final_number": 83,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S105-082",
+      "original_formula": "सहकारेण विश्वं धार्यते",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 112,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "N100-084",
+      "final_number": 86,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S105-083",
+      "original_formula": "प्रज्ञाशीलनेतृत्वम्",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 113,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "N100-061",
+      "final_number": 15,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S105-084",
+      "original_formula": "लोकसंग्रहेण संस्थास्थैर्यम्",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 114,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "N100-077",
+      "final_number": 94,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S105-085",
+      "original_formula": "ज्ञानदानेन वर्धते विद्या",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 115,
+      "disposition": "RETAIN_EXISTING_FORMULA",
+      "target_id": "S105-085",
+      "final_number": 101,
+      "reason": "Existing formulation retained as a main entry."
+    },
+    {
+      "source_id": "S105-086",
+      "original_formula": "अति सर्वत्र वर्जयेत्",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 116,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "S105-054",
+      "final_number": 90,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S105-087",
+      "original_formula": "गुणानां पूजा स्थानम्",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 117,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "S105-034",
+      "final_number": 50,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S105-088",
+      "original_formula": "धर्मयुद्धेन विजयः",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 118,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "N100-039",
+      "final_number": 41,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S105-089",
+      "original_formula": "विश्वस्तभावेन धनपालनम्",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 119,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "N100-023",
+      "final_number": 93,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S105-090",
+      "original_formula": "वसुधैव कुटुम्बकम्",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 120,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "N100-040",
+      "final_number": 85,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S105-091",
+      "original_formula": "अर्थशास्त्रस्य ज्ञानम्",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 121,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "N100-012",
+      "final_number": 27,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S105-092",
+      "original_formula": "प्रबुद्धो ग्राहकः हितकरः",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 122,
+      "disposition": "RETAIN_EXISTING_FORMULA",
+      "target_id": "S105-092",
+      "final_number": 21,
+      "reason": "Existing formulation retained as a main entry."
+    },
+    {
+      "source_id": "S105-093",
+      "original_formula": "स्वस्थं मनः स्वस्थः उद्यमः",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 123,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "S105-055",
+      "final_number": 82,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S105-094",
+      "original_formula": "व्यक्तीपेक्षा संस्था श्रेष्ठ",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 124,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "S105-040",
+      "final_number": 99,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged. Mixed-language or damaged original Sanskrit is not carried into the main formula."
+    },
+    {
+      "source_id": "S105-095",
+      "original_formula": "करुणया युक्तं व्यवस्थापनम्",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 125,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "N100-063",
+      "final_number": 55,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S105-096",
+      "original_formula": "कृतज्ञता जीवनधर्मः",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 126,
+      "disposition": "RETAIN_EXISTING_FORMULA",
+      "target_id": "S105-096",
+      "final_number": 104,
+      "reason": "Existing formulation retained as a main entry."
+    },
+    {
+      "source_id": "S105-097",
+      "original_formula": "युگانुरूपं चिन्तनम्",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 127,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "N100-048",
+      "final_number": 74,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged. Mixed-language or damaged original Sanskrit is not carried into the main formula."
+    },
+    {
+      "source_id": "S105-098",
+      "original_formula": "राष्ट्राभिवृद्धये उद्यमः",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 128,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "N100-030",
+      "final_number": 87,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S105-099",
+      "original_formula": "कर्मणा सिद्धिः",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 129,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "N100-002",
+      "final_number": 2,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S105-100",
+      "original_formula": "उद्यमः एव जीवनसाधना",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 130,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "N100-022",
+      "final_number": 103,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged."
+    },
+    {
+      "source_id": "S105-101",
+      "original_formula": "स्वयं नियन्त्रयेत् पूर्वं, ततो विश्वं जयेत् सुधीः। चारित्र्यं रक्षयेन्नित्यं, यतो धर्मस्ततो जयः॥",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 134,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "N100-015",
+      "final_number": 59,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged. Long late additions are represented by existing shorter author principles; no replacement Sanskrit was generated."
+    },
+    {
+      "source_id": "S105-102",
+      "original_formula": "प्रलोभने न मुह्येत, भावावेगे न विश्वसेत्। गूढं रक्षेत् सदा धीमान्, शत्रुर्हि छद्मवेषधृक्॥",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 138,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "S105-071",
+      "final_number": 71,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged. Long late additions are represented by existing shorter author principles; no replacement Sanskrit was generated."
+    },
+    {
+      "source_id": "S105-103",
+      "original_formula": "अन्तर्भेदं निवार्येत, विश्वासं परीक्षयेत्। एकस्य प्रमादेन, सर्वं राष्ट्रं विनश्यति॥",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 142,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "S105-052",
+      "final_number": 65,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged. Long late additions are represented by existing shorter author principles; no replacement Sanskrit was generated."
+    },
+    {
+      "source_id": "S105-104",
+      "original_formula": "शिखरे स्थित्वा सावधानः, प्रमादं न समाचरेत्। उत्कर्षे विनयो भूयात्, अहंकारः पतनाय हि॥",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 146,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "S105-036",
+      "final_number": 91,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged. Long late additions are represented by existing shorter author principles; no replacement Sanskrit was generated."
+    },
+    {
+      "source_id": "S105-105",
+      "original_formula": "व्यक्तेः श्रेष्ठा सदा संस्था, व्यवस्था शाश्वती भवेत्। नायके विचलितेऽपि, धर्ममार्गे न विचलेत्॥",
+      "source_file": "Udyam_Sutre_Antim_Mahagranth_Final.docx",
+      "source_paragraph": 150,
+      "disposition": "THEME_COVERED_ORIGINAL_ARCHIVED",
+      "target_id": "S105-040",
+      "final_number": 99,
+      "reason": "Related business theme represented by the selected entry; original formula remains archived. This is thematic filtration, not asserted textual identity or a claim that every sentence was merged. Long late additions are represented by existing shorter author principles; no replacement Sanskrit was generated."
+    }
+  ],
+  "fifty_pdf_crosswalk": [
+    {
+      "prior_packet": 2,
+      "pdf_entry_labels": [
+        6,
+        16,
+        25,
+        29,
+        39
+      ],
+      "target_ids": [
+        "N100-001"
+      ],
+      "final_numbers": [
+        1
+      ],
+      "use": "Thematic comparison evidence only; PDF OCR was not used to invent or silently replace a Sanskrit formula."
+    },
+    {
+      "prior_packet": 3,
+      "pdf_entry_labels": [
+        9,
+        32
+      ],
+      "target_ids": [
+        "V19-002"
+      ],
+      "final_numbers": [
+        7
+      ],
+      "use": "Thematic comparison evidence only; PDF OCR was not used to invent or silently replace a Sanskrit formula."
+    },
+    {
+      "prior_packet": 4,
+      "pdf_entry_labels": [
+        10,
+        45
+      ],
+      "target_ids": [
+        "N100-037"
+      ],
+      "final_numbers": [
+        83
+      ],
+      "use": "Thematic comparison evidence only; PDF OCR was not used to invent or silently replace a Sanskrit formula."
+    },
+    {
+      "prior_packet": 5,
+      "pdf_entry_labels": [
+        9,
+        25,
+        35
+      ],
+      "target_ids": [
+        "N100-002"
+      ],
+      "final_numbers": [
+        2
+      ],
+      "use": "Thematic comparison evidence only; PDF OCR was not used to invent or silently replace a Sanskrit formula."
+    },
+    {
+      "prior_packet": 6,
+      "pdf_entry_labels": [
+        44
+      ],
+      "target_ids": [
+        "N100-089"
+      ],
+      "final_numbers": [
+        9
+      ],
+      "use": "Thematic comparison evidence only; PDF OCR was not used to invent or silently replace a Sanskrit formula."
+    },
+    {
+      "prior_packet": 7,
+      "pdf_entry_labels": [
+        7,
+        33
+      ],
+      "target_ids": [
+        "N100-053"
+      ],
+      "final_numbers": [
+        11
+      ],
+      "use": "Thematic comparison evidence only; PDF OCR was not used to invent or silently replace a Sanskrit formula."
+    },
+    {
+      "prior_packet": 8,
+      "pdf_entry_labels": [
+        45,
+        49
+      ],
+      "target_ids": [
+        "N100-089"
+      ],
+      "final_numbers": [
+        9
+      ],
+      "use": "Thematic comparison evidence only; PDF OCR was not used to invent or silently replace a Sanskrit formula."
+    },
+    {
+      "prior_packet": 9,
+      "pdf_entry_labels": [
+        48
+      ],
+      "target_ids": [
+        "N100-015"
+      ],
+      "final_numbers": [
+        59
+      ],
+      "use": "Thematic comparison evidence only; PDF OCR was not used to invent or silently replace a Sanskrit formula."
+    },
+    {
+      "prior_packet": 10,
+      "pdf_entry_labels": [
+        12,
+        48
+      ],
+      "target_ids": [
+        "S105-036"
+      ],
+      "final_numbers": [
+        91
+      ],
+      "use": "Thematic comparison evidence only; PDF OCR was not used to invent or silently replace a Sanskrit formula."
+    },
+    {
+      "prior_packet": 11,
+      "pdf_entry_labels": [
+        15,
+        38
+      ],
+      "target_ids": [
+        "N100-047"
+      ],
+      "final_numbers": [
+        17
+      ],
+      "use": "Thematic comparison evidence only; PDF OCR was not used to invent or silently replace a Sanskrit formula."
+    },
+    {
+      "prior_packet": 12,
+      "pdf_entry_labels": [
+        38
+      ],
+      "target_ids": [
+        "S105-016"
+      ],
+      "final_numbers": [
+        4
+      ],
+      "use": "Thematic comparison evidence only; PDF OCR was not used to invent or silently replace a Sanskrit formula."
+    },
+    {
+      "prior_packet": 13,
+      "pdf_entry_labels": [
+        27,
+        37
+      ],
+      "target_ids": [
+        "S105-015"
+      ],
+      "final_numbers": [
+        18
+      ],
+      "use": "Thematic comparison evidence only; PDF OCR was not used to invent or silently replace a Sanskrit formula."
+    },
+    {
+      "prior_packet": 14,
+      "pdf_entry_labels": [
+        27,
+        37
+      ],
+      "target_ids": [
+        "N100-061"
+      ],
+      "final_numbers": [
+        15
+      ],
+      "use": "Thematic comparison evidence only; PDF OCR was not used to invent or silently replace a Sanskrit formula."
+    },
+    {
+      "prior_packet": 16,
+      "pdf_entry_labels": [
+        26,
+        35
+      ],
+      "target_ids": [
+        "N100-002"
+      ],
+      "final_numbers": [
+        2
+      ],
+      "use": "Thematic comparison evidence only; PDF OCR was not used to invent or silently replace a Sanskrit formula."
+    },
+    {
+      "prior_packet": 19,
+      "pdf_entry_labels": [
+        37
+      ],
+      "target_ids": [
+        "S105-039"
+      ],
+      "final_numbers": [
+        51
+      ],
+      "use": "Thematic comparison evidence only; PDF OCR was not used to invent or silently replace a Sanskrit formula."
+    },
+    {
+      "prior_packet": 20,
+      "pdf_entry_labels": [
+        52
+      ],
+      "target_ids": [
+        "S105-085"
+      ],
+      "final_numbers": [
+        101
+      ],
+      "use": "Thematic comparison evidence only; PDF OCR was not used to invent or silently replace a Sanskrit formula."
+    },
+    {
+      "prior_packet": 21,
+      "pdf_entry_labels": [
+        34
+      ],
+      "target_ids": [
+        "N100-036"
+      ],
+      "final_numbers": [
+        73
+      ],
+      "use": "Thematic comparison evidence only; PDF OCR was not used to invent or silently replace a Sanskrit formula."
+    },
+    {
+      "prior_packet": 22,
+      "pdf_entry_labels": [
+        34
+      ],
+      "target_ids": [
+        "N100-036"
+      ],
+      "final_numbers": [
+        73
+      ],
+      "use": "Thematic comparison evidence only; PDF OCR was not used to invent or silently replace a Sanskrit formula."
+    },
+    {
+      "prior_packet": 24,
+      "pdf_entry_labels": [
+        8,
+        15,
+        34
+      ],
+      "target_ids": [
+        "N100-048"
+      ],
+      "final_numbers": [
+        74
+      ],
+      "use": "Thematic comparison evidence only; PDF OCR was not used to invent or silently replace a Sanskrit formula."
+    },
+    {
+      "prior_packet": 26,
+      "pdf_entry_labels": [
+        28,
+        30,
+        42
+      ],
+      "target_ids": [
+        "N100-086"
+      ],
+      "final_numbers": [
+        34
+      ],
+      "use": "Thematic comparison evidence only; PDF OCR was not used to invent or silently replace a Sanskrit formula."
+    },
+    {
+      "prior_packet": 27,
+      "pdf_entry_labels": [
+        13,
+        16,
+        36
+      ],
+      "target_ids": [
+        "S105-020"
+      ],
+      "final_numbers": [
+        35
+      ],
+      "use": "Thematic comparison evidence only; PDF OCR was not used to invent or silently replace a Sanskrit formula."
+    },
+    {
+      "prior_packet": 29,
+      "pdf_entry_labels": [
+        30
+      ],
+      "target_ids": [
+        "N100-018"
+      ],
+      "final_numbers": [
+        47
+      ],
+      "use": "Thematic comparison evidence only; PDF OCR was not used to invent or silently replace a Sanskrit formula."
+    },
+    {
+      "prior_packet": 30,
+      "pdf_entry_labels": [
+        28
+      ],
+      "target_ids": [
+        "S105-045"
+      ],
+      "final_numbers": [
+        39
+      ],
+      "use": "Thematic comparison evidence only; PDF OCR was not used to invent or silently replace a Sanskrit formula."
+    },
+    {
+      "prior_packet": 31,
+      "pdf_entry_labels": [
+        19,
+        24,
+        50
+      ],
+      "target_ids": [
+        "N100-069"
+      ],
+      "final_numbers": [
+        44
+      ],
+      "use": "Thematic comparison evidence only; PDF OCR was not used to invent or silently replace a Sanskrit formula."
+    },
+    {
+      "prior_packet": 32,
+      "pdf_entry_labels": [
+        42
+      ],
+      "target_ids": [
+        "N100-038"
+      ],
+      "final_numbers": [
+        45
+      ],
+      "use": "Thematic comparison evidence only; PDF OCR was not used to invent or silently replace a Sanskrit formula."
+    },
+    {
+      "prior_packet": 33,
+      "pdf_entry_labels": [
+        16
+      ],
+      "target_ids": [
+        "S105-046"
+      ],
+      "final_numbers": [
+        20
+      ],
+      "use": "Thematic comparison evidence only; PDF OCR was not used to invent or silently replace a Sanskrit formula."
+    },
+    {
+      "prior_packet": 37,
+      "pdf_entry_labels": [
+        8,
+        11
+      ],
+      "target_ids": [
+        "S105-051"
+      ],
+      "final_numbers": [
+        66
+      ],
+      "use": "Thematic comparison evidence only; PDF OCR was not used to invent or silently replace a Sanskrit formula."
+    },
+    {
+      "prior_packet": 38,
+      "pdf_entry_labels": [
+        41
+      ],
+      "target_ids": [
+        "S105-052"
+      ],
+      "final_numbers": [
+        65
+      ],
+      "use": "Thematic comparison evidence only; PDF OCR was not used to invent or silently replace a Sanskrit formula."
+    },
+    {
+      "prior_packet": 39,
+      "pdf_entry_labels": [
+        18
+      ],
+      "target_ids": [
+        "S105-062"
+      ],
+      "final_numbers": [
+        62
+      ],
+      "use": "Thematic comparison evidence only; PDF OCR was not used to invent or silently replace a Sanskrit formula."
+    },
+    {
+      "prior_packet": 40,
+      "pdf_entry_labels": [
+        10
+      ],
+      "target_ids": [
+        "N100-037"
+      ],
+      "final_numbers": [
+        83
+      ],
+      "use": "Thematic comparison evidence only; PDF OCR was not used to invent or silently replace a Sanskrit formula."
+    },
+    {
+      "prior_packet": 44,
+      "pdf_entry_labels": [
+        14
+      ],
+      "target_ids": [
+        "N100-014"
+      ],
+      "final_numbers": [
+        28
+      ],
+      "use": "Thematic comparison evidence only; PDF OCR was not used to invent or silently replace a Sanskrit formula."
+    },
+    {
+      "prior_packet": 45,
+      "pdf_entry_labels": [
+        7,
+        14
+      ],
+      "target_ids": [
+        "N100-066"
+      ],
+      "final_numbers": [
+        38
+      ],
+      "use": "Thematic comparison evidence only; PDF OCR was not used to invent or silently replace a Sanskrit formula."
+    },
+    {
+      "prior_packet": 46,
+      "pdf_entry_labels": [
+        41,
+        42
+      ],
+      "target_ids": [
+        "S105-026"
+      ],
+      "final_numbers": [
+        67
+      ],
+      "use": "Thematic comparison evidence only; PDF OCR was not used to invent or silently replace a Sanskrit formula."
+    },
+    {
+      "prior_packet": 51,
+      "pdf_entry_labels": [
+        13
+      ],
+      "target_ids": [
+        "N100-087"
+      ],
+      "final_numbers": [
+        25
+      ],
+      "use": "Thematic comparison evidence only; PDF OCR was not used to invent or silently replace a Sanskrit formula."
+    },
+    {
+      "prior_packet": 52,
+      "pdf_entry_labels": [
+        14
+      ],
+      "target_ids": [
+        "S105-050"
+      ],
+      "final_numbers": [
+        26
+      ],
+      "use": "Thematic comparison evidence only; PDF OCR was not used to invent or silently replace a Sanskrit formula."
+    },
+    {
+      "prior_packet": 53,
+      "pdf_entry_labels": [
+        51
+      ],
+      "target_ids": [
+        "N100-010"
+      ],
+      "final_numbers": [
+        49
+      ],
+      "use": "Thematic comparison evidence only; PDF OCR was not used to invent or silently replace a Sanskrit formula."
+    },
+    {
+      "prior_packet": 54,
+      "pdf_entry_labels": [
+        31,
+        51
+      ],
+      "target_ids": [
+        "S105-034"
+      ],
+      "final_numbers": [
+        50
+      ],
+      "use": "Thematic comparison evidence only; PDF OCR was not used to invent or silently replace a Sanskrit formula."
+    },
+    {
+      "prior_packet": 55,
+      "pdf_entry_labels": [
+        24,
+        50
+      ],
+      "target_ids": [
+        "S105-033"
+      ],
+      "final_numbers": [
+        52
+      ],
+      "use": "Thematic comparison evidence only; PDF OCR was not used to invent or silently replace a Sanskrit formula."
+    },
+    {
+      "prior_packet": 58,
+      "pdf_entry_labels": [
+        17,
+        46
+      ],
+      "target_ids": [
+        "S105-032"
+      ],
+      "final_numbers": [
+        57
+      ],
+      "use": "Thematic comparison evidence only; PDF OCR was not used to invent or silently replace a Sanskrit formula."
+    },
+    {
+      "prior_packet": 59,
+      "pdf_entry_labels": [
+        47
+      ],
+      "target_ids": [
+        "S105-035"
+      ],
+      "final_numbers": [
+        58
+      ],
+      "use": "Thematic comparison evidence only; PDF OCR was not used to invent or silently replace a Sanskrit formula."
+    },
+    {
+      "prior_packet": 60,
+      "pdf_entry_labels": [
+        52
+      ],
+      "target_ids": [
+        "S105-038"
+      ],
+      "final_numbers": [
+        81
+      ],
+      "use": "Thematic comparison evidence only; PDF OCR was not used to invent or silently replace a Sanskrit formula."
+    },
+    {
+      "prior_packet": 61,
+      "pdf_entry_labels": [
+        19,
+        29,
+        43
+      ],
+      "target_ids": [
+        "N100-079"
+      ],
+      "final_numbers": [
+        92
+      ],
+      "use": "Thematic comparison evidence only; PDF OCR was not used to invent or silently replace a Sanskrit formula."
+    },
+    {
+      "prior_packet": 63,
+      "pdf_entry_labels": [
+        17
+      ],
+      "target_ids": [
+        "S105-019"
+      ],
+      "final_numbers": [
+        46
+      ],
+      "use": "Thematic comparison evidence only; PDF OCR was not used to invent or silently replace a Sanskrit formula."
+    },
+    {
+      "prior_packet": 64,
+      "pdf_entry_labels": [
+        12
+      ],
+      "target_ids": [
+        "S105-079"
+      ],
+      "final_numbers": [
+        54
+      ],
+      "use": "Thematic comparison evidence only; PDF OCR was not used to invent or silently replace a Sanskrit formula."
+    },
+    {
+      "prior_packet": 65,
+      "pdf_entry_labels": [
+        18
+      ],
+      "target_ids": [
+        "S105-054"
+      ],
+      "final_numbers": [
+        90
+      ],
+      "use": "Thematic comparison evidence only; PDF OCR was not used to invent or silently replace a Sanskrit formula."
+    },
+    {
+      "prior_packet": 66,
+      "pdf_entry_labels": [
+        18
+      ],
+      "target_ids": [
+        "S105-076"
+      ],
+      "final_numbers": [
+        100
+      ],
+      "use": "Thematic comparison evidence only; PDF OCR was not used to invent or silently replace a Sanskrit formula."
+    },
+    {
+      "prior_packet": 67,
+      "pdf_entry_labels": [
+        31
+      ],
+      "target_ids": [
+        "S105-040"
+      ],
+      "final_numbers": [
+        99
+      ],
+      "use": "Thematic comparison evidence only; PDF OCR was not used to invent or silently replace a Sanskrit formula."
+    },
+    {
+      "prior_packet": 71,
+      "pdf_entry_labels": [
+        13
+      ],
+      "target_ids": [
+        "S105-052"
+      ],
+      "final_numbers": [
+        65
+      ],
+      "use": "Thematic comparison evidence only; PDF OCR was not used to invent or silently replace a Sanskrit formula."
+    },
+    {
+      "prior_packet": 72,
+      "pdf_entry_labels": [
+        47
+      ],
+      "target_ids": [
+        "N100-053"
+      ],
+      "final_numbers": [
+        11
+      ],
+      "use": "Thematic comparison evidence only; PDF OCR was not used to invent or silently replace a Sanskrit formula."
+    },
+    {
+      "prior_packet": 73,
+      "pdf_entry_labels": [
+        15,
+        36
+      ],
+      "target_ids": [
+        "N100-066"
+      ],
+      "final_numbers": [
+        38
+      ],
+      "use": "Thematic comparison evidence only; PDF OCR was not used to invent or silently replace a Sanskrit formula."
+    },
+    {
+      "prior_packet": 74,
+      "pdf_entry_labels": [
+        24
+      ],
+      "target_ids": [
+        "S105-044"
+      ],
+      "final_numbers": [
+        64
+      ],
+      "use": "Thematic comparison evidence only; PDF OCR was not used to invent or silently replace a Sanskrit formula."
+    },
+    {
+      "prior_packet": 76,
+      "pdf_entry_labels": [
+        52
+      ],
+      "target_ids": [
+        "N100-084"
+      ],
+      "final_numbers": [
+        86
+      ],
+      "use": "Thematic comparison evidence only; PDF OCR was not used to invent or silently replace a Sanskrit formula."
+    },
+    {
+      "prior_packet": 81,
+      "pdf_entry_labels": [
+        43
+      ],
+      "target_ids": [
+        "S105-055"
+      ],
+      "final_numbers": [
+        82
+      ],
+      "use": "Thematic comparison evidence only; PDF OCR was not used to invent or silently replace a Sanskrit formula."
+    },
+    {
+      "prior_packet": 83,
+      "pdf_entry_labels": [
+        49
+      ],
+      "target_ids": [
+        "N100-039"
+      ],
+      "final_numbers": [
+        41
+      ],
+      "use": "Thematic comparison evidence only; PDF OCR was not used to invent or silently replace a Sanskrit formula."
+    },
+    {
+      "prior_packet": 84,
+      "pdf_entry_labels": [
+        33,
+        46
+      ],
+      "target_ids": [
+        "N100-023"
+      ],
+      "final_numbers": [
+        93
+      ],
+      "use": "Thematic comparison evidence only; PDF OCR was not used to invent or silently replace a Sanskrit formula."
+    },
+    {
+      "prior_packet": 85,
+      "pdf_entry_labels": [
+        39
+      ],
+      "target_ids": [
+        "N100-089"
+      ],
+      "final_numbers": [
+        9
+      ],
+      "use": "Thematic comparison evidence only; PDF OCR was not used to invent or silently replace a Sanskrit formula."
+    },
+    {
+      "prior_packet": 86,
+      "pdf_entry_labels": [
+        7,
+        8,
+        11,
+        17,
+        32
+      ],
+      "target_ids": [
+        "V19-002"
+      ],
+      "final_numbers": [
+        7
+      ],
+      "use": "Thematic comparison evidence only; PDF OCR was not used to invent or silently replace a Sanskrit formula."
+    },
+    {
+      "prior_packet": 87,
+      "pdf_entry_labels": [
+        53
+      ],
+      "target_ids": [
+        "N100-098"
+      ],
+      "final_numbers": [
+        95
+      ],
+      "use": "Thematic comparison evidence only; PDF OCR was not used to invent or silently replace a Sanskrit formula."
+    },
+    {
+      "prior_packet": 89,
+      "pdf_entry_labels": [
+        53
+      ],
+      "target_ids": [
+        "S105-069"
+      ],
+      "final_numbers": [
+        97
+      ],
+      "use": "Thematic comparison evidence only; PDF OCR was not used to invent or silently replace a Sanskrit formula."
+    },
+    {
+      "prior_packet": 91,
+      "pdf_entry_labels": [
+        6,
+        24
+      ],
+      "target_ids": [
+        "N100-050"
+      ],
+      "final_numbers": [
+        102
+      ],
+      "use": "Thematic comparison evidence only; PDF OCR was not used to invent or silently replace a Sanskrit formula."
+    },
+    {
+      "prior_packet": 94,
+      "pdf_entry_labels": [
+        24,
+        43,
+        50
+      ],
+      "target_ids": [
+        "N100-063"
+      ],
+      "final_numbers": [
+        55
+      ],
+      "use": "Thematic comparison evidence only; PDF OCR was not used to invent or silently replace a Sanskrit formula."
+    },
+    {
+      "prior_packet": 95,
+      "pdf_entry_labels": [
+        6,
+        53
+      ],
+      "target_ids": [
+        "N100-077"
+      ],
+      "final_numbers": [
+        94
+      ],
+      "use": "Thematic comparison evidence only; PDF OCR was not used to invent or silently replace a Sanskrit formula."
+    },
+    {
+      "prior_packet": 96,
+      "pdf_entry_labels": [
+        53
+      ],
+      "target_ids": [
+        "N100-030"
+      ],
+      "final_numbers": [
+        87
+      ],
+      "use": "Thematic comparison evidence only; PDF OCR was not used to invent or silently replace a Sanskrit formula."
+    },
+    {
+      "prior_packet": 99,
+      "pdf_entry_labels": [
+        40
+      ],
+      "target_ids": [
+        "N100-002"
+      ],
+      "final_numbers": [
+        2
+      ],
+      "use": "Thematic comparison evidence only; PDF OCR was not used to invent or silently replace a Sanskrit formula."
+    },
+    {
+      "prior_packet": 100,
+      "pdf_entry_labels": [
+        26,
+        40,
+        44
+      ],
+      "target_ids": [
+        "N100-022"
+      ],
+      "final_numbers": [
+        103
+      ],
+      "use": "Thematic comparison evidence only; PDF OCR was not used to invent or silently replace a Sanskrit formula."
+    }
+  ],
+  "fifty_pdf_sha256": "504ad50a672532af8fe2e82d0d1b6a341b4f939b9d1d690042180ba20d05e274",
+  "unavailable": "Referenced working copy 107–112 is not present and no text has been fabricated.",
+  "approval": "Offline review; thematic decisions remain subject to author review."
+}

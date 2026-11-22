@@ -51,7 +51,7 @@ class FakeDispatch:
                     {"review": "Synthetic candidate review", "preferred_sutra_no": "1",
                      "rejected_reasons": []})
         content = json.dumps(data, ensure_ascii=False)
-        return SimpleNamespace(content=f"```json\n{content}\n```" if role in self.fenced_roles else content)
+        return SimpleNamespace(content=f"```json\n{content}\n```" if role in self.fenced_roles else content, was_truncated=False)
 
 
 def test_actual_runner_uses_five_roles_and_never_auto_approves():
@@ -241,3 +241,26 @@ def test_restart_reuses_completed_unit_without_new_provider_calls():
         assert outcome["qualifying"] == 1
         assert restarted_dispatch.calls == []
         assert args["review_store"].latest_state("UDYAM-1")["version"] == 1
+
+
+def test_composition_continuation_and_exact_checkpoint(tmp_path):
+    """Interrupted JSON resumes once; exact composition reuse incurs no further calls."""
+    source = tmp_path / "source.txt"
+    source.write_text("source ethics", encoding="utf-8")
+    full = json.dumps(make_draft(), ensure_ascii=False)
+    fragments = [full[:70], full[70:]]
+    calls = []
+    class PartialDispatch:
+        """Provide an interrupted composition followed by its exact suffix."""
+        def call(self, role, prompt, system_prompt, **kwargs):
+            """Record bounded dispatch and return the next fixture fragment."""
+            calls.append(kwargs)
+            return SimpleNamespace(content=fragments.pop(0), was_truncated=len(calls) == 1)
+    runner = DynamicLiveCouncilRunner(dispatcher=PartialDispatch(), vector_store=FakeVector(),
+        review_store=ReviewStore(tmp_path / "reviews.db"), example_registry=ExampleRegistry(tmp_path / "examples.db"),
+        narada_sutras=[], shandilya_sutras=[], source_paths={"DOC-01": source}, run_id="continue")
+    payload = {"mode": "compose", "inputs": []}
+    assert runner._json_role("sutrakar_master", payload) == make_draft()
+    assert runner._json_role("sutrakar_master", payload) == make_draft()
+    assert len(calls) == 2
+    assert all(call["allow_truncated"] for call in calls)

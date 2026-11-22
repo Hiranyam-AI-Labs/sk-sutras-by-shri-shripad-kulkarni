@@ -1,0 +1,1612 @@
+{
+  "schema_version": 1,
+  "mode": "DIAGNOSTIC_PILOT",
+  "status": "EXPORTED_FOR_AUTHOR_REVIEW",
+  "ordering": "JOURNEY rank, then explicit result-list position (1-based)",
+  "journey_ranks": {
+    "opening": 0,
+    "practice": 1,
+    "growth": 2,
+    "people": 2,
+    "society": 2,
+    "closure": 3
+  },
+  "numbering_map": [
+    {
+      "id": "source-selection-N078-S028",
+      "canonical_number": 1,
+      "canonical_chapter": 1,
+      "stable_input_order": 1,
+      "journey_stage": "opening",
+      "display_number": 1,
+      "presentation_chapter": 1,
+      "canonical_draft_sha256": "fd3794617d0e9cfc4985b64e8c90a6fbc4709c003e22fc8f7cd1e838e6e71621",
+      "reviewed_draft_sha256": "fd3794617d0e9cfc4985b64e8c90a6fbc4709c003e22fc8f7cd1e838e6e71621",
+      "presentation_draft_sha256": "fd3794617d0e9cfc4985b64e8c90a6fbc4709c003e22fc8f7cd1e838e6e71621",
+      "unchanged_content_sha256": "74cf4c2f905176d0330339f2a456cefb08c3e4bafaed854c3c52434ad231fb51",
+      "review_binding_verified_against": "canonical_draft_only",
+      "presentation_copy_independently_reviewed": false,
+      "changed_fields": [],
+      "result_canonical_sha256": "6cc232ff5540c363c4804a085b763efc6cae0c576ffab14bb3bdd968c97bf05a",
+      "proposal_sha256": "55ba64ac46e654339ae47a2b422cd37fc5b1c2a616c3cfa96dbaa7ddc21e29d3",
+      "selected_proposal_sha256": "55ba64ac46e654339ae47a2b422cd37fc5b1c2a616c3cfa96dbaa7ddc21e29d3",
+      "lineage": {
+        "assessment": {
+          "status": "PASS",
+          "issues": []
+        },
+        "review": {
+          "verdict": "PASS",
+          "issues": [],
+          "outcome": "READY",
+          "typed_review": {
+            "source_checks": [
+              {
+                "field": "comparative_mr.0.explanation_mr",
+                "source_id": "N78",
+                "source_claim_quote": "नारद ७८ भक्तिसाधनेच्या शिस्तीचा नैतिक विस्तार आहे. 'आस्तिक्य' म्हणजे ईश्वर आणि शास्त्रीय सत्यावरील श्रद्धा; ती व्यवसायाच्या कृतीत उतरवलेली नाही. अहिंसा, सत्य, शुद्धता आणि दया यांचे पालन 'परिपालनीयानि' या शब्दाप्रमाणे काटेकोर आहे, 'आदि' शब्द इतर सद्गुणांनाही जागा देतो. ही वृत्ती केवळ तपासयादीसारखी नाही.",
+                "application_quote": "",
+                "source_quote": "अहिंसासत्यशौचदयास्तिक्यादिचारित्र्याणि परिपालनीयानि ॥",
+                "classification": "SUPPORTED_ORIGINAL",
+                "reason": "The historical claim about Narada's teachings on virtues is supported by the source."
+              },
+              {
+                "field": "comparative_mr.1.explanation_mr",
+                "source_id": "S28",
+                "source_claim_quote": "तदङ्गानाम् म्हणजे सूत्र २७मधील बुद्धिहेतूंची साहाय्यक अंगे. प्रवृत्ती आणि शुद्धीपर्यंतचा कालावधी मागील सूत्रातून येथे अनुवर्तित आहेत. आ विशुद्धेः म्हणजे शुद्धी प्राप्त होईपर्यंत. बुद्धिहेतू म्हणजे ब्रह्मविषयक निश्चित जाणीवेची साधने. गुरुसेवा आणि इंद्रियसंयम ही भाष्याची तात्पुरती उदाहरणे आहेत, विद्वत्परीक्षण बाकी आहे. हे सूत्र प्रामाणिकपणा किंवा करुणा यांची नावे घेत नाही; ते फक्त साहाय्यक अंगे मुख्य साधनेबरोबर असतात ही रचना दाखवते.",
+                "application_quote": "",
+                "source_quote": "तदङ्गानां च ॥२८॥",
+                "classification": "SUPPORTED_ORIGINAL",
+                "reason": "The claim about auxiliary practices in Shandilya's sutra is supported by the source."
+              },
+              {
+                "field": "comparative_mr.2.explanation_mr",
+                "source_id": "EVC-CMP020",
+                "source_claim_quote": "योगसूत्र २.३० अहिंसा, सत्य, अस्तेय, ब्रह्मचर्य आणि अपरिग्रह हे यम सांगते. ही अष्टांगयोगातील नैतिक साधना आहे; ब्रह्मचर्याला केवळ वित्तीय शिस्त मानू नये. ही यादी नारद ७८ ची पूरक आहे, तिच्याशी एकसारखी नाही.",
+                "application_quote": "",
+                "source_quote": "अहिंसासत्यास्तेयब्रह्मचर्यापरिग्रहा यमाः ॥ २.३०॥",
+                "classification": "SUPPORTED_ORIGINAL",
+                "reason": "The claim about Yamas in the Yoga Sutras is supported by the source."
+              },
+              {
+                "field": "comparative_mr.3.explanation_mr",
+                "source_id": "DEV-GITA-12-13-14",
+                "source_claim_quote": "गीतेत मैत्री आणि करुणेचा विषय सर्व प्राणी आहेत, तर मनबुद्धीच्या अर्पणाचा विषय भगवान आहे; हे दोन्ही मिसळू नयेत. 'स मे प्रियः' म्हणजे भक्त भगवानाला प्रिय आहे, केवळ भक्ताच्या भावनिक प्रेमाची भाषा नव्हे. १२.१३ ची गुणमालिका १२.१४ शी जोडलेली आहे. ही स्थळे नारद ७८ ला पूरक आहेत, त्याची पुष्टी करणारी नाहीत.",
+                "application_quote": "",
+                "source_quote": "अद्वेष्टा सर्वभूतानां मैत्रः करुण एव च।\nनिर्ममो निरहङ्कारः समदुःखसुखः क्षमी।।12.13।।\n\nसन्तुष्टः सततं योगी यतात्मा दृढनिश्चयः।\nमय्यर्पितमनोबुद्धिर्यो मद्भक्तः स मे प्रियः।।12.14।।",
+                "classification": "SUPPORTED_ORIGINAL",
+                "reason": "The claim about the qualities of a devotee in the Bhagavad Gita is supported by the source."
+              }
+            ],
+            "outcome": "READY",
+            "blocking_issues": [],
+            "advisory_notes": [],
+            "uncertainties": []
+          },
+          "review_key": "74e38da91d13f10d2a73fef8262025b567a97f749b713051ec6a564952bba018",
+          "reviewed_draft_sha256": "fd3794617d0e9cfc4985b64e8c90a6fbc4709c003e22fc8f7cd1e838e6e71621",
+          "rubric_sha256": "5f9136a410ea50658c0937be070fa20da68e7f28b7051948d787b312a3592728",
+          "evidence_selections": [
+            {
+              "response_path": "source_checks.0.comparison_ref",
+              "ref": "D9c068faee2b1"
+            },
+            {
+              "response_path": "source_checks.0.source_ref",
+              "ref": "Saf3b3f2f075d"
+            },
+            {
+              "response_path": "source_checks.0.source_claim_ref",
+              "ref": "D9c068faee2b1"
+            },
+            {
+              "response_path": "source_checks.1.comparison_ref",
+              "ref": "D1bc7a3f39d1a"
+            },
+            {
+              "response_path": "source_checks.1.source_ref",
+              "ref": "S629d177c24cf"
+            },
+            {
+              "response_path": "source_checks.1.source_claim_ref",
+              "ref": "D1bc7a3f39d1a"
+            },
+            {
+              "response_path": "source_checks.2.comparison_ref",
+              "ref": "Da460af46f9bc"
+            },
+            {
+              "response_path": "source_checks.2.source_ref",
+              "ref": "Sc55058a670ab"
+            },
+            {
+              "response_path": "source_checks.2.source_claim_ref",
+              "ref": "Da460af46f9bc"
+            },
+            {
+              "response_path": "source_checks.3.comparison_ref",
+              "ref": "D078dd1cb0122"
+            },
+            {
+              "response_path": "source_checks.3.source_ref",
+              "ref": "S585f919a4230"
+            },
+            {
+              "response_path": "source_checks.3.source_claim_ref",
+              "ref": "D078dd1cb0122"
+            }
+          ],
+          "decision_comparisons": {}
+        },
+        "discussion": {
+          "position": {
+            "narada": {
+              "positions": {
+                "1": {
+                  "concerns": "Do not reduce 'astikya' and 'daya' to mere secular HR empathy or corporate compliance; N78 demands authentic moral restraint.",
+                  "evidence": "N78 explicitly mandates 'परिपालनीयानि' regarding ahimsa, satya, sauca, daya, and astikya as non-negotiable devotional conduct.",
+                  "source_fit": "Direct source fit: N78 establishes that genuine devotion must be grounded in disciplined ethical character.",
+                  "thesis": "N78 insists that devotional commitment requires preserving core moral virtues—non-harm, truth, purity, compassion, and reverence—in daily conduct."
+                }
+              }
+            },
+            "shandilya": {
+              "positions": {
+                "1": {
+                  "thesis": "शांडिल्य सूत्रानुसार साहाय्यक अंगांचा सराव मुख्य साधनेला आधार देतो.",
+                  "evidence": "शांडिल्य सूत्र 28 मध्ये गुरुसेवा, शास्त्राशी सुसंगत विचार आणि इंद्रियसंयम यांचा उल्लेख आहे.",
+                  "source_fit": "शांडिल्य सूत्रात साहाय्यक अंगांचा सराव मुख्य साधनेला पूरक मानला आहे.",
+                  "concerns": "सर्व गुण थेट एकसारखे मानू नयेत; भाष्याच्या विविधतेमुळे अर्थ बदलू शकतो."
+                }
+              }
+            },
+            "researcher": {
+              "positions": {
+                "1": {
+                  "thesis": "Qualified support only. EVC-CMP020 (Yoga Sutra 2.30) and Gita 12.13–14 complement N78 (ethical conduct as part of bhakti) and S28 (supporting limbs alongside the main practice): both show moral groundwork as a supporting limb. A bounded business extension is plausible, but it must be labelled a present-day interpretation.",
+                  "evidence": "Yoga 2.30 lists the yamas: ahimsa, satya, asteya, brahmacharya, aparigraha. Gita 12.13 lists adveshta, maitra, karuna, nirmama, nirahankara, kshami. 12.14 ties these to a devotee whose mind and intellect are offered to God.",
+                  "source_fit": "These passages support the idea that ethical disposition accompanies spiritual practice. They do not define S28's limbs. The S28 examples (guru-seva, sense-restraint) come from the commentary, and the lists differ across texts. They do not prove a team culture or any business result.",
+                  "concerns": "Do not equate yamas with the Gita qualities, or treat brahmacharya as financial discipline. Do not mix compassion toward all beings with offering the mind to God. Do not read 'dear to God' as emotional love or as success. Honesty and empathy as a team foundation is a modern analogy and needs a specific, bounded action before acceptance."
+                }
+              }
+            },
+            "sutrakar": {
+              "positions": {
+                "1": {
+                  "thesis": "सशर्त स्वीकार. नारद ७८ (अहिंसा, सत्य, शौच, दया, आस्तिक्य यांचे परिपालन) आणि शांडिल्य २८ (मुख्य साधनेला आधार देणाऱ्या अंगांचा सराव) यांतून एक आधुनिक निर्णय निघतो: मुख्य कार्य सुरू करण्यापूर्वी आणि चालू असताना नैतिक आधारपद्धती आधी निश्चित करणे. 'संघसंस्कृती' ही सामान्य उपमा सोडून हा संकुचित निर्णय घ्यावा.",
+                  "evidence": "नारद ७८ थेट चारित्र्यपालन सांगतात. शांडिल्य २८ चा 'तदङ्गानां' हा संदर्भ २७ शी जोडलेला असून भाष्य (गुरुसेवा, इंद्रियसंयम) तात्पुरते आहे. योगसूत्र २.३० आणि गीता १२.१३–१४ पूरक आहेत, पण समान नाहीत.",
+                  "source_fit": "नारद: भक्तिसाधनेतील नैतिक आचरण. शांडिल्य: साहाय्यक अंगे मुख्य साधनेला आधार. दोघे पूरक, एकसारखे नाहीत. व्यावसायिक उपयोग ही आजची व्याख्या आहे, लेखकांचा हेतू नव्हे.",
+                  "concerns": "'आस्तिक्य' चे कंपनी-मूल्यात रूपांतर नको. गीतेत करुणा सर्वभूतांवर, अर्पण भगवानावर; ते मिसळू नये. शांडिल्य भाष्य अनिश्चित. 'प्रामाणिकता-सहानुभूती हा संघाचा पाया' ही सामान्य घोषणा आहे; ठोस कृती, कर्ता, मर्यादा आणि निरीक्षणीय पुढची पायरी हवी."
+                }
+              }
+            }
+          },
+          "challenge": {
+            "narada": {
+              "challenges": {
+                "shandilya": {
+                  "1": "While S28 treats secondary limbs as aids to main practice, N78 treats virtues like truth, non-harm, and reverence as non-negotiable devotional duties ('परिपालनीयानि'), so does your reliance on commentary examples risk reducing essential moral conduct to mere instrumental preparation?"
+                },
+                "researcher": {
+                  "1": "I concur with your warning against diluting 'astikya' into secular HR values, but you must ensure that comparing N78 with Yoga 2.30 does not obscure that Narada demands these virtues as an active, mandatory devotional discipline rather than an abstract philosophical taxonomy."
+                },
+                "sutrakar": {
+                  "1": "Your proposal to operationalize ethical baselines before execution is sound, provided your bounded decision does not dilute Narada's categorical moral restraint ('परिपालनीयानि') into a mere utilitarian procedural checklist."
+                }
+              }
+            },
+            "shandilya": {
+              "challenges": {
+                "narada": {
+                  "1": "शांडिल्य सूत्र २८ मध्ये साहाय्यक अंगांचा सराव मुख्य साधनेला पूरक मानला आहे. त्यामुळे नैतिक गुणांचा सराव भक्तिसाधनेचा भाग असल्याचे नारद सूत्र ७८ च्या दृष्टीने पूरक आहे."
+                },
+                "researcher": {
+                  "1": "शांडिल्य सूत्र २८ च्या साहाय्यक अंगांचा सराव मुख्य साधनेला आधार देतो, त्यामुळे नैतिक गुणांचा सराव आवश्यक आहे. परंतु, आधुनिक उपमा म्हणून संघसंस्कृतीचा पाया म्हणून प्रामाणिकता आणि सहानुभूतीचा वापर करणे योग्य आहे का, यावर विचार करावा."
+                },
+                "sutrakar": {
+                  "1": "शांडिल्य सूत्र २८ च्या साहाय्यक अंगांचा सराव मुख्य साधनेला आधार देतो, त्यामुळे नैतिक आधारपद्धती निश्चित करणे योग्य आहे. परंतु, 'संघसंस्कृती' ही सामान्य उपमा सोडून ठोस निर्णय घेणे आवश्यक आहे."
+                }
+              }
+            },
+            "researcher": {
+              "challenges": {
+                "narada": {
+                  "1": "I agree that N78 requires real moral restraint and not mere compliance. But on the supplementary evidence, Yoga 2.30 lists the yamas and Gita 12.13–14 describes the devotee's qualities, and neither is N78's list, so we should say they complement N78 rather than confirm that 'astikya' or 'daya' mean the same thing there."
+                },
+                "shandilya": {
+                  "1": "I agree that the S28 limbs depend on the commentary and that the lists differ. But 'tad-anganam ca' refers back to S27, so can you say whether the examples from the commentary (guru-seva, sense-restraint) are the limbs that S27 supports, or only a provisional reading? Neither Yoga 2.30 nor Gita 12.13–14 mentions guru-seva, so they cannot confirm that reading."
+                },
+                "sutrakar": {
+                  "1": "I agree that the 'sanghasanskriti' framing is too general and that a narrower decision is needed. One check: if the decision is to fix the ethical groundwork before starting the main work, the supplements only show that moral disposition accompanies spiritual practice, with different objects of compassion and offering in the Gita. So the actor, the trigger and the observable step have to be labelled as modern interpretation, not drawn from these passages."
+                }
+              }
+            },
+            "sutrakar": {
+              "challenges": {
+                "narada": {
+                  "1": "I agree that N78 demands real moral restraint and not HR empathy; but 'astikya' concerns faith in God and scripture, so how would you keep it out of the business action while still letting ahimsa, satya, shaucha and daya shape a bounded, observable practice?"
+                },
+                "shandilya": {
+                  "1": "I agree that S28 'tadanganam ca' depends on S27 and that the commentary examples (guru-seva, indriya-samyama) are provisional; since you caution that the limbs differ, can you confirm the safe claim is only 'supporting practices accompany the main practice', and that S28 does not name honesty or compassion?"
+                },
+                "researcher": {
+                  "1": "I accept that Yoga 2.30 and Gita 12.13-14 are complementary and not identical to N78 or S28, and I note that Gita karuna is directed at all beings while the offering of mind is directed to God; the 'team culture foundation' line is still too general, so would you support a narrower decision, such as fixing explicit ethical ground rules before and during a main undertaking, with a named actor, a trigger and a checkable step?"
+                }
+              }
+            }
+          },
+          "reply": {
+            "narada": {
+              "answers": {
+                "researcher": {
+                  "1": "I agree that Yoga 2.30 and Gita 12.13–14 serve as complementary witnesses rather than exact duplicates, which confirms that N78's specific discipline—integrating active ethical restraints with devotional 'astikya'—must retain its distinct canonical integrity."
+                },
+                "shandilya": {
+                  "1": "While S28 treats secondary practices as supportive scaffolding, N78 commands that ethical virtues be preserved categorically ('परिपालनीयानि') as the lived embodiment of devotion itself rather than merely disposable preliminary aids."
+                },
+                "sutrakar": {
+                  "1": "To preserve theological boundaries, 'astikya' must remain anchored to its devotional meaning of reverence for transcendent truth rather than secularized, allowing ahimsa, satya, shaucha, and daya to independently govern concrete, observable operating restraints against harm and deceptive practice."
+                }
+              }
+            },
+            "shandilya": {
+              "answers": {
+                "narada": {
+                  "1": "शांडिल्य सूत्र २८ मध्ये साहाय्यक अंगांचा सराव मुख्य साधनेला पूरक मानला आहे, त्यामुळे नैतिक गुणांचा सराव भक्तिसाधनेचा भाग असल्याचे नारद सूत्र ७८ च्या दृष्टीने पूरक आहे."
+                },
+                "researcher": {
+                  "1": "शांडिल्य सूत्र २८ च्या साहाय्यक अंगांचा सराव मुख्य साधनेला आधार देतो, त्यामुळे नैतिक गुणांचा सराव आवश्यक आहे. परंतु, आधुनिक उपमा म्हणून संघसंस्कृतीचा पाया म्हणून प्रामाणिकता आणि सहानुभूतीचा वापर करणे योग्य आहे का, यावर विचार करावा."
+                },
+                "sutrakar": {
+                  "1": "शांडिल्य सूत्र २८ च्या साहाय्यक अंगांचा सराव मुख्य साधनेला आधार देतो, त्यामुळे नैतिक आधारपद्धती निश्चित करणे योग्य आहे. परंतु, 'संघसंस्कृती' ही सामान्य उपमा सोडून ठोस निर्णय घेणे आवश्यक आहे."
+                }
+              }
+            },
+            "researcher": {
+              "answers": {
+                "narada": {
+                  "1": "Agreed: Yoga 2.30 and Gita 12.13-14 are complementary evidence only and cannot show that N78's 'परिपालनीयानि' is a mandatory devotional discipline; they show only that ethical disposition accompanies devotion or yoga, without erasing N78's imperative or turning it into an abstract list."
+                },
+                "shandilya": {
+                  "1": "Agreed: the supplements do not mention guru-seva or sense-restraint and cannot confirm the commentary examples; they support only the general claim that moral groundwork accompanies the main practice, so the S27-linked reading of 'tad-anganam ca' remains provisional and awaits scholarly review."
+                },
+                "sutrakar": {
+                  "1": "Yes, I support a narrower decision (fixing ethical ground rules before and during the main work), but the supplements neither supply nor support its actor, trigger or checkable step; those are a present-day interpretation. The Gita's compassion is toward all beings and its offering of mind is to God, and I will keep these distinct."
+                }
+              }
+            },
+            "sutrakar": {
+              "answers": {
+                "narada": {
+                  "1": "I accept your point on 'परिपालनीयानि': the restraint stays categorical, so the business step will be a non-negotiable limit (a stated line that is not traded off against results) and not a utilitarian checklist. I will leave 'आस्तिक्य' out of the business action as devotional faith in God and scripture, and carry only ahimsa, satya, shaucha and daya into the practice, labelled as a present-day interpretation."
+                },
+                "shandilya": {
+                  "1": "Agreed: the safe claim is only that supporting practices accompany the main practice, because S28 'तदङ्गानां च' points back to S27 and does not name honesty or compassion. I treat guru-seva and indriya-samyama as provisional commentary examples, so the ethical-groundwork decision rests on N78 and S28 is used only for the structure of supporting limbs alongside the main work, as a qualified interpretation."
+                },
+                "researcher": {
+                  "1": "I accept that Yoga 2.30 and Gita 12.13-14 complement N78 and S28 and do not confirm them, and that Gita compassion toward all beings is a different object from offering the mind to God. I adopt your caution and narrow the decision: the owner or lead names a few explicit ethical limits (truthful statements, no harm to people, clean dealings, care for those affected) before starting a main undertaking, and reviews them at a set checkpoint. The actor, trigger and observable step are my modern interpretation, and the sources do not supply them."
+                }
+              }
+            }
+          },
+          "_batch": {
+            "batch_id": "selection-1",
+            "entry_numbers": [
+              1
+            ],
+            "prior_formulas": [],
+            "forbidden_originals": [
+              "All urgent calls he shall hear at once, but never put off, for when postponed, they will prove too hard or impossible to accomplish.",
+              "But the best demonstration by far is experience, if it go not beyond the actual experiment.",
+              "Capitals are increased by parsimony, and diminished by prodigality and misconduct.",
+              "For if you once gain time and respite, you will more easily command yourself.",
+              "For the things we have to learn before we can do them, we learn by doing them.",
+              "From my grandfather Verus I learned good morals and the government of my temper.",
+              "Give me that which I want, and you shall have this which you want",
+              "He is capable of rectifying his mistakes, by discussion and experience.",
+              "He was most ready to give way without envy to those who possessed any particular faculty",
+              "In sustainable forests around the world, users are active monitors of the level of harvesting occurring in their forests",
+              "Lay hold of to-day’s task, and you will not need to depend so much upon to-morrow’s.",
+              "One procedure already mentioned is to look for satisfactory choices instead of optimal ones.",
+              "Some things are in our control and others not.",
+              "Sovereignty is possible only with assistance. A single wheel can never move. Hence he shall employ ministers and hear their opinion.",
+              "every virtue or excellence both brings into good condition the thing of which it is the excellence and makes the work of that thing be done well",
+              "the carriers of utility are gains and losses – changes of wealth rather than states of wealth.",
+              "अत एव फलानन्त्यम्",
+              "अत एव फलानन्त्यम्॥",
+              "अतः सर्वसुलभा सा",
+              "अतः सर्वसुलभा सा॥",
+              "अति सर्वत्र वर्जयेत्",
+              "अथ फलनिरूपणम्",
+              "अथ फलनिरूपणम्॥",
+              "अथ लक्षणानां विस्तरः",
+              "अथ लक्षणानां विस्तरः॥",
+              "अथातः उद्यमजिज्ञासा",
+              "अथातो उद्यमं व्याख्यास्यामः",
+              "अथातो उद्यमजिज्ञासा",
+              "अथातो भक्तिं व्याख्यास्यामः",
+              "अथातो भक्तिं व्याख्यास्यामः॥",
+              "अथातो भक्तिजिज्ञासा",
+              "अथातो भक्तिजिज्ञासा॥",
+              "अधिकारविभागेन कार्यसिद्धिः",
+              "अनन्यचिन्तनेन उद्यमसिद्धिः भवति",
+              "अनन्यचिन्तनेन उद्यमसिद्धिः भवति॥ ४ ॥",
+              "अनवरताभ्यासेन प्राप्यते परा काष्ठा",
+              "अनावश्यकं ऋणं वर्जयेत्",
+              "अनावश्यकम् ऋणं वर्जयेत्",
+              "अनावश्यकसंग्रहं त्यजेत्",
+              "अनिर्वचनीयं प्रेमस्वरूपम्",
+              "अनिर्वचनीयं प्रेमस्वरूपम्॥",
+              "अनुत्थाने ध्रुवो नाशः प्राप्तस्यानागतस्य च । प्राप्यते फलमुत्थानाल्लभते चार्थसम्पदम्",
+              "अनुत्थाने ध्रुवो नाशः प्राप्तस्यानागतस्य च । प्राप्यते फलमुत्थानाल्लभते चार्थसम्पदम् ॥",
+              "अनुभवरूपं ज्ञानं नवोन्मेषस्य जननी",
+              "अनुभवरूपं ज्ञानं नवोन्मेषस्य जननी॥ ८ ॥",
+              "अन्तर्भेदं निवार्येत, विश्वासं परीक्षयेत्। एकस्य प्रमादेन, सर्वं राष्ट्रं विनश्यति",
+              "अन्तर्भेदं निवार्येत, विश्वासं परीक्षयेत्। एकस्य प्रमादेन, सर्वं राष्ट्रं विनश्यति॥",
+              "अन्त्यजोऽपि विमुच्यते",
+              "अन्त्यजोऽपि विमुच्यते॥",
+              "अन्यथा पातित्यशङ्कया",
+              "अन्यथा पातित्याशङ्कया",
+              "अन्यथा पातित्याशङ्कया॥",
+              "अन्यस्मात् सौलभ्यं भक्तौ",
+              "अन्यस्मात् सौलभ्यं भक्तौ॥",
+              "अन्याश्रयाणां त्यागः",
+              "अन्याश्रयाणां त्यागोनन्यता",
+              "अन्याश्रयाणां त्यागोऽनन्यता",
+              "अन्याश्रयाणां त्यागोऽनन्यता॥",
+              "अन्योन्याश्रयत्वमित्यन्ये",
+              "अन्योन्याश्रयत्वमित्यन्ये॥",
+              "अप्रमादेन कर्तव्यं कार्यं सर्वं विचक्षणैः",
+              "अभिमानदम्भादिकं त्याज्यम्",
+              "अभिमानदम्भादिकं त्याज्यम्॥",
+              "अभिमानाडम्बरमपहाय सङ्घहितरतो नेता स्वाचरणेनादर्शं स्थापयेत् कर्तव्यानपायेन",
+              "अभिमानाडम्बरमपहाय सङ्घहितरतो नेता स्वाचरणेनादर्शं स्थापयेत् कर्तव्यानपायेन॥",
+              "अभ्यासवैराग्याभ्यां तन्निरोधः",
+              "अभ्यासवैराग्याभ्यां तन्निरोधः ॥",
+              "अभ्यासेन तु गृह्यते कौशलम्",
+              "अमृतस्वरूपा च",
+              "अमृतस्वरूपा च गुणवत्ता",
+              "अमृतस्वरूपा च॥",
+              "अर्जितस्य वित्तस्य उचितदानेन समाजऋणं परिशोधनीयम्",
+              "अर्जितस्य वित्तस्य उचितदानेन समाजऋणं परिशोधनीयम्॥ २६ ॥",
+              "अर्थ एव प्रधानः स्याद् अर्थमूलो हि धर्मकामौ । अर्थेन विहीनस्य नरस्य जीवनं निष्प्रयोजनम्",
+              "अर्थ एव प्रधानः स्याद् अर्थमूलो हि धर्मकामौ । अर्थेन विहीनस्य नरस्य जीवनं निष्प्रयोजनम् ॥",
+              "अर्थमर्यादायां स्ववचनाविरुद्धम् एकहितसंख्यां लिखित्वा तिथिपरीक्षितं पालयेत्",
+              "अर्थमर्यादायां स्ववचनाविरुद्धम् एकहितसंख्यां लिखित्वा तिथिपरीक्षितं पालयेत्॥",
+              "अर्थमूलं इदं सर्वम्",
+              "अर्थशास्त्रस्य ज्ञानम्",
+              "अल्पप्रयोगेण सत्यपरीक्षणम्",
+              "अवतारश्च लोकहितार्थम्",
+              "अवतारश्च लोकहितार्थम्॥",
+              "अविद्या तिमिरं हन्ति प्रज्ञादीपः",
+              "अव्यवस्थितात्मनां न सिद्धिः",
+              "अव्यावृत्तभजनात्",
+              "अव्यावृत्तभजनात्॥",
+              "अस्त्येवमेवम्",
+              "अस्त्येवमेवम्॥",
+              "अहंकारः लोभः मोहः च उद्यमविनाशस्य कारणानि",
+              "अहंकारः लोभः मोहः च उद्यमविनाशस्य कारणानि॥ २१ ॥",
+              "अहंकारः विनाशाय",
+              "अहङ्कारं फलासक्तिं च हित्वा लिखितमर्यादया कार्यं न्यसेदन्तिमाधिकारी",
+              "अहङ्कारं फलासक्तिं च हित्वा लिखितमर्यादया कार्यं न्यसेदन्तिमाधिकारी॥",
+              "अहङ्कारनिवृत्तिः",
+              "अहङ्कारनिवृत्तिः॥",
+              "अहिंसा च परमो धर्मः",
+              "अहिंसा च परमो धर्मः॥",
+              "अहिंसासत्यशौचदयास्तिक्यादिचरित्राणि परिपालनीयानि",
+              "अहिंसासत्यशौचदयास्तिक्यादिचारित्र्याणि परिपालनीयानि",
+              "अहिंसासत्यशौचदयास्तिक्यादिसर्वचरित्राणि परिपालनीयानि",
+              "अहिंसासत्यशौचदयास्तिक्यादिसर्वचरित्राणि परिपालनीयानि॥",
+              "अहिंसासत्यास्तेयब्रह्मचर्यापरिग्रहा यमाः ॥ २.",
+              "अहिंसासत्यास्तेयब्रह्मचर्यापरिग्रहा यमाः ॥ २.३०॥",
+              "आत्मकल्याणात् राष्ट्रनिर्माणं यत्र सिद्ध्यति सः परमः उद्यमयोगः",
+              "आत्मकल्याणात् राष्ट्रनिर्माणं यत्र सिद्ध्यति सः परमः उद्यमयोगः॥ २८ ॥",
+              "आत्मज्ञानं समारम्भस्तितिक्षा धर्मनित्यता । यमर्था नापकर्षन्ति स वै पण्डित उच्यते",
+              "आत्मज्ञानं समारम्भस्तितिक्षा धर्मनित्यता । यमर्था नापकर्षन्ति स वै पण्डित उच्यते ॥",
+              "आत्मनो मोक्षार्थं जगद्धिताय च",
+              "आत्मबलेन कृतः पुरुषार्थः कदापि न विफलः भवति",
+              "आत्मबलेन कृतः पुरुषार्थः कदापि न विफलः भवति॥ ११ ॥",
+              "आत्मरत्यविरोधेनेति शाण्डिल्यः",
+              "आत्मरत्यविरोधेनेति शाण्डिल्यः॥",
+              "आत्मविश्वासेन सर्वं सुकरं भवति",
+              "आत्मसमर्पणं च परमम्",
+              "आत्मसमर्पणं च परमम्॥",
+              "आत्मारामो भवति",
+              "आधी प्रचिती मग प्रवचन । आधी आचार मग विचार ॥ अंतरीं असावा विवेक । बाह्य दिसावा नेटका",
+              "आधी प्रचिती मग प्रवचन । आधी आचार मग विचार ॥ अंतरीं असावा विवेक । बाह्य दिसावा नेटका ॥",
+              "आपत्काले धैर्यं न त्यजेत्",
+              "आपत्सु अपि न विमुह्यति प्रज्ञावान्",
+              "आपत्सु मित्रं जानीयात् युद्धे शूरं धने शुचिम्",
+              "आपत्सु सुदृढनियोजनं रक्षाकवचम्",
+              "आपदर्थं धनं रक्षेत्",
+              "आपदर्थे धनं रक्षेत्",
+              "आर्थिकशिस्तः स्थैर्यस्य आधारः",
+              "आलस्यं प्रमादं च त्यक्त्वा कालस्य सदुपयोगः कर्तव्यः",
+              "आलस्यं प्रमादं च त्यक्त्वा कालस्य सदुपयोगः कर्तव्यः॥ १५ ॥",
+              "आलस्यं हि मनुष्याणां शरीरस्थो महान् रिपुः",
+              "आहारः प्राणदः प्रोक्तः स युक्त्या समुपाहृतः । अयुक्त्या प्राणहन्ता च तस्माद्युक्त्या समाचरेत्",
+              "आहारः प्राणदः प्रोक्तः स युक्त्या समुपाहृतः । अयुक्त्या प्राणहन्ता च तस्माद्युक्त्या समाचरेत् ॥",
+              "इति द्वितीयस्याह्निकस्य निर्णयः",
+              "इति द्वितीयस्याह्निकस्य निर्णयः॥",
+              "इति प्रथमस्याह्निकस्य पर्यवसानम्",
+              "इति प्रथमस्याह्निकस्य पर्यवसानम्॥",
+              "इति मोक्षस्वरूपम्",
+              "इति मोक्षस्वरूपम्॥",
+              "इतिहासपुराणाभ्यां सिद्धम्",
+              "इतिहासपुराणाभ्यां सिद्धम्॥",
+              "इत्येवं वदन्ति जनजल्पनिर्भया एकमताः कुमारव्यासशुकशाण्डिल्यगर्गविष्णुकौण्डिन्यशेषोद्धवारुणिबलिव्याभीष्माष्टमी आचार्याः",
+              "इत्येवं वदन्ति जनजल्पनिर्भया एकमताः कुमारव्यासशुकशाण्डिल्यगर्गविष्णुकौण्डिन्यशेषोद्धवारुणिबलिव्याभीष्माष्टमी आचार्याः॥",
+              "इत्येवं वदन्ति जनजल्पनिर्भया एकमताः कुमारव्यासशुकशाण्डिल्यगर्गविष्णुकौण्डिन्यशेषोद्धवारुणिबलिहनुमद्विभीषणादयो भक्त्याचार्याः",
+              "इत्येवं वदन्ति जनजल्पनिर्भया एकमताः कुमारव्यासशुकशाण्डिल्यगर्गविष्णुकौण्डिल्यशेषोद्धवारुणिबलिहनुमद्विभीषणादयो भक्ताचार्याः",
+              "ईशा वास्यमिदं सर्वं यत्किञ्च जगत्यां जगत् । तेन त्यक्तेन भुञ्जीथा मा गृधः कस्यस्विद्धनम्",
+              "ईशा वास्यमिदं सर्वं यत्किञ्च जगत्यां जगत् । तेन त्यक्तेन भुञ्जीथा मा गृधः कस्यस्विद्धनम् ॥",
+              "ईशा वास्यमिदꣳसर्वं यत्किञ्च जगत्यां जगत् ।",
+              "ईशा वास्यमिदꣳसर्वं यत्किञ्च जगत्यां जगत् ।\nतेन त्यक्तेन भुञ्जीथा मा गृधः कस्यस्विद्धनम्",
+              "ईशा वास्यमिदꣳसर्वं यत्किञ्च जगत्यां जगत् ।\nतेन त्यक्तेन भुञ्जीथा मा गृधः कस्यस्विद्धनम् ॥ १॥",
+              "ईशावास्यमिदं सर्वं यत्किञ्च जगत्यां जगत्",
+              "ईश्वरचिन्तनं सततम्",
+              "ईश्वरचिन्तनं सततम्॥",
+              "ईश्वरप्रणिधानाद्वा",
+              "ईश्वरप्रणिधानाद्वा॥",
+              "ईश्वरस्य स्वरूपविचारः",
+              "ईश्वरस्य स्वरूपविचारः॥",
+              "ईश्वरस्याप्यभिमानद्वेषित्वात् दैन्यप्रियत्वाच्च",
+              "ईश्वरस्याप्यभिमानद्वेषित्वाद् दैन्यप्रियत्वाच्च",
+              "ईश्वरस्याप्यभिमानद्वेषित्वाद् दैन्यप्रियत्वाच्च॥",
+              "ईश्वरार्पितसर्वभावः",
+              "ईश्वरार्पितसर्वभावः॥",
+              "उत्तरस्मादुत्तरस्मात् पूर्वपूर्वा श्रेयसी भवति",
+              "उत्तरस्मादुत्तरस्मात् पूर्वपूर्वा श्रेयसी भवति॥",
+              "उत्तरस्मादुत्तरस्मात् पूर्वपूर्वा श्रेयाय भवति",
+              "उत्तिष्ठ हे कापुरुष मा शेष्वैवं पराजितः । मुहूर्तं ज्वलितं श्रेयो न च धूमायितं चिरम्",
+              "उत्तिष्ठ हे कापुरुष मा शेष्वैवं पराजितः । मुहूर्तं ज्वलितं श्रेयो न च धूमायितं चिरम् ॥",
+              "उद्यमः एव जीवनसाधना",
+              "उद्यमः एव परमात्मा इति निश्चयः आलम्बनम्",
+              "उद्यमः एव परमात्मा इति निश्चयः आलम्बनम्॥ ३ ॥",
+              "उद्यमस्य मूलं ध्येयशुद्धिस्य दृढनिश्चयः",
+              "उद्यमेन एव सिद्धयन्ति कार्याणि न मनोरथैः",
+              "उद्यमेन एव सिध्यन्ति कार्याणि न मनोरथैः",
+              "उद्योगः खलु सर्वकर्मणां फलप्रदः",
+              "उद्योगिनं पुरुषसिंहमुपैति लक्ष्मीः",
+              "उद्योगे तु वसते लक्ष्मीः",
+              "उद्योजकेन सहकारिणां परिवारवत् पालनं कर्तव्यम्",
+              "उद्योजकेन सहकारिणां परिवारवत् पालनं कर्तव्यम्॥ २५ ॥",
+              "उपदेक्ष्यन्ति ते ज्ञानं ज्ञानिनस्तत्त्वदर्शिनः ॥ ४-३४॥",
+              "उपायेन हि यच्छक्यं न तच्छक्यं पराक्रमैः",
+              "एकाधारात् दृष्टिध्येये पृथङ्निश्चित्य कर्तव्यानपायेन स्वेच्छाव्यापारा ध्येयाभिमुखाः कार्याः, विमुखास्त्याज्याः",
+              "एकाधारात् दृष्टिध्येये पृथङ्निश्चित्य कर्तव्यानपायेन स्वेच्छाव्यापारा ध्येयाभिमुखाः कार्याः, विमुखास्त्याज्याः॥",
+              "एवं परा निष्ठा",
+              "एवं परा निष्ठा॥",
+              "ऐश्वर्यं वीर्यं यशः श्रीः ज्ञानं वैराग्यं च उद्यमस्य षड्गुणाः",
+              "ऐश्वर्यं वीर्यं यशः श्रीः ज्ञानं वैराग्यं च उद्यमस्य षड्गुणाः॥ १७ ॥",
+              "कण्ठावरोधरोमाञ्चाश्रुभिः परस्परं लपमानाः पावयन्ति कुलानि पृथिवीं च",
+              "कण्ठावरोधरोमाञ्चाश्रुभिः परस्परं लपमानाः पावयन्ति कुलानि पृथिवीं च॥",
+              "कथादिष्विति गर्गः",
+              "कथादिष्विति गर्गः॥",
+              "करुणया युक्तं व्यवस्थापनम्",
+              "कर्तव्यानपायेन विक्षेपहेतून् हित्वैकाधारे निष्ठा",
+              "कर्तव्यानपायेन विक्षेपहेतून् हित्वैकाधारे निष्ठा॥",
+              "कर्तव्याविरोधेनैकान्तभावेन बाधकाश्रयत्यागोऽनन्यता",
+              "कर्तव्याविरोधेनैकान्तभावेन बाधकाश्रयत्यागोऽनन्यता॥",
+              "कर्म तु चित्तशुद्ध्यर्थम्",
+              "कर्म तु चित्तशुद्ध्यर्थम्॥",
+              "कर्मणा सिद्धिः",
+              "कर्मणैव हि संसिद्धिमास्थिता जनकादयः । लोकसंग्रहमेवापि संपश्यन्कर्तुमर्हसि",
+              "कर्मणैव हि संसिद्धिमास्थिता जनकादयः । लोकसंग्रहमेवापि संपश्यन्कर्तुमर्हसि ॥",
+              "कर्मण्येवाधिकारस्ते मा फलेषु कदाचन ।",
+              "कर्मण्येवाधिकारस्ते मा फलेषु कदाचन ।\nमा कर्मफलहेतुर्भूर्मा ते सङ्गोऽस्त्वकर्मणि ॥ २-",
+              "कर्मण्येवाधिकारस्ते मा फलेषु कदाचन ।\nमा कर्मफलहेतुर्भूर्मा ते सङ्गोऽस्त्वकर्मणि ॥ २-४७॥",
+              "कर्मण्येवाधिकारस्ते मा फलेषु कदाचन । मा कर्मफलहेतुर्भूर्मा ते सङ्गोऽस्त्वकर्मणि",
+              "कर्मण्येवाधिकारस्ते मा फलेषु कदाचन । मा कर्मफलहेतुर्भूर्मा ते सङ्गोऽस्त्वकर्मणि ॥",
+              "कर्मत्यागान् न सिद्धिः स्यात् कर्मयोगो विशिष्यते । जगच्चक्रप्रवृत्त्यर्थं कर्तव्यं कर्म सर्वदा",
+              "कर्मत्यागान् न सिद्धिः स्यात् कर्मयोगो विशिष्यते । जगच्चक्रप्रवृत्त्यर्थं कर्तव्यं कर्म सर्वदा ॥",
+              "कर्मफले असक्तिः परमशांतिप्रदा",
+              "कस्तरति कस्तरति मायां यः सङ्गं त्यजति यो महानुभावं सेवते निर्ममो भवति",
+              "कस्तरति कस्तरति मायां यः सङ्गं त्यजति यो महानुभावं सेवते निर्ममो भवति॥",
+              "कामक्रोधमोहस्मृतिभ्रंशबुद्धिनाशसर्वनाशकारणत्वात्",
+              "कामक्रोधमोहस्मृतिभ्रंशबुद्धिनाशसर्वनाशकारणत्वात्॥",
+              "कामक्रोधादिजयः",
+              "कामक्रोधादिजयः॥",
+              "कार्यमूलो हि दण्डः",
+              "कार्यसंस्कृतिः संघस्य जीवनम्",
+              "कालज्ञता एव सफलतायाः बींजम्",
+              "कालज्ञता एव सफलतायाः बीजम्",
+              "कालस्य महत्त्वं जानीयात्",
+              "कालानुकूलं परिवर्तनं हि शाश्वतम्",
+              "कालानुरूपं परिवर्तनम्",
+              "कालो हि दुरतिक्रमः",
+              "किंबहुना तुमचें केलें । धर्मकीर्तन हें सिद्धी नेलें ।",
+              "किंबहुना तुमचें केलें । धर्मकीर्तन हें सिद्धी नेलें ।\nयेथ माझें जी उरलें । पाईकपण",
+              "किंबहुना तुमचें केलें । धर्मकीर्तन हें सिद्धी नेलें ।\nयेथ माझें जी उरलें । पाईकपण ॥ १७९३ ॥",
+              "कीर्तनादीनि तद्भूयस्त्वेन",
+              "कीर्तनादीनि तद्भूयस्त्वेन॥",
+              "कुटुम्बोद्योगे नियमबद्धता",
+              "कृतज्ञता जीवनधर्मः",
+              "कृषि-पशुपाल्ये वणिज्या च वार्ता । धान्य-पशु-हिरण्य-कुप्य-विष्टि-प्रदानाद् औपकारिकी",
+              "कृषि-पशुपाल्ये वणिज्या च वार्ता । धान्य-पशु-हिरण्य-कुप्य-विष्टि-प्रदानाद् औपकारिकी ॥",
+              "केल्याने होत आहे रे आधी केलेचि पाहिजे । यत्न तो देव जाणावा अंतरीं धरितां बरे ॥ आळस हाचि शत्रु मोठा । आळसे काम होत नाही",
+              "केल्याने होत आहे रे आधी केलेचि पाहिजे । यत्न तो देव जाणावा अंतरीं धरितां बरे ॥ आळस हाचि शत्रु मोठा । आळसे काम होत नाही ॥",
+              "कोषपूर्वाः सर्वा रम्भाः",
+              "कोषपूर्वाः सर्वारम्भाः",
+              "क्षणशः कणशश्चैव विद्यामर्थं च साधयेत्",
+              "क्षेत्रज्ञता आवश्यकः",
+              "गुणमाहात्म्यासक्ति-रूपासक्ति-पूजासक्ति-स्मरणासक्ति-दास्यासक्ति-सख्यासक्ति-कान्तासक्ति-वात्सल्यासक्ति-आत्मनिवेदनासक्ति-तन्मयतासक्ति-परमविरहासक्तिरूपा एकधाप्येकादशधा भवति",
+              "गुणमाहात्म्यासक्ति-रूपासक्ति-पूजासक्ति-स्मरणासक्ति-दास्यासक्ति-सख्यासक्ति-वात्सल्यासक्ति-कान्तासक्ति-आत्मनिवेदनासक्ति-तन्मयतासक्ति-परमविरहासक्तिरूपा एकधाप्येकदशधा भवति",
+              "गुणमाहात्म्यासक्तिरूपासक्तिपूजासक्तिस्मरणासक्तिदास्यासक्तिसख्यासक्तिकान्तासक्तिवात्सल्यासक्त्यात्मनिवेदनासक्तितन्मयासक्तिपरमविरहासक्तिरूपा एकधाप्येकादशधा भवति",
+              "गुणमाहात्म्यासक्तिरूपासक्तिपूजासक्तिस्मरणासक्तिदास्यासक्तिसख्यासक्तिकान्तासक्तिवात्सल्यासक्त्यात्मनिवेदनासक्तितन्मयासक्तिपरमविरहासक्तिरूपा एकधाप्येकादशधा भवति॥",
+              "गुणरहितं कामनारहितं प्रतिक्षणवर्धमानमविच्छिन्नं सूक्ष्मतरमनुभवरूपम्",
+              "गुणरहितं कामनारहितं प्रतिक्षणवर्धमानमविच्छिन्नं सूक्ष्मतरमनुभवरूपम्॥",
+              "गुणवत्ता सर्वोपरि लक्ष्यम्",
+              "गुणवत्ता सर्वोपरी लक्ष्यम्",
+              "गुणानां पूजा स्थानम्",
+              "गुणैः स्पर्धां कुर्यात्",
+              "गौणी तु परोपकरणत्वात्",
+              "गौणी तु परोपकरणत्वात्॥",
+              "गौणी त्रिधा गुणभेदादार्तादिभेदाद्वा",
+              "गौणी त्रिधा गुणभेदादार्तादिभेदाद्वा॥",
+              "ग्रामोद्योगेन राष्ट्रबलम्",
+              "ग्राहकवाणी मार्गदर्शिका",
+              "ग्राहकसंतोषः एव सर्वोच्चं मूल्यम्",
+              "ग्राहकस्य दीर्घसंबंधः",
+              "ग्राहकानुकूलता यशसः रहस्यम्",
+              "ग्राहके परमप्रेमरूपा सेवा",
+              "छिद्रं विज्ञाय प्रहरेत्",
+              "जडतां त्यक्त्वा प्रज्ञाबलेन नूतनमार्गः अन्वेषणीयः",
+              "जडतां त्यक्त्वा प्रज्ञाबलेन नूतनमार्गः अन्वेषणीयः॥ ७ ॥",
+              "जातिभेदो न विद्यते",
+              "जातिभेदो न विद्यते॥",
+              "जीवन्मुक्तिश्च संभवति",
+              "जीवन्मुक्तिश्च संभवति॥",
+              "जीवस्येश्वरानन्यत्वेऽपि तद्भावविमुक्तिः",
+              "जीवस्येश्वरानन्यत्वेऽपि तद्भावविमुक्तिः॥",
+              "जे खळांची व्यंकटी सांडो । तयां सत्कर्मीं रती वाढो ।",
+              "जे खळांची व्यंकटी सांडो । तयां सत्कर्मीं रती वाढो ।\nभूतां परस्परें पडो । मैत्र जीवाचें",
+              "जे खळांची व्यंकटी सांडो । तयां सत्कर्मीं रती वाढो ।\nभूतां परस्परें पडो । मैत्र जीवाचें ॥ १७९५ ॥",
+              "जोडोनियां धन उत्तम व्यवहारे । उदास विचारे वेच करी ॥ उत्तम ते ख्याती अमित हे जोडी । परि नाही गोडी संचयाची",
+              "जोडोनियां धन उत्तम व्यवहारे । उदास विचारे वेच करी ॥ उत्तम ते ख्याती अमित हे जोडी । परि नाही गोडी संचयाची ॥",
+              "ज्ञानं तु तदङ्गम्",
+              "ज्ञानं तु तदङ्गम्॥",
+              "ज्ञानं भारः क्रियां बिना",
+              "ज्ञानं भारः क्रियां विना",
+              "ज्ञानदानेन वर्धते विद्या",
+              "ज्ञानदृष्टिः सर्वोद्यमानां मूलम्",
+              "ज्ञानमिति चेन्न द्विषतोऽपि ज्ञानस्य तदसंस्थितेः",
+              "ज्ञानयोगेन विद्यानां वृद्धिः संजायते ध्रुवम्",
+              "ज्ञानसंपदः रक्षणम्",
+              "ज्ञानस्य प्रयोगः एव सामर्थ्यम्",
+              "ज्ञानेति चेन्न परस्य ज्ञानप्रतिष्ठानात्",
+              "ज्ञानेति चेन्न परस्य ज्ञानप्रतिष्ठानात्॥",
+              "तज्ज्ञानां सल्लां गृह्णीयात्",
+              "तत्तु विषयत्यागात् सङ्गत्यागाच्च",
+              "तत्तु विषयत्यागात् सङ्गत्यागाच्च॥",
+              "तत्प्राप्य तदेवावलोकति तदेव शृणोति तदेव भाषयति तदेव चिन्तयति",
+              "तत्प्राप्य तदेवावलोकयति तदेव शृणोति तदेव भाषयति तदेव चिन्तयति",
+              "तत्प्राप्य तदेवावलोकयति तदेव शृणोति तदेव भाषयति तदेव चिन्तयति॥",
+              "तत्र परा साध्या",
+              "तत्र परा साध्या॥",
+              "तत्र प्रेमानन्दस्य प्राधान्यम्",
+              "तत्र प्रेमानन्दस्य प्राधान्यम्॥",
+              "तत्र भक्तानुग्रहः प्रधानम्",
+              "तत्र भक्तानुग्रहः प्रधानम्॥",
+              "तत्रापि न माहात्म्यज्ञानविस्मृत्यपवादः",
+              "तत्रापि न माहात्म्यज्ञानविस्मृत्यपवादः॥",
+              "तत्संस्थस्यामृतत्वोपदेशात्",
+              "तत्संस्थस्यामृतत्वोपदेशात्॥",
+              "तथा भक्तात्मनि प्रभुः",
+              "तथा भक्तात्मनि प्रभुः॥",
+              "तदङ्गानि च यथायथम्",
+              "तदङ्गानि च यथायथम्॥",
+              "तदर्चनं च यथाविधि",
+              "तदर्चनं च यथाविधि॥",
+              "तदर्पिताखिलचारः सन् कामक्रोधाभिमानादिकं तस्मिन्नेव करणीयम्",
+              "तदर्पिताखिलचारः सन् कामक्रोधाभिमानादिकं तस्मिन्नेव करणीयम्॥",
+              "तदर्पिताखिलाचारः सन् कामक्रोधाभिमानादिकं तस्मिन्नेव करणीयम्",
+              "तदेकान्तभावेन तदुपासनम्",
+              "तदेकान्तभावेन तदुपासनम्॥",
+              "तदेव साध्यतां तदेव साध्यताम्",
+              "तदेव साध्यतां तदेव साध्यताम्॥",
+              "तद्वतः प्रपत्तिरन्यथा पातित्यात्",
+              "तद्वतः प्रपत्तिरन्यथा पातित्यात्॥",
+              "तद्विद्धि प्रणिपातेन परिप्रश्नेन सेवया ।",
+              "तद्विद्धि प्रणिपातेन परिप्रश्नेन सेवया ।\nउपदेक्ष्यन्ति ते ज्ञानं ज्ञानिनस्तत्त्वदर्शिनः ॥ ४-",
+              "तद्विद्धि प्रणिपातेन परिप्रश्नेन सेवया ।\nउपदेक्ष्यन्ति ते ज्ञानं ज्ञानिनस्तत्त्वदर्शिनः ॥ ४-३४॥",
+              "तद्विहीनं जाराणामिव",
+              "तद्विहीनं जाराणामिव॥",
+              "तन्न्यासश्च भक्तौ",
+              "तन्न्यासश्च भक्तौ॥",
+              "तन्मयाः",
+              "तन्मयाः॥",
+              "तरङ्गयिता अपीमे सङ्गात् समुद्रायन्ति",
+              "तरङ्गायिता अपीमे सङ्गात् समुद्रायन्ति",
+              "तरङ्गायिता अपीमे सङ्गात् समुद्रायन्ति॥",
+              "तरङ्गायिता अपीमे सङ्गात् समुद्रायन्ते",
+              "तल्लक्षणानि वाच्यन्ते नानामतभेदात्",
+              "तल्लक्षणानि वाच्यन्ते नानामतभेदात्॥",
+              "तस्मात् सैव गरीयसी",
+              "तस्मात् सैव गरीयसी॥",
+              "तस्मात् सैव ग्राह्या मुमुक्षुभिः",
+              "तस्मात् सैव ग्राह्या मुमुक्षुभिः॥",
+              "तस्मिंस्तज्जने भेदाभावात्",
+              "तस्मिंस्तज्जने भेदाभावात्॥",
+              "तस्मिन्ननन्यता तद्विरोधिषूदासीनता",
+              "तस्मिन्ननन्यता तद्विरोधिषूदासीनता च",
+              "तस्मिन्ननन्यता तद्विरोधिषूदासीनता च॥",
+              "तस्या ज्ञानमेव साधनमित्येके",
+              "तस्यां न भेदः",
+              "तस्यां न भेदः॥",
+              "तस्याः ज्ञानमेव साधनमित्येके",
+              "तस्याः ज्ञानमेव साधनमित्येके॥",
+              "तस्याः साधनानि गायन्त्याचार्याः",
+              "तस्याः साधनानि गायन्त्याचार्याः॥",
+              "तीक्ष्णरसश्च निरपेक्षश्च नित्यमुद्योगी स्यात्",
+              "तीर्थीकुर्वन्ति तीर्थानि सुकर्मीकुर्वन्ति कर्माणि सच्छास्त्रीकुर्वन्ति शास्त्राणि",
+              "तीर्थीकुर्वन्ति तीर्थानि सुकर्मीकुर्वन्ति कर्माणि सच्छास्त्रीकुर्वन्ति शास्त्राणि॥",
+              "तेन त्यक्तेन भुञ्जीथा मा गृधः कस्यस्विद्धनम् ॥ १॥",
+              "त्रिरूपभङ्गपूर्वकं नित्यदास्यनित्यकान्ताभजनात्मकं प्रेम कार्यं प्रेमैव कार्यम्",
+              "त्रिरूपभङ्गो भेदं परिचर्य्यादिषु वा कुर्यात्",
+              "त्रिरूपभङ्गो भेदं परिचर्य्यादिषु वा कुर्यात्॥",
+              "त्रिसत्यस्य भक्तिरेव गरीयसी भक्तिरेव गरीयसी",
+              "त्रिसत्यस्य भक्तिरेव गरीयसी भक्तिरेव गरीयसी॥",
+              "दम्भत्यागेन ग्राहकपुष्टहितं ध्येयाविरोधि कर्तव्यानपायेन साधयेत्",
+              "दम्भत्यागेन ग्राहकपुष्टहितं ध्येयाविरोधि कर्तव्यानपायेन साधयेत्॥",
+              "दम्भत्यागेन सङ्घाय सत्यं प्रियं हितं गोप्यमर्यादया कर्तव्यानपायेन वदेत्",
+              "दम्भत्यागेन सङ्घाय सत्यं प्रियं हितं गोप्यमर्यादया कर्तव्यानपायेन वदेत्॥",
+              "दानेन शोभते श्रीः",
+              "दास्यं चात्मनिवेदनम्",
+              "दास्यं चात्मनिवेदनम्॥",
+              "दुःसङ्गः सर्वथा त्याज्यः सत्सङ्गेन च उन्नतिः साध्या",
+              "दुःसङ्गः सर्वथा त्याज्यः सत्सङ्गेन च उन्नतिः साध्या॥ २३ ॥",
+              "दुःसङ्गः सर्वथैव त्याज्यः",
+              "दुष्प्रवृत्तिकारणानां त्यागः",
+              "दुष्प्रवृत्तिकारणानां त्यागः॥",
+              "दुस्सङ्गः सर्वथैव त्याज्यः",
+              "दुस्सङ्गः सर्वथैव त्याज्यः॥",
+              "दूरदर्शित्वात् विना न कश्चित् महाप्रकल्पः",
+              "दूरदृष्टिः सर्वसम्पदां कारणम्",
+              "दृष्टिध्येये पृथक् कृत्वा कर्तव्यानपायेन स्वेच्छाव्यापारा ध्येयाभिमुखाः",
+              "दृष्टिध्येये पृथक् कृत्वा कर्तव्यानपायेन स्वेच्छाव्यापारा ध्येयाभिमुखाः॥",
+              "देयशोधनोत्तरं लब्धलाभं लिखितप्रयोजने पुनर्निवेशयेत्",
+              "देयशोधनोत्तरं लब्धलाभं लिखितप्रयोजने पुनर्निवेशयेत्॥",
+              "दैन्यं च शरणागतिः",
+              "दैन्यं च शरणागतिः॥",
+              "दोषनिवारणं सततम्",
+              "दोषस्वीकारः उन्नतिहेतुः",
+              "द्रव्यप्रवाहस्य रक्षणम्",
+              "द्वेषप्रतिद्वन्द्विभावाद्रसशब्दाच्च",
+              "द्वेषप्रतिद्वन्द्विभावाद्रसशब्दाच्च॥",
+              "द्वेषप्रतिपक्षभावाद्रसशब्दाच्च रागः",
+              "धर्मयुद्धेन विजयः",
+              "धर्मार्थकामाः सममेव सेव्याः",
+              "धर्मेण अर्थार्जनं कर्तव्यं न तु अधर्मेण कदाचन",
+              "धर्मेण अर्थार्जनं कर्तव्यं न तु अधर्मेण कदाचन॥ १८ ॥",
+              "धैर्येण सर्वाः विपदः तरन्ति",
+              "न क्रिया कृत्यनपेक्षणाज्ज्ञानवत्",
+              "न क्रिया परप्रयोजनाभावात्",
+              "न क्रिया परप्रयोजनाभावात्॥",
+              "न च पुनरावृत्तिः",
+              "न च पुनरावृत्तिः॥",
+              "न चातिलोभः कार्यस्य विघातकः",
+              "न चान्यत् साधनम्",
+              "न चान्यत् साधनम्॥",
+              "न जातु कामः कामानामुपभोगेन शाम्यति",
+              "न तत्सिद्धौ लोकव्यवहारो हेयः किन्तु फलत्यागस्तत्साधनं च कार्यमेव",
+              "न तदसिद्धौ लोकव्यवहारो हेयः किंतु फलत्यागस्तत्साधनं च कार्यमेव",
+              "न तदसिद्धौ लोकव्यवहारो हेयः किंतु फलत्यागस्तत्साधनं च कार्यमेव॥",
+              "न तदसिद्धौ लोकव्यवहारो हेयः किन्तु फलत्यागस्तत्साधनं च कार्यमेव",
+              "न तु केवलं कैवल्यम्",
+              "न तु केवलं कैवल्यम्॥",
+              "न तु केवलं शुष्कम्",
+              "न तु केवलं शुष्कम्॥",
+              "न तु तत्त्वतः",
+              "न तु तत्त्वतः॥",
+              "न तु तीर्थादिमात्रेण",
+              "न तु तीर्थादिमात्रेण॥",
+              "न तु प्राधान्येन",
+              "न तु प्राधान्येन॥",
+              "न तु वस्तुतः",
+              "न तु वस्तुतः॥",
+              "न तेन राजपरितोषः क्षुधाशान्तिर्वा",
+              "न तेन राजा परितोषः क्षुधाशान्तिर्वा",
+              "न तेन राजा परितोषो क्षुच्छान्तिर्वा",
+              "न तेन राजा परितोषो क्षुच्छान्तिर्वा॥",
+              "न देवः सृजति प्रजाः",
+              "न शोचति न द्वेष्टि",
+              "न संशयमनारुह्य नरो भद्राणि पश्यति",
+              "न सा साखली यस्यां न सम्भवति संवर्धनम्",
+              "न स्वामिनः सर्वं स्वयमेव कुर्यात्",
+              "न स्वामी सर्वं स्वयमेव कुर्यात्",
+              "न हि कश्चित्क्षणमपि जातु तिष्ठत्यकर्मकृत्",
+              "न हि कृतं कार्यं प्रणश्यति",
+              "न ह्यनभ्युपायेन कश्चिदर्थः प्रसाध्यते",
+              "न ह्यविज्ञात्वा मानदण्डं व्यापारः प्रवर्धते",
+              "न ह्यविज्ञाय मानदण्डं व्यापारः प्रवर्धते",
+              "नमस्कारश्च भक्त्या",
+              "नमस्कारश्च भक्त्या॥",
+              "नवपरिवर्तनं विकासस्य स्पन्दनम्",
+              "नवोन्मेषेण विना न नूतनं जगत्",
+              "नाम्नो हि महिमातिशयात्",
+              "नाम्नो हि महिमातिशयात्॥",
+              "नारदस्तु तदर्पिताखिलाचारता तद्विस्मरणे परमव्याकुलतेति",
+              "नारदस्तु तदर्पिताखिलाचारता तद्विस्मरणे परमव्याकुलतेति॥",
+              "नास्ति तेषु जातिविद्यारूपकुलधनक्रियादिभेदः",
+              "नास्ति तेषु जातिविद्यारूपकुलधनक्रियादिभेदः॥",
+              "नास्त्येव तस्मिंस्तत्सुखसुखित्वम्",
+              "नास्त्येव तस्मिंस्तत्सुखसुखित्वम्॥",
+              "नास्त्येव तस्मिन् तत्सुखसुखित्वम्",
+              "नित्यं लिखितधनप्रवाहदृष्ट्या न केवललाभदृष्ट्या वर्तेत",
+              "नित्यं लिखितधनप्रवाहदृष्ट्या न केवललाभदृष्ट्या वर्तेत॥",
+              "नित्यनूतनं अन्वेषणम्",
+              "निन्दन्तु नीतिनिपुणा यदि वा स्तुवन्तु लक्ष्मीः समाविशतु गच्छतु वा यथेष्टम् । अद्यैव वा मरणमस्तु युगान्तरे वा न्यायात्पथः प्रविचलन्ति पदं न धीराः",
+              "निन्दन्तु नीतिनिपुणा यदि वा स्तुवन्तु लक्ष्मीः समाविशतु गच्छतु वा यथेष्टम् । अद्यैव वा मरणमस्तु युगान्तरे वा न्यायात्पथः प्रविचलन्ति पदं न धीराः ॥",
+              "नियमिताचारः सर्वसम्पदां द्वारम्",
+              "निरन्तरं प्रशिक्षणम्",
+              "निरोधस्तु लोकवेदव्यापारन्यासः",
+              "निरोधस्तु लोकवेदव्यापारन्यासः॥",
+              "नीतिविहीनः उद्योगः क्षणभङ्गुरः",
+              "नेतृत्वस्य हस्तांतरणम्",
+              "नेतृत्वस्य हस्तान्तरणम्",
+              "नैतिकधनेन साम्राज्यं वर्धते",
+              "न्याय्यं शासनं संस्थायाः",
+              "न्याय्यमूल्येन विक्रयः",
+              "पक्षपातवर्जितं शासनम्",
+              "पतनात् पुनः उत्थानम्",
+              "परस्परावलम्बनेन जगत् प्रवर्धते",
+              "पराजयात् शिक्षा गृहीत्वा पुनः द्विगुणोत्साहेन प्रयतितव्यम्",
+              "पराजयात् शिक्षा गृहीत्वा पुनः द्विगुणोत्साहेन प्रयतितव्यम्॥ २४ ॥",
+              "पराश्रयत्यागः एव स्वतन्त्रोद्यमस्य प्रथमं सोपानम्",
+              "पराश्रयत्यागः एव स्वतन्त्रोद्यमस्य प्रथमं सोपानम्॥ १० ॥",
+              "पातकनाशनं च",
+              "पातकनाशनं च॥",
+              "पादोदकधारणं च",
+              "पादोदकधारणं च॥",
+              "पारदर्शकता विश्वस्य मूलमन्त्रः",
+              "पूजादिष्वनुराग इति पाराशर्यः",
+              "पूजादिष्वनुराग इति पाराशर्यः॥",
+              "प्रकाशते क्वापि पात्रे",
+              "प्रकाशते क्वापि पात्रे॥",
+              "प्रकृतेः संरक्षणं धर्मः",
+              "प्रजासुखे सुखं राज्ञः प्रजानां च हिते हितम्",
+              "प्रज्ञाशीलनेतृत्वम्",
+              "प्रतिक्षणवर्धमानं नवसृजनम् उद्यमस्य अमृतत्वम्",
+              "प्रतिक्षणवर्धमानं नवसृजनम् उद्यमस्य अमृतत्वम्॥ ५ ॥",
+              "प्रपन्नस्य न भयं क्वचित्",
+              "प्रपन्नस्य न भयं क्वचित्॥",
+              "प्रबुद्धो ग्राहकः हितकरः",
+              "प्रमाणान्तरस्यानपेक्षत्वात् स्वयं प्रमाणत्वात्",
+              "प्रमाणान्तरस्यानपेक्षत्वात् स्वयं प्रमाणत्वात्॥",
+              "प्रमाणैः निर्णयः कार्यः",
+              "प्रलोभने न मुह्येत, भावावेगे न विश्वसेत्। गूढं रक्षेत् सदा धीमान्, शत्रुर्हि छद्मवेषधृक्",
+              "प्रलोभने न मुह्येत, भावावेगे न विश्वसेत्। गूढं रक्षेत् सदा धीमान्, शत्रुर्हि छद्मवेषधृक्॥",
+              "प्राणिषु दया च",
+              "प्राणिषु दया च॥",
+              "प्रायश्चित्तं च भगवन्नाम",
+              "प्रायश्चित्तं च भगवन्नाम॥",
+              "प्रारब्धक्षये परमं पदम्",
+              "प्रारब्धक्षये परमं पदम्॥",
+              "प्रारभ्यते न खलु विघ्नभयेन नीचैः प्रारभ्य विघ्नविहता विरमन्ति मध्याः । विघ्नैः पुनः पुनरपि प्रतिहन्यमानाः प्रारब्धमुत्तमगुणा न परित्यजन्ति",
+              "प्रारभ्यते न खलु विघ्नभयेन नीचैः प्रारभ्य विघ्नविहता विरमन्ति मध्याः । विघ्नैः पुनः पुनरपि प्रतिहन्यमानाः प्रारब्धमुत्तमगुणा न परित्यजन्ति ॥",
+              "फलरूपत्वात्",
+              "फलरूपत्वात्॥",
+              "फलानासक्तो ध्येयाविरोधि साधनमेकं पूर्वनियतसमीक्षं यथायथं परिवर्तयेत्",
+              "फलानासक्तो ध्येयाविरोधि साधनमेकं पूर्वनियतसमीक्षं यथायथं परिवर्तयेत्॥",
+              "फलासक्तिं विहाय सततं कर्मणि निष्ठा विधेया",
+              "फलासक्तिं विहाय सततं कर्मणि निष्ठा विधेया॥ १४ ॥",
+              "बाहुल्यावकाशत्वादनियतत्वाच्च",
+              "बाहुल्यावकाशत्वादनियतत्वाच्च॥",
+              "बाहुल्यावकाशत्वादनीयतत्वाच्च",
+              "भक्ता एकान्तिनो मुख्याः",
+              "भक्तिमतः सर्वं सफलं भवति",
+              "भक्तिमतः सर्वं सफलं भवति॥",
+              "भक्तिशास्त्राणि मननीयानि तदुद्बोधककर्माणि करणीयानि",
+              "भक्तिशास्त्राणि मननीयानि तदुद्बोधककर्माणि करणीयानि॥",
+              "भक्तिहीनस्य सर्वं व्यर्थम्",
+              "भक्तिहीनस्य सर्वं व्यर्थम्॥",
+              "भक्तेषु विशेषेणाविर्भावः",
+              "भक्तेषु विशेषेणाविर्भावः॥",
+              "भक्तौ न प्रतिबन्धः",
+              "भक्तौ न प्रतिबन्धः॥",
+              "भवतु निश्चयदाढ्र्र्यादूर्ध्वं शास्त्ररक्षणम्",
+              "भवतु निश्चयदाढ्र्र्यादूर्ध्वं शास्त्ररक्षणम्॥",
+              "भवतु निश्चयदार्ढ्यादूर्ध्वं शास्त्ररक्षणम्",
+              "भूतां परस्परें पडो । मैत्र जीवाचें ॥ १७९५ ॥",
+              "मधुरं सत्यं च वदेत्",
+              "मर्यादापालनं सर्वत्र",
+              "महत्सङ्गस्तु दुर्लभोऽगम्योऽमोघश्च",
+              "महत्सङ्गस्तु दुर्लभोऽगम्योऽमोघश्च॥",
+              "मा कर्मफलहेतुर्भूर्मा ते सङ्गोऽस्त्वकर्मणि ॥ २-४७॥",
+              "मानवीमूल्यानां रक्षणं समृद्धेः रहस्यम्",
+              "मायया सगुणत्वम्",
+              "मायया सगुणत्वम्॥",
+              "मितव्ययेन समृद्धिः",
+              "मुक्तिश्च भगवत्प्राप्तिरूपा",
+              "मुक्तिश्च भगवत्प्राप्तिरूपा॥",
+              "मुख्यतस्तु महत्कृपयैव भगवत्कृपालेशाद्वा",
+              "मुख्यतस्तु महत्कृपयैव भगवत्कृपालेशाद्वा॥",
+              "मुख्यास्त्वेकान्तिनो भक्ताः",
+              "मुख्यास्त्वेकान्तिनो भक्ताः॥",
+              "मूकास्वादनवत्",
+              "मूकास्वादनवत्॥",
+              "मैत्रीकरुणामुदितोपेक्षाणां सुखदुःखपुण्यापुण्यविषयाणां भावनातश्चित्तप्रसादनम्",
+              "मैत्रीकरुणामुदितोपेक्षाणां सुखदुःखपुण्यापुण्यविषयाणां भावनातश्चित्तप्रसादनम् ॥",
+              "मोदन्ते पितरो नृत्यन्ति देवताः सनाथा चेयं भूर्भवति",
+              "मोदन्ते पितरो नृत्यन्ति देवताः सनाथा चेयं भूर्भवति॥",
+              "मोहजालं परित्यजेत्",
+              "म्हणौनि स्वधर्मु जो बापा । तोचि एकु अनुष्ठेपु । जेणे पाविजे क्षेपु । मोक्षाचिया ॥ तया स्वधर्माचेनि बळे । कर्म सकळही फळे",
+              "म्हणौनि स्वधर्मु जो बापा । तोचि एकु अनुष्ठेपु । जेणे पाविजे क्षेपु । मोक्षाचिया ॥ तया स्वधर्माचेनि बळे । कर्म सकळही फळे ।",
+              "य इदं नारदप्रोक्तं शिवानुशासनं विश्वसिति श्रद्धत्ते स भक्तिमान् भवति स प्रेष्ठं लभते स प्रेष्ठं लभत इति",
+              "य इदं नारदप्रोक्तं शिवानुशासनं विश्वसिति श्रद्धत्ते स भक्तिमान् भवति स प्रेष्ठं लभते स प्रेष्ठं लभत इति॥",
+              "य इदं नारदप्रोक्तं शिवानुशासनं विश्वसिति श्रद्धत्ते स भक्तिमान् भवति सः प्रेष्ठं लभते सः प्रेष्ठं लभते",
+              "यः कर्मफलं त्यजति कर्माणि संन्यस्यति ततो निर्द्वन्द्वो भवति",
+              "यः कर्मफलं त्यजति कर्माणि संन्यस्यति ततो निर्द्वन्द्वो भवति॥",
+              "यः पठति स परमां गतिं लभत इति",
+              "यः पठति स परमां गतिं लभत इति॥",
+              "यज्ज्ञात्वा मत्तो भवति स्तब्धो भवति आत्मारामो भवति",
+              "यज्ज्ञात्वा मत्तो भवति स्तब्धो भवति आत्मारामो भवति॥",
+              "यतः सर्वं तन्मयम्",
+              "यतः सर्वं तन्मयम्॥",
+              "यतस्तदीयाः",
+              "यतस्तदीयाः॥",
+              "यत् प्राप्य उद्यमी न किञ्चित् वाञ्छति न शोचति न द्वेष्टि",
+              "यत् प्राप्य उद्यमी न किञ्चित् वाञ्छति न शोचति न द्वेष्टि॥ २ ॥",
+              "यत्ते भूमे विखनामि क्षिप्रं तदपि रोहतु । मा ते मर्म विमृग्वरि मा ते हृदयमर्पिपम्",
+              "यत्ते भूमे विखनामि क्षिप्रं तदपि रोहतु । मा ते मर्म विमृग्वरि मा ते हृदयमर्पिपम् ॥",
+              "यत्प्राप्य न किञ्चिद् वाञ्छति न शोचति न द्वेष्टि न रमते नोत्साही भवति",
+              "यत्प्राप्य न किञ्चिद् वाञ्छति न शोचति न द्वेष्टि न रमते नोत्साही भवति॥",
+              "यथा काष्ठेऽग्निः",
+              "यथा काष्ठेऽग्निः॥",
+              "यथा व्रजगोपिकानाम्",
+              "यथा व्रजगोपिकानाम्॥",
+              "यथा ह्येकेन चक्रेण न रथस्य गतिर्भवेत्",
+              "यथायथं शिक्षाभ्यासाभ्यां लिखितावलोकनेन सहचरं वर्धयेत् कर्तव्यानपायेन",
+              "यथायथं शिक्षाभ्यासाभ्यां लिखितावलोकनेन सहचरं वर्धयेत् कर्तव्यानपायेन॥",
+              "यथार्थं लिखित्वा व्यवसायधनं स्वधनात् पृथक्कृत्य प्रमाणैर्मेलयेत्",
+              "यथार्थं लिखित्वा व्यवसायधनं स्वधनात् पृथक्कृत्य प्रमाणैर्मेलयेत्॥",
+              "यथार्थलेखं स्वधनात् पृथक्कृत्य बैङ्कलेखेन मेलयेत्",
+              "यथार्थलेखं स्वधनात् पृथक्कृत्य बैङ्कलेखेन मेलयेत्॥",
+              "यद्यदाचरति श्रेष्ठः",
+              "यद्यदाचरति श्रेष्ठस्तत्तदेवेतरो जनः ।",
+              "यद्यदाचरति श्रेष्ठस्तत्तदेवेतरो जनः ।\nस यत्प्रमाणं कुरुते लोकस्तदनुवर्तते ॥ ३-",
+              "यद्यदाचरति श्रेष्ठस्तत्तदेवेतरो जनः ।\nस यत्प्रमाणं कुरुते लोकस्तदनुवर्तते ॥ ३-२१॥",
+              "यन्त्रविद्यायाः सदुपयोगः",
+              "यल्लब्ध्वा उद्यमी तृप्तो भवति",
+              "यल्लब्ध्वा पुमान् सिद्धो भवति अमृतो भवति तृप्तो भवति",
+              "यल्लब्ध्वा पुमान् सिद्धो भवति अमृतो भवति तृप्तो भवति॥",
+              "यस्तु सर्वाणि भूतान्यात्मन्येवानुपश्यति ।",
+              "यस्तु सर्वाणि भूतान्यात्मन्येवानुपश्यति ।\nसर्वभूतेषु चात्मानं ततो न विजुगुप्सते",
+              "यस्तु सर्वाणि भूतान्यात्मन्येवानुपश्यति ।\nसर्वभूतेषु चात्मानं ततो न विजुगुप्सते ॥ ६॥",
+              "युگانुरूपं चिन्तनम्",
+              "युक्तस्वप्नावबोधस्य योगो भवति दुःखहा ॥ ६-१७॥",
+              "युक्ताहारविहारस्य युक्तचेष्टस्य कर्मसु ।",
+              "युक्ताहारविहारस्य युक्तचेष्टस्य कर्मसु ।\nयुक्तस्वप्नावबोधस्य योगो भवति दुःखहा ॥ ६-",
+              "युक्ताहारविहारस्य युक्तचेष्टस्य कर्मसु ।\nयुक्तस्वप्नावबोधस्य योगो भवति दुःखहा ॥ ६-१७॥",
+              "येथ माझें जी उरलें । पाईकपण ॥ १७९३ ॥",
+              "यो विविक्तस्थानं सेवते यो लोकबन्धमुन्मूलयति निस्त्रैगुण्यो भवति यो योगक्षेमं त्यजति",
+              "यो विविक्तस्थानं सेवते यो लोकबन्धमुन्मूलयति निस्त्रैगुण्यो भवति योगक्षेमं त्यजति",
+              "यो विविक्तस्थानं सेवते यो लोकबन्धमुन्मूलयति निस्त्रैगुण्यो भवति योगक्षेमं त्यजति॥",
+              "यो वेदानपि संन्यस्यति केवलमविच्छिन्नानुरागं लभते",
+              "यो वेदानपि संन्यस्यति केवलमविच्छिन्नानुरागं लभते॥",
+              "योगः कर्मसु कौशलम्",
+              "योगः कर्मसु कौशलम् इति उद्यमस्य मूलमन्त्रः",
+              "योगः कर्मसु कौशलम् इति उद्यमस्य मूलमन्त्रः॥ १३ ॥",
+              "योगश्च मनःप्रणिधानाय",
+              "योगश्च मनःप्रणिधानाय॥",
+              "योगश्चित्तवृत्तिनिरोधः",
+              "योगश्चित्तवृत्तिनिरोधः ॥",
+              "योगस्तूभयार्थमपेक्षणात् प्रयाजवत्",
+              "योग्यस्य योग्यं कर्म",
+              "रागप्राप्तत्वाच्च न विधीयते",
+              "रागप्राप्तत्वाच्च न विधीयते॥",
+              "रागस्तु काम्यत्वात्",
+              "रागस्तु काम्यत्वात्॥",
+              "राजगृहभोजनादिषु तथैव दृष्टत्वात्",
+              "राजगृहभोजनादिषु तथैव दृष्टत्वात्॥",
+              "राजद्वारे श्मशाने च यस्तिष्ठति स बान्धवः",
+              "राष्ट्राभिवृद्धये उद्यमः",
+              "राष्ट्रोन्नतिः सर्वोद्यमानां परमं फलम्",
+              "रूपभेदश्चोपासनाभेदात्",
+              "रूपभेदश्चोपासनाभेदात्॥",
+              "रोजगारनिर्मित्या राष्ट्रसेवा",
+              "लभ्यतेऽपि तत्कृपयैव",
+              "लभ्यतेऽपि तत्कृपयैव॥",
+              "लाभात् पुनः सृजनम्",
+              "लिखितं प्रमाणम्",
+              "लिखितनिकषैः प्रत्यक्षकार्येण परीक्ष्य ध्येयानुगं जनं वृणुयात् कर्तव्यानपायेन",
+              "लिखितनिकषैः प्रत्यक्षकार्येण परीक्ष्य ध्येयानुगं जनं वृणुयात् कर्तव्यानपायेन॥",
+              "लिखितप्रयोजनविवेकेन व्ययं नियच्छेत् कर्तव्यानपायेन",
+              "लिखितप्रयोजनविवेकेन व्ययं नियच्छेत् कर्तव्यानपायेन॥",
+              "लेखाशुद्धिः अनिवार्यः",
+              "लेखाशुद्धिः अनिवार्या",
+              "लोकवेदेषु तदनुकूलाचरणं तद्विरोधिषूदासीनता",
+              "लोकसंग्रहमेवापि सम्पश्यन् कर्तुमर्हसि",
+              "लोकसंग्रहेण संस्थास्थैर्यम्",
+              "लोकहानौ चिन्ता न कार्या निवेदितात्मलोकवेदत्वात्",
+              "लोकहानौ चिन्ता न कार्या निवेदितात्मलोकवेदत्वात्॥",
+              "लोके वेदेषु तदनुकूलाचरणं तद्विरोधिषूदासीनता",
+              "लोके वेदेषु तदनुकूलाचरणं तद्विरोधिषूदासीनता॥",
+              "लोकेऽपि भगवद्गुणश्रवणकीर्तनात्",
+              "लोकेऽपि भगवद्गुणश्रवणकीर्तनात्॥",
+              "लोकोऽपि तावदेव किंतु भोजनादिव्यापारस्त्वाशरीरधारणावधि",
+              "लोकोऽपि तावदेव किंतु भोजनादिव्यापारस्त्वाशरीरधारणावधि॥",
+              "लोकोऽपि तावदेव भोजनादि व्यापारस्त्वाशरीरधारणावधि",
+              "वचनबद्धता धर्मः",
+              "वर्तमानं भविष्यं च चिन्तयेत्",
+              "वसुधैव कुटुम्बकं व्यापारे अपि धर्मः",
+              "वसुधैव कुटुम्बकम्",
+              "वादो नावलम्ब्यः",
+              "वादो नावलम्ब्यः॥",
+              "विचारेण विना कृत्वा पश्चात्तापं भजेन्नरः",
+              "विधिपालनं अनिवार्यम्",
+              "विधिपालनम् अनिवार्यम्",
+              "विपत्काले धैर्यं जयस्य प्रथमं सोपानम्",
+              "विवादे संवादः श्रेयान्",
+              "विवेकः सर्वसम्पदां मूलाधारः",
+              "विवेकेन प्रमाणेन च व्यावसायिकनिर्णयः ग्राह्यः",
+              "विवेकेन प्रमाणेन च व्यावसायिकनिर्णयः ग्राह्यः॥ १६ ॥",
+              "विश्वस्तभावेन धनपालनम्",
+              "विश्वासेन एव रक्ष्यन्ते ग्राहकाः",
+              "विश्वासो हि परमं धनम्",
+              "वैराग्यं च तदनुकूलम्",
+              "वैराग्यं च तदनुकूलम्॥",
+              "व्यक्तीपेक्षा संस्था श्रेष्ठ",
+              "व्यक्तेः श्रेष्ठा सदा संस्था, व्यवस्था शाश्वती भवेत्। नायके विचलितेऽपि, धर्ममार्गे न विचलेत्",
+              "व्यक्तेः श्रेष्ठा सदा संस्था, व्यवस्था शाश्वती भवेत्। नायके विचलितेऽपि, धर्ममार्गे न विचलेत्॥",
+              "व्याधादीनामपि तरणात्",
+              "व्याधादीनामपि तरणात्॥",
+              "व्यापारन्यासः कर्तव्यनिष्ठा",
+              "शक्तिमतिक्रम्य न विस्तरेत्",
+              "शाण्डिल्येन प्रोक्तं शास्त्रमिदम्",
+              "शाण्डिल्येन प्रोक्तं शास्त्रमिदम्॥",
+              "शान्तिरूपात् परमानन्दरूपाच्च",
+              "शान्तिरूपात् परमानन्दरूपाच्च॥",
+              "शाश्वतविकासः एव अंतिमं लक्ष्यम्",
+              "शाश्वतविकासः एव अन्तिमं लक्ष्यम्",
+              "शिखरे स्थित्वा सावधानः, प्रमादं न समाचरेत्। उत्कर्षे विनयो भूयात्, अहंकारः पतनाय हि",
+              "शिखरे स्थित्वा सावधानः, प्रमादं न समाचरेत्। उत्कर्षे विनयो भूयात्, अहंकारः पतनाय हि॥",
+              "शोधितशेषादूनां हानिसीमां लिखित्वैवानिश्चितं कर्म कुर्यात्",
+              "शोधितशेषादूनां हानिसीमां लिखित्वैवानिश्चितं कर्म कुर्यात्॥",
+              "शोधेन नवनिर्माणम्",
+              "शौचं चान्तरं बाह्यम्",
+              "शौचं चान्तरं बाह्यम्॥",
+              "श्रद्धा हि मूलम्",
+              "श्रद्धा हि मूलम्॥",
+              "श्रमस्य सन्मानः कर्तव्यः",
+              "श्रमेण सह विश्रान्तिः",
+              "श्रीमद्उद्यमसूत्राणि जयन्ति सर्वदा",
+              "श्रुतिस्मृतिभ्यां च",
+              "श्रुतिस्मृतिभ्यां च॥",
+              "श्रुतेस्तथा प्रतिपादनात्",
+              "श्रुतेस्तथा प्रतिपादनात्॥",
+              "श्रुत्वा ग्राहकवाचं शौचसत्यहितं शक्यमेकं वचः पालयेत्",
+              "श्रुत्वा ग्राहकवाचं शौचसत्यहितं शक्यमेकं वचः पालयेत्॥",
+              "स कीर्त्यमानः शीघ्रमेवाविर्भवत्यनुभावयति च भक्तान्",
+              "स कीर्त्यमानः शीघ्रमेवाविर्भवत्यनुभावयति च भक्तान्॥",
+              "स कीर्त्यमानः शीघ्रमेवाविर्भवत्यनुभावयति भक्तान्",
+              "स च भक्तावेव पर्यवस्यति",
+              "स च भक्तावेव पर्यवस्यति॥",
+              "स च भक्तिप्रसादात्",
+              "स च भक्तिप्रसादात्॥",
+              "स तरति स तरति स लोकांस्तारयति",
+              "स तरति स तरति स लोकांस्तारयति॥",
+              "स तु दीर्घकालनैरन्तर्यसत्कारासेवितो दृढभूमिः ॥ १.",
+              "स तु दीर्घकालनैरन्तर्यसत्कारासेवितो दृढभूमिः ॥ १.१४॥",
+              "स यत्प्रमाणं कुरुते लोकस्तदनुवर्तते ॥ ३-२१॥",
+              "स सच्चिदानन्दघनः",
+              "स सच्चिदानन्दघनः॥",
+              "स हि रक्षति सर्वथा",
+              "स हि रक्षति सर्वथा॥",
+              "संकटकाले धैर्येण बुद्ध्या च मार्गः निष्कासनीयः",
+              "संकटकाले धैर्येण बुद्ध्या च मार्गः निष्कासनीयः॥ २२ ॥",
+              "संकटप्रबन्धने धैर्यं विजयप्रदम्",
+              "संकटस्य पूर्वचिन्तनम्",
+              "संगठनं सर्वसिद्धेः द्वारम्",
+              "संघटितशक्त्या एव असक्यं शक्यं भवति",
+              "संघशक्तिः कलौ युगे",
+              "संघे शक्तिः कलौ युगे",
+              "संशय आत्मा विनश्यति",
+              "संशयात्मा विनश्यति",
+              "संसाधनानां सुयोग्यव्ययः वृद्धेः रहस्यम्",
+              "संस्कृत्या वर्धते संस्था",
+              "संहतिः श्रेयसी पुंसां स्वपक्षैरल्पकैरपि",
+              "सः त्वस्मिन् उद्यमे परानुरक्तिरूपः अनन्यव्यवसायः",
+              "सः त्वस्मिन् उद्यमे परानुरक्तिरूपः अनन्यव्यवसायः॥ १ ॥",
+              "सख्यं च तदेकतानत्वात्",
+              "सख्यं च तदेकतानत्वात्॥",
+              "सज्जनसङ्गेन विवेकः",
+              "सततज्ञानवृद्ध्या नेतृत्वं सुदृढम्",
+              "सततपरिश्रमेण न किञ्चिदसाध्यम्",
+              "सत्य तेचि भांडवल । असत्य तेचि बुडवल ॥ सत्य ज्याचे मुखी । तोचि जगी सुखी",
+              "सत्य तेचि भांडवल । असत्य तेचि बुडवल ॥ सत्य ज्याचे मुखी । तोचि जगी सुखी ॥",
+              "सत्यं च प्रियं हितम्",
+              "सत्यं च प्रियं हितम्॥",
+              "सत्यं पारदर्शकता च ग्राहकविश्वासस्य आधारस्तम्भौ",
+              "सत्यं पारदर्शकता च ग्राहकविश्वासस्य आधारस्तम्भौ॥ १९ ॥",
+              "सत्यं वद । धर्मं चर । स्वाध्यायान्मा प्रमदः । आचार्याय प्रियं धनमाहृत्य प्रजातन्तुं मा व्यवच्छेत्सीः",
+              "सत्यं वद । धर्मं चर । स्वाध्यायान्मा प्रमदः । आचार्याय प्रियं धनमाहृत्य प्रजातन्तुं मा व्यवच्छेत्सीः ॥",
+              "सत्यनिष्ठया एव शाश्वती प्रतिष्ठा",
+              "सत्यमेव जयते नानृतम्",
+              "सत्यमेव जयते व्यवहारे",
+              "सत्यशौचदयायुक्त एकगणमानं लिखित्वा हितवृद्धिम् अपव्ययरोधं वा साधयेत्",
+              "सत्यशौचदयायुक्त एकगणमानं लिखित्वा हितवृद्धिम् अपव्ययरोधं वा साधयेत्॥",
+              "सत्येन धार्यते पृथ्वी",
+              "सत्येन प्रचारः कार्यः",
+              "सत्सङ्गश्चोद्बोधकः",
+              "सत्सङ्गश्चोद्बोधकः॥",
+              "सन्तुष्टो असन्तुष्टो वा मर्यादां न लङ्घयेत्",
+              "सन्तुष्टोऽसन्तुष्टो वा मर्यादां न लङ्घयेत्",
+              "सन्तोषश्च सर्वदा",
+              "सन्तोषश्च सर्वदा॥",
+              "समयपालनेनैव प्रतिष्ठा वर्धते",
+              "समयस्य प्रतिपलम् अमूल्यम्",
+              "समस्यायां अवसरं पश्येत्",
+              "समस्यायाम् अवसरं पश्येत्",
+              "समाजात् लब्धं समाजाय दद्यात्",
+              "सम्पदः सहकारेण द्विगुणीभवन्ति",
+              "सम्भूय समुत्थानं व्यापाराणां जयप्रदम्",
+              "सर्वकल्याणप्रदः उद्योगः एव परमो धर्मः",
+              "सर्वकल्याणप्रदः उद्योगः एव परमोधर्मः",
+              "सर्वकल्याणमयो उद्योगः परमं श्रेयः",
+              "सर्वजनसहानुभूत्या नेतृत्वं दीप्यते",
+              "सर्वजनसुखं हि परमोत्कर्षः",
+              "सर्वजनहितम् एव परमोधर्मः",
+              "सर्वजनहितैषिणः नराः पूज्यन्ते",
+              "सर्वदा सर्वभावेन निश्चिन्तैर्भगवानेव भजनीयः",
+              "सर्वदा सर्वभावेन निश्चिन्तैर्भगवानेव भजनीयः॥",
+              "सर्वद्वारं न पश्यन्ति मूढाः",
+              "सर्वभूतहिते रतिः",
+              "सर्वभूतहिते रतिः॥",
+              "सर्वभूतेषु चात्मानं ततो न विजुगुप्सते ॥ ६॥",
+              "सर्वलोकसमृद्धिः उद्योगस्य परमं लक्ष्यम्",
+              "सर्ववर्णानामधिकारः",
+              "सर्ववर्णानामधिकारः॥",
+              "सर्वव्यापकोऽपि हृदि संस्थितः",
+              "सर्वव्यापकोऽपि हृदि संस्थितः॥",
+              "सर्वसिद्धिमयो योगः उद्यमेन समाप्यते",
+              "सर्वहितम् एकं नवकर्म लिखितहानिसीमामानपूर्वं परीक्ष्य निर्णयेत्",
+              "सर्वहितम् एकं नवकर्म लिखितहानिसीमामानपूर्वं परीक्ष्य निर्णयेत्॥",
+              "सहकारिभिः दृढबन्धः",
+              "सहकारेण विश्वं धार्यते",
+              "सहभागिनां स्पष्टाः नियमाः",
+              "सा तु कर्मज्ञानयोगेभ्योऽप्यधिकतरा",
+              "सा तु कर्मज्ञानयोगेभ्योऽप्यधिकतरा॥",
+              "सा त्वस्मिन् परप्रेमरूपा",
+              "सा त्वस्मिन् परमप्रेमरूपा",
+              "सा त्वस्मिन् परमप्रेमरूपा॥",
+              "सा न कामयमाना निरोधरूपत्वात्",
+              "सा न कामयमाना निरोधरूपत्वात्॥",
+              "सा न कामयमाना लोभवर्जिता",
+              "सा परमानुरागरूपा उद्यमनिष्ठा",
+              "सा परानुरक्तिरीश्वरे",
+              "सा परानुरक्तिरीश्वरे॥",
+              "सा पराऽनुरक्तिरीश्वरे",
+              "सा मुख्येतरभेदेन द्विविधा",
+              "सा मुख्येतरभेदेन द्विविधा॥",
+              "साक्षात्कारात् मुक्तिः",
+              "साक्षात्कारात् मुक्तिः॥",
+              "सातत्येन महद् कार्यम्",
+              "साधनप्रकारनिरूपणम्",
+              "साधनप्रकारनिरूपणम्॥",
+              "साधनानां सुयोगः",
+              "सामाजिकदायित्वं धर्मस्य अङ्गम्",
+              "सायुज्यं च परमानन्दः",
+              "सायुज्यं च परमानन्दः॥",
+              "सुखदुःखेच्छालाभादित्यक्ते काले प्रतीक्षमाणे क्षणार्धमपि व्यर्थं न नेयम्",
+              "सुखदुःखेच्छालाभादित्यक्ते काले प्रतीक्ष्यमाणे क्षणार्धमपि व्यर्थं न नेयम्",
+              "सुखदुःखेच्छालाभादित्यक्ते काले प्रतीक्ष्यमाणे क्षणार्धमपि व्यर्थं न नेयम्॥",
+              "सुरक्षा प्रथमा कर्तव्या",
+              "सूचनासुरक्षा परमं कवचम्",
+              "सृष्टिकर्तृवत् नवीननिर्माणे उद्योजकेन रमणीयम्",
+              "सृष्टिकर्तृवत् नवीननिर्माणे उद्योजकेन रमणीयम्॥ ६ ॥",
+              "स्त्रीधननास्तिकवैरिचरित्रं न श्रवणीयं न दर्शनीयम्",
+              "स्त्रीधननास्तिकवैरिचरित्रं न श्रवणीयं न दर्शनीयम्॥",
+              "स्त्रीधननास्तिकवैरिचरित्रं न श्रवणीयम्",
+              "स्त्रीशूद्रादीनामपि",
+              "स्त्रीशूद्रादीनामपि॥",
+              "स्थितप्रज्ञतया लाभालाभौ समौ कृत्वा उद्यमः पालनीयः",
+              "स्थितप्रज्ञतया लाभालाभौ समौ कृत्वा उद्यमः पालनीयः॥ २० ॥",
+              "स्पर्धा विजयस्य साधनं न विघातस्य",
+              "स्मरणं चाविच्छेदेन",
+              "स्मरणं चाविच्छेदेन॥",
+              "स्वदेशसम्पदः उपयोगेन आत्मनिर्भरता साध्या",
+              "स्वदेशसम्पदः उपयोगेन आत्मनिर्भरता साध्या॥ १२ ॥",
+              "स्वदेशीय साधनानां विकासः",
+              "स्वदेशीयसाधनानां विकासः",
+              "स्वधनं संस्थाधनं च पृथक्",
+              "स्वमूल्यवचनाविरुद्धम् अभेदहितेन एकबाह्यन्याय्यमानं लिखित्वा पालयेत्",
+              "स्वमूल्यवचनाविरुद्धम् अभेदहितेन एकबाह्यन्याय्यमानं लिखित्वा पालयेत्॥",
+              "स्वयं नियन्त्रयेत् पूर्वं, ततो विश्वं जयेत् सुधीः। चारित्र्यं रक्षयेन्नित्यं, यतो धर्मस्ततो जयः",
+              "स्वयं नियन्त्रयेत् पूर्वं, ततो विश्वं जयेत् सुधीः। चारित्र्यं रक्षयेन्नित्यं, यतो धर्मस्ततो जयः॥",
+              "स्वयं फलरूपतेति ब्रह्मकुमारः",
+              "स्वयं फलरूपतेति ब्रह्मकुमाराः",
+              "स्वयं फलरूपतेति ब्रह्मकुमाराः॥",
+              "स्ववर्तनस्य परीक्षणम्",
+              "स्वस्थं मनः स्वस्थः उद्यमः",
+              "स्वाध्यायप्रवचनाभ्यां न प्रमदितव्यम्",
+              "स्वाध्यायप्रवचनाभ्यां न प्रमदितव्यम् ।",
+              "स्वाध्यायश्च भक्तिपोषकः",
+              "स्वाध्यायश्च भक्तिपोषकः॥",
+              "स्वाभिमानेन उद्यमः",
+              "स्वावलंबनेनैव स्वराज्यं सिद्ध्यति",
+              "स्वावलंबनेनैव स्वराज्यं सिध्यति",
+              "स्वावलम्बनेन आत्मोत्कर्षः ततः राष्ट्रसमृद्धिः लोकसंग्रहार्थम्",
+              "स्वावलम्बनेन आत्मोत्कर्षः ततः राष्ट्रसमृद्धिः लोकसंग्रहार्थम्॥ ९ ॥",
+              "स्वे स्वे कर्मण्यभिरतः संसिद्धिं लभते नरः । स्वकर्मनिरतः सिद्धिं यथा विन्दति तच्छृणु",
+              "स्वे स्वे कर्मण्यभिरतः संसिद्धिं लभते नरः । स्वकर्मनिरतः सिद्धिं यथा विन्दति तच्छृणु ॥",
+              "स्वोद्यमेन अनेकजनानां जीविकाप्रदानं महायज्ञः एव",
+              "स्वोद्यमेन अनेकजनानां जीविकाप्रदानं महायज्ञः एव॥ २७ ॥",
+              "हेया रागत्वादिति चेन्नोत्तमास्पदत्वात् सङ्गवत्",
+              "子曰、學而不思則罔、思而不學則殆。",
+              "ग्राहकव्यथां पृष्ट्वा परीक्षेत",
+              "आवश्यकं लिखित्वारभेत",
+              "विरामयुक्तः क्रमः सिद्धिकरः",
+              "आर्तिं ज्ञात्वा क्षमतां रचयेत्",
+              "विमतं पृष्ट्वा मार्गान् पश्येत्",
+              "न्यूनतां सत्येन पूरयेत्",
+              "उपयोगसत्याभ्यां निष्ठा",
+              "पर्याप्तसाक्ष्ये निश्चिनुयात्",
+              "दायित्वं वहेत् फले समः",
+              "आकांक्षा नीतिसामर्थ्यानुगा",
+              "परधनाधिकारे मर्यादा धार्या",
+              "कौशलं सपरीक्षा पद्धतिः",
+              "प्रतिक्रियया पुनर्यत्नः",
+              "लब्धज्ञानं नियुक्तेन प्रयोज्यम्",
+              "सीमाज्ञः स्वीकार्यं चिनुयात्",
+              "प्रत्यहं स्वल्पसञ्चयः",
+              "प्रतिनिधिमतं विचिनुयात्",
+              "साक्ष्यसोपानैः निवेशं वर्धयेत्",
+              "अवसरसज्जतायोगे प्रवर्तेत",
+              "ग्राहकवचः प्रतिकारान्तं नयेत्",
+              "लाभस्रोतः स्पष्टं वाच्यम्",
+              "समन्वयं परीक्ष्याग्रे व्रजेत्",
+              "लाभाधाराः पूर्वमन्वेष्टव्याः",
+              "साहसे रक्षासीमां न लङ्घयेत्",
+              "प्रवर्तकं नियुज्याभ्यस्येत्",
+              "निर्वाहावधिना शाखाः प्रसारयेत्",
+              "आरम्भः आधारानुरूपः",
+              "आपदि मूलकर्मणे सुलभनिधिः",
+              "आगमनिर्गमकालं निरीक्षेत",
+              "प्रयोजनशोधनाभ्यां ऋणं ग्राह्यम्",
+              "निजधनं संस्थाकोशात् पृथग्लेख्यम्",
+              "मूल्यं सार्थं स्पष्टसमयं स्थिरम्",
+              "गुणनिकषाः दायित्वयुताः स्युः",
+              "हेतुं छित्त्वा पुनः परीक्षेत",
+              "अप्रमादः क्रमे निधेयः",
+              "दोषस्वीकृतिः शोधफलाभ्यां सत्या",
+              "वर्धनात् पूर्वम् अपव्ययशोधः",
+              "प्रतिज्ञासमीपे सीमा दृश्या",
+              "क्रेतृयोग्यः पूर्तिक्षम उपायः",
+              "स्पर्धया स्वसामर्थ्यं वर्धयेत्",
+              "मानज्ञः क्रियासत्यः प्रसरेत्",
+              "शक्तिसमं कालवचनम्"
+            ],
+            "entry_hashes": {
+              "1": "768e95df1da92c4932d9a86fa61c9fe04fd1871d1aa2aa21da3b0676e2866cd5"
+            },
+            "source_first_selection": "source-first-selection-v1"
+          }
+        },
+        "proposal": {
+          "number": 1,
+          "decision": "ACCEPT",
+          "proposed_sutra": "आदौ शुद्धमर्यादा स्थाप्या",
+          "derivation": "Strongest bounded peer response: the Researcher's narrowing (named actor, few ethical limits, checkpoint), refined by Narada's point that 'परिपालनीयानि' is categorical. Adopted. N78 supplies ahimsa, satya, shaucha and daya; 'astikya' stays devotional and is left out of the business action. S28 supports only the structure of supporting limbs alongside the main practice; its commentary examples are provisional. Yoga 2.30 and Gita 12.13–14 complement N78 and do not confirm it. Gita compassion is toward all beings, while the offering of mind is to God. The actor, trigger and checkpoint are a present-day interpretation.",
+          "selected_source_ids": [
+            "N78",
+            "S28",
+            "EVC-CMP020",
+            "DEV-GITA-12-13-14"
+          ],
+          "topic_mr": "कामापूर्वी नैतिक मर्यादा",
+          "business_decision_mr": "आजच्या अर्थान्वयनानुसार मोठे काम सुरू करण्यापूर्वी मालकाने सत्य, अहिंसा, शुद्ध व्यवहार आणि बाधित लोकांविषयी दया या मर्यादा ठरवाव्यात. निकालासाठी त्या मर्यादांची तडजोड केली जाणार नाही.",
+          "business_action_mr": "प्रकल्प सुरू करण्याआधी मालक किंवा प्रमुख तीन ते पाच लेखी मर्यादा ठरवून टीमला सांगतो. ठरलेल्या टप्प्यावर त्यांचे पालन तपासून नोंदवतो. हे आजचे अर्थान्वयन आहे, मूळ ग्रंथांचे विधान नव्हे.",
+          "journey_stage": "opening"
+        },
+        "peer_review": {
+          "narada": {
+            "number": 1,
+            "verdict": "PASS",
+            "issues": []
+          },
+          "shandilya": {
+            "number": 1,
+            "verdict": "PASS",
+            "issues": []
+          },
+          "researcher": {
+            "number": 1,
+            "verdict": "PASS",
+            "issues": []
+          }
+        },
+        "revisions": 0,
+        "review_history": [
+          {
+            "stage": "independent_review_v2",
+            "revision": 0,
+            "review": {
+              "verdict": "PASS",
+              "issues": [],
+              "outcome": "READY",
+              "typed_review": {
+                "source_checks": [
+                  {
+                    "field": "comparative_mr.0.explanation_mr",
+                    "source_id": "N78",
+                    "source_claim_quote": "नारद ७८ भक्तिसाधनेच्या शिस्तीचा नैतिक विस्तार आहे. 'आस्तिक्य' म्हणजे ईश्वर आणि शास्त्रीय सत्यावरील श्रद्धा; ती व्यवसायाच्या कृतीत उतरवलेली नाही. अहिंसा, सत्य, शुद्धता आणि दया यांचे पालन 'परिपालनीयानि' या शब्दाप्रमाणे काटेकोर आहे, 'आदि' शब्द इतर सद्गुणांनाही जागा देतो. ही वृत्ती केवळ तपासयादीसारखी नाही.",
+                    "application_quote": "",
+                    "source_quote": "अहिंसासत्यशौचदयास्तिक्यादिचारित्र्याणि परिपालनीयानि ॥",
+                    "classification": "SUPPORTED_ORIGINAL",
+                    "reason": "The claim about Narada 78's focus on ethical conduct aligns with the source text."
+                  },
+                  {
+                    "field": "comparative_mr.1.explanation_mr",
+                    "source_id": "S28",
+                    "source_claim_quote": "'तदङ्गानां च' हे सूत्र २७ मधील साहाय्यक अंगांशी जोडलेले आहे; मुख्य अभ्यासाबरोबर आधार देणाऱ्या सरावाचा हा संदर्भ आहे. गुरुसेवा आणि इंद्रियसंयम ही भाष्याची तात्पुरती उदाहरणे आहेत, विद्वत्परीक्षण बाकी आहे. हे सूत्र प्रामाणिकपणा किंवा करुणा यांची नावे घेत नाही; ते फक्त साहाय्यक अंगे मुख्य साधनेबरोबर असतात ही रचना दाखवते.",
+                    "application_quote": "",
+                    "source_quote": "तदङ्गानां च ॥२८॥",
+                    "classification": "SUPPORTED_ORIGINAL",
+                    "reason": "The claim about the auxiliary practices in Shandilya 28 is supported by the source."
+                  },
+                  {
+                    "field": "comparative_mr.2.explanation_mr",
+                    "source_id": "EVC-CMP020",
+                    "source_claim_quote": "योगसूत्र २.३० अहिंसा, सत्य, अस्तेय, ब्रह्मचर्य आणि अपरिग्रह हे यम सांगते. ही अष्टांगयोगातील नैतिक साधना आहे; ब्रह्मचर्याला केवळ वित्तीय शिस्त मानू नये. ही यादी नारद ७८ ची पूरक आहे, तिच्याशी एकसारखी नाही.",
+                    "application_quote": "",
+                    "source_quote": "अहिंसासत्यास्तेयब्रह्मचर्यापरिग्रहा यमाः ॥ २.३०॥",
+                    "classification": "SUPPORTED_ORIGINAL",
+                    "reason": "The claim about Yamas in Yoga Sutra 2.30 is supported by the source."
+                  },
+                  {
+                    "field": "comparative_mr.3.explanation_mr",
+                    "source_id": "DEV-GITA-12-13-14",
+                    "source_claim_quote": "गीतेत मैत्री आणि करुणेचा विषय सर्व प्राणी आहेत, तर मनबुद्धीच्या अर्पणाचा विषय भगवान आहे; हे दोन्ही मिसळू नयेत. 'स मे प्रियः' म्हणजे भक्त भगवानाला प्रिय आहे, केवळ भक्ताच्या भावनिक प्रेमाची भाषा नव्हे. १२.१३ ची गुणमालिका १२.१४ शी जोडलेली आहे. ही स्थळे नारद ७८ ला पूरक आहेत, त्याची पुष्टी करणारी नाहीत.",
+                    "application_quote": "",
+                    "source_quote": "अद्वेष्टा सर्वभूतानां मैत्रः करुण एव च।\nनिर्ममो निरहङ्कारः समदुःखसुखः क्षमी।।12.13।।\n\nसन्तुष्टः सततं योगी यतात्मा दृढनिश्चयः।\nमय्यर्पितमनोबुद्धिर्यो मद्भक्तः स मे प्रियः।।12.14।।",
+                    "classification": "SUPPORTED_ORIGINAL",
+                    "reason": "The claim about the qualities of a devotee in Bhagavad Gita 12.13-14 is supported by the source."
+                  }
+                ],
+                "outcome": "READY",
+                "blocking_issues": [],
+                "advisory_notes": [],
+                "uncertainties": []
+              },
+              "review_key": "c7071235ae21ef12211170c09370c916af2f8f8b4a33167229e9eb6dac00081d",
+              "reviewed_draft_sha256": "09ac31c81ac16824f23fa11cf597521283e0d95525b55158aeab320a838971eb",
+              "rubric_sha256": "5f9136a410ea50658c0937be070fa20da68e7f28b7051948d787b312a3592728",
+              "evidence_selections": [
+                {
+                  "response_path": "source_checks.0.comparison_ref",
+                  "ref": "D9c068faee2b1"
+                },
+                {
+                  "response_path": "source_checks.0.source_ref",
+                  "ref": "Saf3b3f2f075d"
+                },
+                {
+                  "response_path": "source_checks.0.source_claim_ref",
+                  "ref": "D9c068faee2b1"
+                },
+                {
+                  "response_path": "source_checks.1.comparison_ref",
+                  "ref": "D5bc8d7c20528"
+                },
+                {
+                  "response_path": "source_checks.1.source_ref",
+                  "ref": "S629d177c24cf"
+                },
+                {
+                  "response_path": "source_checks.1.source_claim_ref",
+                  "ref": "D5bc8d7c20528"
+                },
+                {
+                  "response_path": "source_checks.2.comparison_ref",
+                  "ref": "Da460af46f9bc"
+                },
+                {
+                  "response_path": "source_checks.2.source_ref",
+                  "ref": "Sc55058a670ab"
+                },
+                {
+                  "response_path": "source_checks.2.source_claim_ref",
+                  "ref": "Da460af46f9bc"
+                },
+                {
+                  "response_path": "source_checks.3.comparison_ref",
+                  "ref": "D078dd1cb0122"
+                },
+                {
+                  "response_path": "source_checks.3.source_ref",
+                  "ref": "S585f919a4230"
+                },
+                {
+                  "response_path": "source_checks.3.source_claim_ref",
+                  "ref": "D078dd1cb0122"
+                }
+              ],
+              "decision_comparisons": {}
+            }
+          },
+          {
+            "stage": "editorial_source_context_correction",
+            "review": {
+              "verdict": "PASS",
+              "issues": [],
+              "outcome": "READY",
+              "typed_review": {
+                "source_checks": [
+                  {
+                    "field": "comparative_mr.0.explanation_mr",
+                    "source_id": "N78",
+                    "source_claim_quote": "नारद ७८ भक्तिसाधनेच्या शिस्तीचा नैतिक विस्तार आहे. 'आस्तिक्य' म्हणजे ईश्वर आणि शास्त्रीय सत्यावरील श्रद्धा; ती व्यवसायाच्या कृतीत उतरवलेली नाही. अहिंसा, सत्य, शुद्धता आणि दया यांचे पालन 'परिपालनीयानि' या शब्दाप्रमाणे काटेकोर आहे, 'आदि' शब्द इतर सद्गुणांनाही जागा देतो. ही वृत्ती केवळ तपासयादीसारखी नाही.",
+                    "application_quote": "",
+                    "source_quote": "अहिंसासत्यशौचदयास्तिक्यादिचारित्र्याणि परिपालनीयानि ॥",
+                    "classification": "SUPPORTED_ORIGINAL",
+                    "reason": "The historical claim about Narada's teachings on virtues is supported by the source."
+                  },
+                  {
+                    "field": "comparative_mr.1.explanation_mr",
+                    "source_id": "S28",
+                    "source_claim_quote": "तदङ्गानाम् म्हणजे सूत्र २७मधील बुद्धिहेतूंची साहाय्यक अंगे. प्रवृत्ती आणि शुद्धीपर्यंतचा कालावधी मागील सूत्रातून येथे अनुवर्तित आहेत. आ विशुद्धेः म्हणजे शुद्धी प्राप्त होईपर्यंत. बुद्धिहेतू म्हणजे ब्रह्मविषयक निश्चित जाणीवेची साधने. गुरुसेवा आणि इंद्रियसंयम ही भाष्याची तात्पुरती उदाहरणे आहेत, विद्वत्परीक्षण बाकी आहे. हे सूत्र प्रामाणिकपणा किंवा करुणा यांची नावे घेत नाही; ते फक्त साहाय्यक अंगे मुख्य साधनेबरोबर असतात ही रचना दाखवते.",
+                    "application_quote": "",
+                    "source_quote": "तदङ्गानां च ॥२८॥",
+                    "classification": "SUPPORTED_ORIGINAL",
+                    "reason": "The claim about auxiliary practices in Shandilya's sutra is supported by the source."
+                  },
+                  {
+                    "field": "comparative_mr.2.explanation_mr",
+                    "source_id": "EVC-CMP020",
+                    "source_claim_quote": "योगसूत्र २.३० अहिंसा, सत्य, अस्तेय, ब्रह्मचर्य आणि अपरिग्रह हे यम सांगते. ही अष्टांगयोगातील नैतिक साधना आहे; ब्रह्मचर्याला केवळ वित्तीय शिस्त मानू नये. ही यादी नारद ७८ ची पूरक आहे, तिच्याशी एकसारखी नाही.",
+                    "application_quote": "",
+                    "source_quote": "अहिंसासत्यास्तेयब्रह्मचर्यापरिग्रहा यमाः ॥ २.३०॥",
+                    "classification": "SUPPORTED_ORIGINAL",
+                    "reason": "The claim about Yamas in the Yoga Sutras is supported by the source."
+                  },
+                  {
+                    "field": "comparative_mr.3.explanation_mr",
+                    "source_id": "DEV-GITA-12-13-14",
+                    "source_claim_quote": "गीतेत मैत्री आणि करुणेचा विषय सर्व प्राणी आहेत, तर मनबुद्धीच्या अर्पणाचा विषय भगवान आहे; हे दोन्ही मिसळू नयेत. 'स मे प्रियः' म्हणजे भक्त भगवानाला प्रिय आहे, केवळ भक्ताच्या भावनिक प्रेमाची भाषा नव्हे. १२.१३ ची गुणमालिका १२.१४ शी जोडलेली आहे. ही स्थळे नारद ७८ ला पूरक आहेत, त्याची पुष्टी करणारी नाहीत.",
+                    "application_quote": "",
+                    "source_quote": "अद्वेष्टा सर्वभूतानां मैत्रः करुण एव च।\nनिर्ममो निरहङ्कारः समदुःखसुखः क्षमी।।12.13।।\n\nसन्तुष्टः सततं योगी यतात्मा दृढनिश्चयः।\nमय्यर्पितमनोबुद्धिर्यो मद्भक्तः स मे प्रियः।।12.14।।",
+                    "classification": "SUPPORTED_ORIGINAL",
+                    "reason": "The claim about the qualities of a devotee in the Bhagavad Gita is supported by the source."
+                  }
+                ],
+                "outcome": "READY",
+                "blocking_issues": [],
+                "advisory_notes": [],
+                "uncertainties": []
+              },
+              "review_key": "74e38da91d13f10d2a73fef8262025b567a97f749b713051ec6a564952bba018",
+              "reviewed_draft_sha256": "fd3794617d0e9cfc4985b64e8c90a6fbc4709c003e22fc8f7cd1e838e6e71621",
+              "rubric_sha256": "5f9136a410ea50658c0937be070fa20da68e7f28b7051948d787b312a3592728",
+              "evidence_selections": [
+                {
+                  "response_path": "source_checks.0.comparison_ref",
+                  "ref": "D9c068faee2b1"
+                },
+                {
+                  "response_path": "source_checks.0.source_ref",
+                  "ref": "Saf3b3f2f075d"
+                },
+                {
+                  "response_path": "source_checks.0.source_claim_ref",
+                  "ref": "D9c068faee2b1"
+                },
+                {
+                  "response_path": "source_checks.1.comparison_ref",
+                  "ref": "D1bc7a3f39d1a"
+                },
+                {
+                  "response_path": "source_checks.1.source_ref",
+                  "ref": "S629d177c24cf"
+                },
+                {
+                  "response_path": "source_checks.1.source_claim_ref",
+                  "ref": "D1bc7a3f39d1a"
+                },
+                {
+                  "response_path": "source_checks.2.comparison_ref",
+                  "ref": "Da460af46f9bc"
+                },
+                {
+                  "response_path": "source_checks.2.source_ref",
+                  "ref": "Sc55058a670ab"
+                },
+                {
+                  "response_path": "source_checks.2.source_claim_ref",
+                  "ref": "Da460af46f9bc"
+                },
+                {
+                  "response_path": "source_checks.3.comparison_ref",
+                  "ref": "D078dd1cb0122"
+                },
+                {
+                  "response_path": "source_checks.3.source_ref",
+                  "ref": "S585f919a4230"
+                },
+                {
+                  "response_path": "source_checks.3.source_claim_ref",
+                  "ref": "D078dd1cb0122"
+                }
+              ],
+              "decision_comparisons": {}
+            },
+            "draft_sha256": "fd3794617d0e9cfc4985b64e8c90a6fbc4709c003e22fc8f7cd1e838e6e71621"
+          }
+        ],
+        "status": "READY_FOR_AUTHOR_REVIEW",
+        "editorial_provenance": {
+          "path": "C:\\Adwait\\Hiranyam AI Labs\\sk-sutras-by-shri-shripad-kulkarni\\logs\\source-first-generation-20261120\\first-chapter-editorial\\provenance.json",
+          "sha256": "0924d5dd9a6b49c8a6bc39ea6e4d88c8d5acdecc434da8e31c02eb74ab70f7de"
+        }
+      },
+      "result_file": {
+        "path": "C:\\Adwait\\Hiranyam AI Labs\\sk-sutras-by-shri-shripad-kulkarni\\logs\\source-first-generation-20261120\\first-chapter-editorial\\result-reviewed.json",
+        "sha256": "fcca3568f597a9eedce5cc388cd27506835e3e80bef27d761eec095131168897"
+      }
+    }
+  ],
+  "presentation_entries_sha256": "9352daaf55ea130f31e352aeba7645245d42e4d8a22cab42713b34c772058cca",
+  "canonical_references_sha256": "348bad3825b1095fc52dc237a3f303443756acd46f035a7b45315783a7e18bb4",
+  "canonical_reference_record_hashes": {
+    "N78": "4440bf26d34fa01b2770681e7b472b35631562950cac50ef5ecb8a9c111b06fb",
+    "S28": "f694f3a035b2e6f985aff592b971d5a71bf102f38e83657a10ef27e111d0a114",
+    "EVC-CMP020": "10413c3730d6070e0a64ecb5b64247ffe3b5669947107536f590e0bbd9cd921d",
+    "DEV-GITA-12-13-14": "9c596cb279571ab733d4889c8eb137c269ef62749b5d7d5cbb620e7cbd5d37d2"
+  },
+  "chapters": [
+    {
+      "number": 1,
+      "title_mr": "प्रारंभ"
+    }
+  ],
+  "metadata_only_fields": [
+    "number",
+    "chapter"
+  ],
+  "content_preservation": "All other JSON values and string contents unchanged; input file bytes untouched.",
+  "review_scope": "Review hashes bind canonical drafts, not renumbered presentation copies.",
+  "author_approval": "PENDING",
+  "publication_approved": false,
+  "visual_qa": "NOT_RUN",
+  "new_generation": false,
+  "reference_display": {
+    "overlay_canonical_sha256": "898e9f42f768fc29556eb8646e642784d53d116c1227a3807a330bcb6fb9f3af",
+    "field_changes": [
+      {
+        "reference_id": "N78",
+        "field": "locator_mr",
+        "canonical_value": "सूत्र 78",
+        "before_display": "सूत्र 78",
+        "after_display": "सूत्र ७८",
+        "visible_text_changed": true
+      },
+      {
+        "reference_id": "S28",
+        "field": "locator_mr",
+        "canonical_value": "सूत्र 28",
+        "before_display": "सूत्र 28",
+        "after_display": "सूत्र २८",
+        "visible_text_changed": true
+      },
+      {
+        "reference_id": "EVC-CMP020",
+        "field": "author_mr",
+        "canonical_value": "Patanjali",
+        "before_display": "Patanjali",
+        "after_display": "महर्षी पतंजली",
+        "visible_text_changed": true
+      },
+      {
+        "reference_id": "EVC-CMP020",
+        "field": "title_mr",
+        "canonical_value": "Yoga Sutras",
+        "before_display": "Yoga Sutras",
+        "after_display": "योगसूत्रे",
+        "visible_text_changed": true
+      },
+      {
+        "reference_id": "EVC-CMP020",
+        "field": "locator_mr",
+        "canonical_value": "2.30; unaccented text section",
+        "before_display": "2.30; unaccented text section",
+        "after_display": "२.३०",
+        "visible_text_changed": true
+      },
+      {
+        "reference_id": "DEV-GITA-12-13-14",
+        "field": "author_mr",
+        "canonical_value": "Traditionally attributed to Vyasa; Krishna speaking to Arjuna",
+        "before_display": "Traditionally attributed to Vyasa; Krishna speaking to Arjuna",
+        "after_display": "परंपरेनुसार महर्षी व्यास; श्रीकृष्ण-अर्जुन संवाद",
+        "visible_text_changed": true
+      },
+      {
+        "reference_id": "DEV-GITA-12-13-14",
+        "field": "title_mr",
+        "canonical_value": "Shrimad Bhagavad Gita",
+        "before_display": "Shrimad Bhagavad Gita",
+        "after_display": "श्रीमद्भगवद्गीता",
+        "visible_text_changed": true
+      },
+      {
+        "reference_id": "DEV-GITA-12-13-14",
+        "field": "locator_mr",
+        "canonical_value": "12.13–14",
+        "before_display": "12.13–14",
+        "after_display": "१२.१३–१४",
+        "visible_text_changed": true
+      }
+    ],
+    "display_reference_records_sha256": "b149ae87527c31ba921d7e0c6d2e4c2ca01624c5b9770b7c8733432c644b5583",
+    "canonical_reference_records_changed": false,
+    "original_quotes_and_urls_changed": false,
+    "canonical_drafts_and_review_hashes_changed": false
+  },
+  "result_files_in_explicit_order": [
+    {
+      "path": "C:\\Adwait\\Hiranyam AI Labs\\sk-sutras-by-shri-shripad-kulkarni\\logs\\source-first-generation-20261120\\first-chapter-editorial\\result-reviewed.json",
+      "sha256": "fcca3568f597a9eedce5cc388cd27506835e3e80bef27d761eec095131168897"
+    }
+  ],
+  "reference_registry_file": {
+    "path": "C:\\Adwait\\Hiranyam AI Labs\\sk-sutras-by-shri-shripad-kulkarni\\logs\\source-first-generation-20261120\\selected-book-reference-registry.json",
+    "sha256": "30b897f6fbf2587a108bdf070f9a1d91e81c9c83acac99c5c62017926cd5e933"
+  },
+  "approved_preflight_file": {
+    "path": "C:\\Adwait\\Hiranyam AI Labs\\sk-sutras-by-shri-shripad-kulkarni\\logs\\source-first-generation-20261120\\book-export-preflight.json",
+    "sha256": "3074e42ea3b7540d3d1d66ac48546dbcb4645bc28dbbb317e85b0bd081cbb5df"
+  },
+  "templates": {
+    "opening": {
+      "path": "C:\\Users\\LENOVO\\Downloads\\SK_Sutras\\17Nov2026\\Udyam_Sutre_Sampurna_Granth_v19.docx",
+      "sha256": "add131fb87ed22ec0eaa1b64886e530610efbb4bb7340daa2595e1239a6d6502"
+    },
+    "closing": {
+      "path": "C:\\Users\\LENOVO\\Downloads\\SK_Sutras\\Udyam_Sutre_Sampurna_Mukha_Anukramanika_Malaprushtha-v2.docx",
+      "sha256": "621aa70d3d81d649f2002f6bfc71e6adca0be18e655e0024f57f43a99b12dc80"
+    }
+  },
+  "renderer": "src.doc_export.research_book.render_research_book",
+  "renderer_report": {
+    "output": "C:\\Adwait\\Hiranyam AI Labs\\sk-sutras-by-shri-shripad-kulkarni\\deliverables\\20261121-source-first\\Udyam_Sutre_Source_First_Reader_Pilot_001_20261121.docx",
+    "sha256": "65019fa12c20e56740837b598172923749fe46f0372340321e8951c001972dcb",
+    "status": "DRAFT_PENDING_VISUAL_AND_SCHOLAR_REVIEW",
+    "main_entries": 1,
+    "chapters": 1,
+    "case_entities": 2,
+    "cited_references": [
+      "N78",
+      "S28",
+      "EVC-CMP020",
+      "DEV-GITA-12-13-14"
+    ],
+    "proposed_research_count": 0,
+    "word_counts": {
+      "source-selection-N078-S028": {
+        "words": 588,
+        "devanagari_tokens": 588
+      }
+    },
+    "source_hashes": {
+      "opening": "add131fb87ed22ec0eaa1b64886e530610efbb4bb7340daa2595e1239a6d6502",
+      "closing": "621aa70d3d81d649f2002f6bfc71e6adca0be18e655e0024f57f43a99b12dc80"
+    },
+    "first85paragraphs_identical": true,
+    "closing_text_identical": true,
+    "centered_main_formulas": 1,
+    "render_status": "NOT_RUN",
+    "factual_verification": "CALLER_SUPPLIED_NOT_PERFORMED_BY_EXPORTER",
+    "author_approval": false,
+    "publication": false
+  },
+  "output": "C:\\Adwait\\Hiranyam AI Labs\\sk-sutras-by-shri-shripad-kulkarni\\deliverables\\20261121-source-first\\Udyam_Sutre_Source_First_Reader_Pilot_001_20261121.docx",
+  "output_sha256": "65019fa12c20e56740837b598172923749fe46f0372340321e8951c001972dcb",
+  "qa_receipt": "C:\\Adwait\\Hiranyam AI Labs\\sk-sutras-by-shri-shripad-kulkarni\\deliverables\\20261121-source-first\\Udyam_Sutre_Source_First_Reader_Pilot_001_20261121.qa.json",
+  "fresh_word_pdf_render": "NOT_RUN",
+  "fresh_protected_page_pixel_comparison": "NOT_RUN",
+  "reference_display_file": {
+    "path": "C:\\Adwait\\Hiranyam AI Labs\\sk-sutras-by-shri-shripad-kulkarni\\logs\\source-first-generation-20261120\\selected-book-reference-display-mr.json",
+    "sha256": "1d3dae833001726321365bf607094651dd6ebe30cb33cdae06382eb1480f0fcd"
+  }
+}

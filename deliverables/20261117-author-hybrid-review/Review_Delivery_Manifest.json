@@ -1,0 +1,66 @@
+{
+  "status": "COMPLETE_OFFLINE_REVIEW_DELIVERY",
+  "main_sutras": 104,
+  "chapters": 20,
+  "pages": 253,
+  "real_business_examples": 208,
+  "minimum_main_exposition_words": 506,
+  "main_exposition_words_total": 55486,
+  "narada_reference_items": 84,
+  "asaktis": 11,
+  "selected_shandilya_items": 8,
+  "original_sources_unchanged": 13,
+  "protected_first9_pixel_identical": true,
+  "protected_closing_pixel_identical": true,
+  "no_new_sutras": true,
+  "paid_api_calls": 0,
+  "author_scholar_approval": "PENDING",
+  "publication": false,
+  "files": [
+    {
+      "name": "Udyam_Sutre_Hybrid_Review_20261117.docx",
+      "sha256": "3d0d4ee92dcca38dc4985eb3308d697bec10f71ad6e8a801eb5485360a22f3cd",
+      "bytes": 492210
+    },
+    {
+      "name": "Udyam_Sutre_Hybrid_Review_20261117.pdf",
+      "sha256": "3796b0286d1dacf425aa7ffca13e1d266cfe08259d208178e95ad8562df2d092",
+      "bytes": 3012746
+    },
+    {
+      "name": "Author_Review_Notes_Marathi.txt",
+      "sha256": "f8c3769175243bcea6eb64ef3d802f4b7ec238cb79ded6ad65e6b337bab739be",
+      "bytes": 10414
+    },
+    {
+      "name": "Sutra_Source_and_Correction_Register.csv",
+      "sha256": "2297a76289ae63dbeb2381f5d421478622bd249cf30d5c8adce434c14c3980bf",
+      "bytes": 49185
+    },
+    {
+      "name": "Business_Example_Evidence_Register.csv",
+      "sha256": "5c44f8edc6770168c7a00986b010567019ceee2e4317d3550d4c0feb4ad0d4c7",
+      "bytes": 342759
+    },
+    {
+      "name": "Source_Filtration_Decisions.csv",
+      "sha256": "49dbc3282d10e7100fee78caa4fd9a5a4ac40dd4cb189e71dd2dc4843b9d1e80",
+      "bytes": 66099
+    },
+    {
+      "name": "source_crosswalk.json",
+      "sha256": "b114fb136b0ccc67763e04a4a7942fa7b93bf9471af92024bdacb671b256f40b",
+      "bytes": 95237
+    },
+    {
+      "name": "final_render_verification.json",
+      "sha256": "fff7c1be2c0d9ab9347f8aaa4ce9c7a6443139a2d7847994336cc29c3009c8b6",
+      "bytes": 1973
+    },
+    {
+      "name": "Original_Source_Hash_Verification.json",
+      "sha256": "3474d33f4636a13cd990f608d2a5036ddb70b185e9be38e37a492971746baa02",
+      "bytes": 4274
+    }
+  ]
+}

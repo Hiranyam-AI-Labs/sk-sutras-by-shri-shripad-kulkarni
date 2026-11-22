@@ -10,6 +10,7 @@ Description: Unit tests verifying that API keys are loaded independently from
 """
 
 import pytest
+import src.credentials as credentials
 from src.credentials import (
     get_api_key_for_provider,
     get_claude_key,
@@ -20,7 +21,31 @@ from src.credentials import (
 )
 
 
-def test_separate_key_files_loaded() -> None:
+@pytest.fixture(autouse=True)
+def isolated_key_files(tmp_path, monkeypatch):
+    """Use temporary synthetic files and restore environment after each test.
+
+    Inputs are pytest fixtures; returns provider markers for assertions. Never
+    reads real credentials. A failure indicates loader behavior, not deployment
+    readiness; inspect temporary paths without printing production secrets.
+    """
+    for variable in ("ANTHROPIC_API_KEY", "CLAUDE_API_KEY", "GOOGLE_API_KEY",
+                     "GEMINI_API_KEY", "OPENAI_API_KEY"):
+        monkeypatch.delenv(variable, raising=False)
+    markers = {}
+    for provider in ("claude", "gemini", "openai"):
+        marker = provider + "-unit-test-only"
+        path = tmp_path / (provider + "_key.txt")
+        path.write_text(' "' + marker + '"\n', encoding="utf-8")
+        monkeypatch.setattr(credentials, provider.upper() + "_KEY_PATHS", [path])
+        markers[provider] = marker
+    # Record environment restoration before the production sync function writes.
+    for variable in ("ANTHROPIC_API_KEY", "GOOGLE_API_KEY", "OPENAI_API_KEY"):
+        monkeypatch.setenv(variable, "")
+    return markers
+
+
+def test_separate_key_files_loaded(isolated_key_files) -> None:
     """Verifies that each individual model key is loaded from its own separate file."""
     claude_key = get_claude_key()
     gemini_key = get_gemini_key()
@@ -36,10 +61,10 @@ def test_separate_key_files_loaded() -> None:
     assert claude_key != openai_key
     assert gemini_key != openai_key
 
-    # Check characteristic provider prefixes
-    assert claude_key.startswith("sk-ant-")
-    assert gemini_key.startswith("AQ.")
-    assert openai_key.startswith("sk-proj-")
+    # Verify exact separate fixture values, not vendor-specific token formats.
+    assert claude_key == isolated_key_files["claude"]
+    assert gemini_key == isolated_key_files["gemini"]
+    assert openai_key == isolated_key_files["openai"]
 
 
 def test_provider_dispatch() -> None:

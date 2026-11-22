@@ -1,0 +1,14 @@
+{
+  "scope": "pilot",
+  "pairs": 100,
+  "states": {
+    "BELOW_THRESHOLD": 77,
+    "PRIMARY": 3,
+    "COMPONENT_REJECTED": 5,
+    "RESERVE": 13,
+    "BLOCKED": 2
+  },
+  "assessment_sha256": "cf956ed4aafff680f20d5d4f048691797d4872093587e68426ae61963f0cd345",
+  "layout_status": "NOT_RENDERED_NOT_DELIVERABLE",
+  "docx_sha256": "65cb96059546256b75cb8541789791b5c9bde3703c5248f484281a32e0fb3251"
+}

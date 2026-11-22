@@ -27,6 +27,80 @@ from scripts.run_dynamic_live_council import DynamicLiveCouncilRunner
 from scripts.reformat_canonical_word_document import build_reformatted_canonical_document, MANDATORY_FOOTER
 
 
+class OfflineFixtureEmbedding:
+    """Deterministic vectors for collection plumbing, not semantic-quality proof."""
+
+    def __call__(self, input):
+        """Return finite local vectors for input texts without model downloads."""
+        return [[1.0, 1.0, 1.0, 1.0] for _ in input]
+
+    def embed_query(self, input):
+        """Use identical local query dimensions with modern Chroma clients."""
+        return self(input)
+
+    @staticmethod
+    def name():
+        """Identify this test-only embedding function to Chroma."""
+        return "offline-test-fixture"
+
+
+@pytest.fixture(autouse=True)
+def isolated_iks_index(tmp_path, monkeypatch):
+    """Seed a temporary Chroma index; never rely on or mutate the live index.
+
+    Pytest fixtures provide directory/patch lifetime. Uses existing corpus rows
+    only as retrieval test data, not a claim of scholarly approval or relevance.
+    Return the temporary client; preserve production embedding configuration.
+    """
+    import chromadb
+    from chromadb.config import Settings
+
+    original_client = chromadb.PersistentClient
+    client = original_client(path=str(tmp_path / "chroma"),
+        settings=Settings(anonymized_telemetry=False, is_persistent=True))
+    embedding = OfflineFixtureEmbedding()
+    corpus = json.loads((BASE_DIR / "data/knowledge_repository/sources/iks_canonical_corpus.json").read_text(encoding="utf-8"))
+    entries = corpus if isinstance(corpus, list) else corpus["entries"]
+    collection = client.get_or_create_collection("iks_canonical_library", embedding_function=embedding)
+    collection.upsert(ids=[entry["id"] for entry in entries],
+        documents=[entry["sanskrit"] for entry in entries],
+        metadatas=[{key: value for key, value in entry.items() if isinstance(value, (str, int, float, bool))}
+                   for entry in entries])
+    client.get_or_create_collection("shandilya_100_sutras", embedding_function=embedding)
+    client.get_or_create_collection("bhakti_sutras_comparative", embedding_function=embedding)
+    original_get = client.get_collection
+    original_create = client.get_or_create_collection
+
+    def get_fixture_collection(*args, **kwargs):
+        """Read temporary collections using the local test embedding function."""
+        kwargs["embedding_function"] = embedding
+        return original_get(*args, **kwargs)
+
+    def create_fixture_collection(*args, **kwargs):
+        """Keep all test collection creation on local deterministic embeddings."""
+        kwargs["embedding_function"] = embedding
+        return original_create(*args, **kwargs)
+
+    monkeypatch.setattr(client, "get_collection", get_fixture_collection)
+    monkeypatch.setattr(client, "get_or_create_collection", create_fixture_collection)
+    monkeypatch.setattr(chromadb, "PersistentClient", lambda *args, **kwargs: client)
+    monkeypatch.setattr("src.providers.anthropic_adapter.get_claude_key", lambda: None)
+    from shutil import copytree
+    from src.agents.bharatiya_jnana_agent import BharatiyaJnanaAgent
+    temporary_repository = tmp_path / "knowledge_repository"
+    copytree(BASE_DIR / "data/knowledge_repository/sources", temporary_repository / "sources")
+    for folder in ("registry", "consultation", "research"):
+        (temporary_repository / folder).mkdir()
+    original_init = BharatiyaJnanaAgent.__init__
+
+    def initialize_isolated_research(self, repo_dir=None):
+        """Redirect test research writes to temporary files, preserving live logs."""
+        original_init(self, repo_dir=temporary_repository)
+
+    monkeypatch.setattr(BharatiyaJnanaAgent, "__init__", initialize_isolated_research)
+    return client
+
+
 def test_iks_canonical_corpus_data_completeness():
     """Verifies that the canonical IKS JSON corpus contains at least 20 text traditions."""
     corpus_file = BASE_DIR / "data" / "knowledge_repository" / "sources" / "iks_canonical_corpus.json"
@@ -49,9 +123,9 @@ def test_iks_canonical_corpus_data_completeness():
     assert any("ramdas" in s for s in sources)
 
 
-def test_chromadb_iks_canonical_library_collection():
-    """Verifies that the persistent ChromaDB repository contains iks_canonical_library with indexed verses."""
-    vector_store = SutraVectorStore(collection_name="shandilya_100_sutras")
+def test_chromadb_iks_canonical_library_collection(tmp_path):
+    """Verify seeded temporary collection retrieval, not live semantic relevance."""
+    vector_store = SutraVectorStore(persist_directory=tmp_path / "vector", collection_name="shandilya_100_sutras")
     client = vector_store.client
 
     # Verify collection exists and count >= 20
@@ -60,7 +134,7 @@ def test_chromadb_iks_canonical_library_collection():
     count = iks_coll.count()
     assert count >= 20, f"Expected at least 20 verses in iks_canonical_library, found {count}"
 
-    # Semantic query test
+    # Retrieval-shape test with explicit deterministic fixture embeddings
     query_text = "Truthful business conduct, customer trust, and ethical wealth stewardship"
     results = iks_coll.query(
         query_texts=[query_text],
@@ -71,98 +145,45 @@ def test_chromadb_iks_canonical_library_collection():
     assert results["distances"][0][0] < 1.5
 
 
-def test_council_runner_author_specifications(monkeypatch):
-    """Verifies that DynamicLiveCouncilRunner incorporates Shri Shripad Kulkarni's architectural specifications."""
-    from unittest.mock import MagicMock
+def test_council_runner_author_specifications(tmp_path):
+    """Exercise the current injected five-role runner, without keys or paid calls.
 
-    runner = DynamicLiveCouncilRunner()
+    Input is a temporary directory. A fake dispatcher supplies structured test
+    responses; real review/example stores stay in temporary files. Assert roles,
+    composition and author-review state without weakening runtime budget gates.
+    """
+    from tests.test_live_runner_wiring import FakeDispatch, FakeVector
+    from tests.test_council_service import register_case_examples
+    from src.database.example_registry import ExampleRegistry
+    from src.orchestration.review_store import ReviewStore
 
-    # 1. Collection initialized
-    assert hasattr(runner, "iks_collection")
-    assert runner.iks_collection.count() >= 20
-
-    # 2. Agent 3 dynamic research returns IKS retrieved entries from ChromaDB
-    sample_narada = {
-        "sutra_no": "1",
-        "sanskrit": "अथातो भक्तिं व्याख्यास्यामः ॥",
-        "vishleshan": {"en": "Now therefore we shall expound devotion.", "mr": "आता भक्तीची व्याख्या करू."},
-    }
-    sample_shandilya = {
-        "sutra_no": "1",
-        "sanskrit": "अथातो भक्तिजिज्ञासा ॥",
-        "meaning": {"en": "Now therefore the inquiry into devotion.", "mr": "आता भक्तीविषयी जिज्ञासा."},
-    }
-    research = runner.call_agent3_bharatiya_research(sample_narada, sample_shandilya, "Enterprise Inception")
-    assert "iks_retrieved_entries" in research
-    assert len(research["iks_retrieved_entries"]) > 0
-    assert "Sant Tukaram" in research["doc04_foundation"]
-
-    # 3. Agent 4 composition schema verification
-    mock_agent4_response = MagicMock()
-    mock_agent4_response.usage.input_tokens = 450
-    mock_agent4_response.usage.output_tokens = 920
-    mock_agent4_response.content = json.dumps({
-        "sutra_no": 1,
-        "theme": "Enterprise Inception",
-        "original_sanskrit_verse": "अथातो व्यवहारेऽस्मिन् धर्म्यमुद्योगमारभेत् ।\nजिज्ञासा कार्यदक्षाणां सर्वसिद्धेः प्रसाधिका ॥ १ ॥",
-        "padaccheda": "अथातो । व्यवहारे । अस्मिन् । धर्म्यम् । उद्योगम् । आरभेत् ।",
-        "anvaya": "अथातो अस्मिन् व्यवहारे धर्म्यम् उद्योगम् आरभेत्।",
-        "nirukta": "आरभेत् = प्रवर्तयेत्; जिज्ञासा = ज्ञानप्राप्तीच्छा।",
-        "translation_en": "Now, in this arena of commerce, one must initiate righteous enterprise.",
-        "translation_mr": "व्यवहारात उतरताना पहिली पायरी म्हणजे आपला उद्योग नीतीवर आधारलेला असावा.",
-        "philosophical_foundation_mr": "नारदांचा संकल्प आणि शांडिल्यांची जिज्ञासा यांचा येथे मिलाफ होतो.",
-        "comprehensive_bhashya_mr": "प्रस्तुत सूत्राचे मराठी भाष्य अत्यंत सखोल आणि विस्तृत आहे. " * 35,
-        "biographical_case_studies": [
-            {"name": "Jamsetji Tata", "category": "Eastern/Modern", "case_summary": "Pioneered ethical industrialization in India."},
-            {"name": "Thomas Edison", "category": "Western/Modern", "case_summary": "Relentless empirical investigation and patent development."}
-        ],
-        "mental_resilience_yoga_sutras": {
-            "sutra_reference": "Patanjali Yoga Sutras 1.12-1.14",
-            "sanskrit": "अभ्यासवैराग्याभ्यां तन्निरोधः",
-            "psychological_framework": "Equilibrium of mind in entrepreneurial adversity."
-        },
-        "practical_enterprise_guidance": [
-            {"role": "Founders", "guidance": "Conduct extensive customer due diligence before committing capital."}
-        ]
-    })
-    monkeypatch.setattr(runner.agent4_sutrakar, "generate", lambda **kwargs: mock_agent4_response)
-
-    comp = runner.call_agent4_compose_sutra(1, sample_narada, sample_shandilya, "Enterprise Inception", research)
-    assert comp["sutra_no"] == 1
-    assert "original_sanskrit_verse" in comp
-    assert len(comp["comprehensive_bhashya_mr"]) > 30
-    assert len(comp["biographical_case_studies"]) == 2
-    assert "mental_resilience_yoga_sutras" in comp
-
-    # 4. Agent 5 validation audit logic
-    mock_agent5_response = MagicMock()
-    mock_agent5_response.usage.input_tokens = 800
-    mock_agent5_response.usage.output_tokens = 150
-    mock_agent5_response.content = json.dumps({
-        "verdict": "APPROVED",
-        "overall_score": 98,
-        "bhashya_word_count": 85,
-        "is_short_and_concise": True,
-        "bhashya_depth_verified": True,
-        "case_studies_verified": True,
-        "yoga_psychology_verified": True,
-        "gates_passed": 13,
-        "audit_commentary": "Certified compliant with short Sanskrit formulation, concise Marathi Bhashya, and IKS enterprise ethics."
-    })
-    monkeypatch.setattr(runner.agent5_validator, "generate", lambda **kwargs: mock_agent5_response)
-
-    approved, score, audit = runner.call_agent5_validate_sutra(1, comp, research)
-    assert approved is True
-    assert score >= 90
-    assert audit["bhashya_depth_verified"] is True
-    assert audit["case_studies_verified"] is True
-    assert audit["yoga_psychology_verified"] is True
-    assert audit["gates_passed"] == 13
+    source = tmp_path / "author-source.txt"
+    source.write_text("Synthetic source ethics passage for author-contract testing", encoding="utf-8")
+    dispatch = FakeDispatch()
+    examples = ExampleRegistry(tmp_path / "examples.db")
+    register_case_examples(examples)
+    runner = DynamicLiveCouncilRunner(
+        dispatcher=dispatch, vector_store=FakeVector(),
+        review_store=ReviewStore(tmp_path / "review.db"), example_registry=examples,
+        narada_sutras=[{"sutra_no": 1, "sanskrit": "source ethics"}],
+        shandilya_sutras=[{"sutra_no": 1, "sanskrit": "matching source"}],
+        source_paths={"DOC-01": source})
+    outcome = runner.execute_live_council(1)
+    assert outcome["status"] == "HUMAN_REVIEW_PENDING"
+    assert outcome["units"][0]["status"] == "HUMAN_REVIEW_PENDING"
+    assert {role for role, _ in dispatch.calls} == {
+        "narada_specialist", "shandilya_specialist", "bharatiya_jnana_specialist",
+        "sutrakar_master", "independent_validator"}
+    assert ("sutrakar_master", "compose", 16384) in dispatch.output_ceilings
 
 
-def test_reformatted_word_document_generation(tmp_path: Path):
+
+def test_reformatted_word_document_generation(tmp_path: Path, monkeypatch):
     """Verifies that the canonical Word document generates with all new sections and mandatory footer."""
     import docx
+    artifact_directory = tmp_path / "artifact-copy"
+    artifact_directory.mkdir()
+    monkeypatch.setattr("scripts.reformat_canonical_word_document.ARTIFACT_DIR", artifact_directory)
     test_docx = tmp_path / "test_canonical_output.docx"
     build_reformatted_canonical_document(output_path=test_docx)
 

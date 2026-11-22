@@ -190,6 +190,22 @@ class ReviewStore:
                         fingerprint(content), POLICY_VERSION, json.dumps(gates), "DRAFT"))
         return version
 
+    def record_assessment(self, unit_id: str, version: int, report: Dict[str, Any]) -> None:
+        """Attach gate evidence to an unapproved immutable composition.
+
+        Inputs identify an existing DRAFT and complete current policy report.
+        Content and fingerprint never change. Invalid reports or states raise;
+        inspect version/state on failure. Human approvals are never created.
+        """
+        from src.agents.acceptance_policy import GATE_NAMES, POLICY_VERSION
+        if set(report.get("gates", {})) != set(GATE_NAMES) or report.get("policy_version") != POLICY_VERSION:
+            raise ValueError("Complete current policy report required")
+        with self._connection() as db:
+            changed = db.execute("UPDATE review_versions SET gates_json=? WHERE unit_id=? AND version=? AND state='DRAFT'",
+                                 (json.dumps(report["gates"]), unit_id, version)).rowcount
+            if changed != 1:
+                raise ValueError("Assessment requires an unapproved draft")
+
     def mark_ai_validated(self, unit_id: str, version: int) -> None:
         """Promote an exact draft only when every versioned gate is PASS.
 

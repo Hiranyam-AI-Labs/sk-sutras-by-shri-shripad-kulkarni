@@ -28,6 +28,7 @@ from src.providers.base import (
 )
 
 _UNSET_KEY = object()
+_EFFORT_LEVELS = ("low", "medium", "high", "xhigh", "max")
 
 
 class AnthropicAdapter(BaseLLMAdapter):
@@ -52,6 +53,7 @@ class AnthropicAdapter(BaseLLMAdapter):
         max_tokens: int = 8192,
         timeout_seconds: float = 60.0,
         offline_mode: Optional[bool] = None,
+        effort: Optional[str] = None,
     ) -> None:
         """
         ------------------------------------------------------------------------
@@ -60,6 +62,15 @@ class AnthropicAdapter(BaseLLMAdapter):
         Purpose:
             Initializes the Anthropic Claude adapter with configurable model IDs,
             safe key retrieval from keys/claude_key.txt, and optional workspace ID.
+        Parameters:
+            Existing provider options and effort: optional low/medium/high/xhigh/max.
+            None omits output_config and preserves legacy provider defaults. A
+            runner may change self.effort between calls under its existing lock.
+        Returns:
+            None.
+        Failures:
+            Credential/base initialization errors propagate; generate validates
+            effort before SDK construction so later attribute changes are checked.
         ------------------------------------------------------------------------
         """
         resolved_model = model_id or os.getenv("ANTHROPIC_MODEL_ID", "claude-sonnet-5-5")
@@ -70,6 +81,7 @@ class AnthropicAdapter(BaseLLMAdapter):
             else get_claude_workspace_id()
         )
         self.workspace_id: Optional[str] = resolved_ws
+        self.effort: Optional[str] = effort
         resolved_offline = (
             offline_mode
             if offline_mode is not None
@@ -127,8 +139,20 @@ class AnthropicAdapter(BaseLLMAdapter):
         Purpose:
             Generates text completions. In offline mode, constructs a structured
             offline analytical response without making external network calls.
+        Parameters:
+            prompt, optional system_prompt/cached_context, and legacy kwargs.
+            self.effort controls output_config.effort without changing the model,
+            workspace, thinking defaults, or max_tokens.
+        Returns:
+            ProviderResponse with text and observed usage/truncation metadata.
+        Failures:
+            Invalid effort raises ValueError before any SDK dispatch; provider
+            errors remain ProviderError, with no retry or model fallback.
         ------------------------------------------------------------------------
         """
+        effort = getattr(self, "effort", None)
+        if effort is not None and (not isinstance(effort, str) or effort not in _EFFORT_LEVELS):
+            raise ValueError("Anthropic effort must be None, low, medium, high, xhigh, or max")
         if self.offline_mode:
             input_toks = self.estimate_tokens((system_prompt or "") + prompt)
             output_toks = 220
@@ -195,6 +219,8 @@ class AnthropicAdapter(BaseLLMAdapter):
                 "max_tokens": self.max_tokens,
                 "messages": [{"role": "user", "content": prompt}],
             }
+            if effort is not None:
+                create_kwargs["output_config"] = {"effort": effort}
             if self.workspace_id:
                 create_kwargs["workspace_id"] = self.workspace_id
             if system_blocks:

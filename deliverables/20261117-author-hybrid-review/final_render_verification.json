@@ -1,0 +1,79 @@
+{
+  "pdf": "C:\\Adwait\\Hiranyam AI Labs\\sk-sutras-by-shri-shripad-kulkarni\\logs\\author-hybrid-book-20261117\\Udyam_Sutre_Hybrid_Review_20261117.pdf",
+  "sha256": "3796b0286d1dacf425aa7ffca13e1d266cfe08259d208178e95ad8562df2d092",
+  "pages": 253,
+  "opening": [
+    {
+      "page": 1,
+      "same_size": true,
+      "exact_pixels": true,
+      "difference_bbox": null
+    },
+    {
+      "page": 2,
+      "same_size": true,
+      "exact_pixels": true,
+      "difference_bbox": null
+    },
+    {
+      "page": 3,
+      "same_size": true,
+      "exact_pixels": true,
+      "difference_bbox": null
+    },
+    {
+      "page": 4,
+      "same_size": true,
+      "exact_pixels": true,
+      "difference_bbox": null
+    },
+    {
+      "page": 5,
+      "same_size": true,
+      "exact_pixels": true,
+      "difference_bbox": null
+    },
+    {
+      "page": 6,
+      "same_size": true,
+      "exact_pixels": true,
+      "difference_bbox": null
+    },
+    {
+      "page": 7,
+      "same_size": true,
+      "exact_pixels": true,
+      "difference_bbox": null
+    },
+    {
+      "page": 8,
+      "same_size": true,
+      "exact_pixels": true,
+      "difference_bbox": null
+    },
+    {
+      "page": 9,
+      "same_size": true,
+      "exact_pixels": true,
+      "difference_bbox": null
+    }
+  ],
+  "closing": {
+    "output_page": 253,
+    "source_page": 14,
+    "same_size": true,
+    "exact_pixels": true,
+    "difference_bbox": null
+  },
+  "all_pages_rendered": true,
+  "outside_page_text_rectangles": [],
+  "sparse_pages": [],
+  "visual_inspection": "PASS_ALL_FINAL_PAGES_INDIVIDUALLY_VIEWED",
+  "renderer": "Microsoft Word ExportAsFixedFormat then PDFium; packaged LibreOffice renderer unavailable",
+  "visual_review_reports": [
+    "visual_review_release_001_064.json",
+    "visual_review_release_065_128.json",
+    "visual_review_release_129_192.json",
+    "visual_review_release_193_253.json"
+  ]
+}

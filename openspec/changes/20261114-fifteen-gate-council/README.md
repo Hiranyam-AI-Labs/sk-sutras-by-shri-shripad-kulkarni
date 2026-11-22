@@ -26,3 +26,32 @@ Capabilities: AI workflow, API/data boundary, publication. Existing Python, SQLi
 - Reconcile actual provider billing if and when billing metadata is supplied; current audit stores only available usage and estimated reservations.
 
 This change is intentionally not marked complete or production ready.
+
+## Approved narrow reliability correction — 14 November 2026
+
+User authorization: implement narrow fixes, preserve all five agent/model assignments,
+run offline checks before paid evaluation, and iterate against diagnosed failures.
+Governance baseline remains 2026.11.11.1. No dependency or model changes.
+
+- R-01: Persist every complete composition before independent validation. A verifier
+  outage leaves an unapproved DRAFT. Attach the subsequent full policy report to that
+  exact version without modifying its content or granting human approval.
+- R-02: Exact request/provider/model/source fingerprints permit reuse of composition
+  and validator checkpoints as well as preparation. Changed requests cannot reuse them.
+- R-03: Allow at most two separately reserved composition continuations. Record each
+  truncated response as INCOMPLETE, retaining raw partial text only in the local ignored
+  audit database. Never accept an unfinished JSON response or weaken acceptance gates.
+- R-04: Preflight accounts for eight stage calls; every actual call and continuation
+  remains subject to durable reservation, call and wall-clock limits.
+- R-05: After independent gates pass, enroll previously unknown sourced principal case
+  identities as AI-proposed/pending-human metadata and link person/company identities.
+  Existing cross-chapter allocation restrictions and human exceptions still apply.
+
+Evidence: [reliability report](../../../docs/RELIABILITY_FIXES_20261114.md).
+Capabilities: governance, AI workflow, database. UI, deployment, publication and
+customer-document rendering are unaffected. No new tool or reusable dependency.
+
+- R-06: Canonical Narada text and existing formulations reach downstream author and
+  verifier roles. Regression added after the live source-pairing failure; final suite
+  64 passed. Live result: complete new chapter retained in three revisions, with
+  scholarly/source gates still requiring humans. See the linked reliability report.

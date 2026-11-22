@@ -1,0 +1,14 @@
+{
+  "scope": "full",
+  "pairs": 8400,
+  "states": {
+    "PRIMARY": 243,
+    "BELOW_THRESHOLD": 7091,
+    "COMPONENT_REJECTED": 211,
+    "RESERVE": 758,
+    "BLOCKED": 97
+  },
+  "assessment_sha256": "cd8b76aa23e34a6e74ac2270c3f35e45cb8771d18b64c2eeb1b35a6ef0f9cdf8",
+  "layout_status": "NOT_RENDERED_NOT_DELIVERABLE",
+  "docx_sha256": "c4ff1207e6ad5814b4691190dde4fa4ec504310042d6889286216e2756add627"
+}

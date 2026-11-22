@@ -176,3 +176,55 @@ def test_precomposition_failure_does_not_consume_composition_attempt():
                              [{"sutra_no": 1, "sanskrit": "match"}],
                              [{"source_id": "DOC-01", "text": "source"}], run_id="pilot")
         assert store.run_progress("pilot", "one") is None
+
+
+def test_complete_composition_survives_validator_failure(tmp_path):
+    """A verifier outage propagates while preserving an unapproved exact draft."""
+    store = ReviewStore(tmp_path / "review.db")
+    roles = make_roles([make_draft()], [])
+    def outage(*args):
+        """Simulate a verifier timeout; no assessment or approval is returned."""
+        raise TimeoutError("verifier unavailable")
+    roles["validator"] = outage
+    service = CouncilService(roles, store, ExampleRegistry(tmp_path / "examples.db"))
+    with pytest.raises(TimeoutError):
+        service.run_unit("one", {"sanskrit": "source"}, [{"sutra_no": 1, "sanskrit": "match"}],
+                         [{"source_id": "DOC-01", "text": "source"}], run_id="recovery")
+    saved = store.get_version("one", 1)
+    assert saved["content"]["original_sanskrit_verse"] == make_draft()["original_sanskrit_verse"]
+    assert saved["state"] == "DRAFT"
+    assert "NOT_EVALUATED" in saved["gates"].values()
+
+
+def test_new_sourced_examples_enroll_without_human_approval(tmp_path):
+    """New principal entities can be reserved after gates pass, pending human review."""
+    store = ReviewStore(tmp_path / "review.db")
+    registry = ExampleRegistry(tmp_path / "examples.db")
+    result = CouncilService(make_roles([make_draft()], []), store, registry).run_unit(
+        "new", {"sanskrit": "source"}, [{"sutra_no": 1, "sanskrit": "match"}],
+        [{"source_id": "DOC-01", "text": "source"}])
+    assert result["status"] == "HUMAN_REVIEW_PENDING"
+    assert registry.resolve("Person A")
+    assert store.get_version("new", result["version"])["state"] == "AI_VALIDATED"
+
+
+def test_full_narada_and_existing_formulations_reach_author(tmp_path):
+    """Authoring receives the source itself and prohibited prior formulations."""
+    source = {"sutra_no": 2, "sanskrit": "सा त्वस्मिन् परमप्रेमरूपा"}
+    roles = make_roles([make_draft()], [])
+    original = roles["sutrakar"]
+    def thesis(record, feedback=None):
+        """Return analysis without repeating text; the service must retain the source."""
+        return {"thesis": "source analysis", "source_reference": "Narada 2"}
+    def inspect_source(mode, *inputs):
+        """Require authoritative source at arbitration and evidence at composition."""
+        assert inputs[0]["canonical_narada"] == source
+        if mode == "compose":
+            assert inputs[-1]["narada"] == source
+            assert inputs[-1]["existing_formulations"] == ["पूर्वस्य सूत्रम्"]
+        return original(mode, *inputs)
+    roles["narada"], roles["sutrakar"] = thesis, inspect_source
+    result = CouncilService(roles, ReviewStore(tmp_path / "r.db"), ExampleRegistry(tmp_path / "e.db")).run_unit(
+        "new", source, [{"sutra_no": 1, "sanskrit": "match"}],
+        [{"source_id": "DOC-01", "text": "source"}], ["पूर्वस्य सूत्रम्"])
+    assert result["status"] == "HUMAN_REVIEW_PENDING"

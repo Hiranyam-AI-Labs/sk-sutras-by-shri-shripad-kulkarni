@@ -1539,7 +1539,9 @@ class DynamicLiveCouncilRunner:
         """Dispatch one structured request through budget control and parse JSON.
 
         ``role`` is a frozen registry key; ``payload`` contains sanitized source
-        context. Returns a JSON object, or raises on malformed provider output.
+        context. Returns an exact-request checkpoint or parsed JSON. Composition
+        permits at most two separately budgeted continuations; incomplete or
+        malformed output raises and cannot become an approved draft.
         Audit the dispatch record and response hash to debug, not raw credentials.
         """
         from src.agents.acceptance_policy import GATE_NAMES
@@ -1562,10 +1564,10 @@ class DynamicLiveCouncilRunner:
             }
             if mode not in mode_contracts:
                 raise ValueError("Unknown Sutrakar mode")
-            instruction = ("Act as independent Sutrakar arbiter and author. Recheck Narada/Shandilya fit, research the sources independently, preserve the challenge response, and compose a short Udyam business aphorism with seven complete reader sections. For arbitrate/consult, return concise JSON only. Cases must be factual, two principal examples across East and West, with diverse people and businesses. List every named person and business in named_examples and example_mentions, including any named example in guidance. Each example_mentions location must name a section containing that exact name. The displayed verse, commentary, cases, and all six guidance items must contain the exact validated structured text. Yoga must be cited and applied. No generic business buzzwords, invented sources or forced pairing. " + mode)
+            instruction = ("Act as independent Sutrakar arbiter and author. Recheck Narada/Shandilya fit, research the sources independently, preserve the challenge response, and compose a short Udyam business aphorism with seven complete reader sections. For arbitrate/consult, return concise JSON only. Cases must be factual, two principal examples across East and West, with diverse people and businesses. allocated_examples is a forbidden list of already-used identities, never a list to select from. Do not reuse any listed person or related business. Create an original aphorism distinct from every existing_formulations entry; registered author manuscripts are evidence, not formulations to copy. Keep the full supplied canonical_narada text authoritative for Narada and distinguish it from Shandilya. List every named person and business in named_examples and example_mentions, including any named example in guidance. Each example_mentions location must name a section containing that exact name. The displayed verse, commentary, cases, and all six guidance items must contain the exact validated structured text. Yoga must be cited and applied. No generic business buzzwords, invented sources or forced pairing. " + mode)
             contract = mode_contracts[mode]
             if mode == "compose":
-                instruction += (" Output one complete JSON object. "
+                instruction += (" Output one complete JSON object, target below 6000 output tokens. Do not expand beyond required fields. "
                                 "Keep each section focused while including all required structured "
                                 "fields, exact repeated text, two factual case identities and "
                                 "source citations. Do not add prose outside JSON.")
@@ -1581,7 +1583,7 @@ class DynamicLiveCouncilRunner:
                      "compose": ("original_sanskrit_verse", "named_examples", "example_mentions", "sections")}[payload["mode"]])
         prompt = json.dumps(payload, ensure_ascii=False)
         system_prompt = f"{instruction}\nReturn exactly one JSON object matching this shape: {contract}"
-        cacheable = role != "independent_validator" and not (role == "sutrakar_master" and payload.get("mode") == "compose")
+        cacheable = True  # Exact request/model/source hash also permits safe verifier resumption.
         checkpoint_key = None
         if cacheable and self.run_id:
             registry = getattr(self.dispatcher, "registry", None)
@@ -1600,8 +1602,23 @@ class DynamicLiveCouncilRunner:
                 return cached
         call_kwargs = ({"max_output_tokens": int(os.getenv("COUNCIL_COMPOSE_MAX_OUTPUT_TOKENS", "16384"))}
                        if role == "sutrakar_master" and payload.get("mode") == "compose" else {})
-        response = self.dispatcher.call(role, prompt, system_prompt, **call_kwargs)
-        raw = response.content.strip()
+        if role == "sutrakar_master" and payload.get("mode") == "compose":
+            # Every continuation is separately reserved and deadline-clamped.
+            fragments = ""
+            for continuation in range(3):
+                request = prompt if not fragments else (prompt + "\nContinue the interrupted JSON from its exact last character; "
+                    "return only the missing suffix, no fences or repeated prefix. Partial JSON:\n" + fragments)
+                response = self.dispatcher.call(role, request, system_prompt,
+                                               allow_truncated=True, **call_kwargs)
+                fragments += response.content
+                if not response.was_truncated:
+                    break
+            else:
+                raise ValueError("Composition continuation limit exhausted; partial outputs retained")
+            raw = fragments.strip()
+        else:
+            response = self.dispatcher.call(role, prompt, system_prompt, **call_kwargs)
+            raw = response.content.strip()
         if raw.startswith("```"):
             raw = raw.split("\n", 1)[-1]
             if raw.rstrip().endswith("```"):
@@ -1634,6 +1651,7 @@ class DynamicLiveCouncilRunner:
         if hasattr(self.dispatcher, "preflight_roles"):
             self.dispatcher.preflight_roles([
                 "narada_specialist", "shandilya_specialist",
+                "bharatiya_jnana_specialist", "sutrakar_master", "sutrakar_master",
                 "bharatiya_jnana_specialist", "sutrakar_master", "independent_validator"])
         results = []
         qualifying = 0

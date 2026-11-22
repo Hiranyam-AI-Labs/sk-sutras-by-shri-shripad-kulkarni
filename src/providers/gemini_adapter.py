@@ -11,6 +11,7 @@ Description: Adapter for Google Gemini models (Gemini 1.5 Pro) designated for
 
 import os
 import warnings
+from copy import deepcopy
 from typing import Any, Dict, Optional
 
 # Suppress Python version lifecycle and package deprecation warnings for 100% clean logs
@@ -28,6 +29,45 @@ from src.providers.base import (
 )
 
 _UNSET_KEY = object()
+
+
+def _usage_payload(metadata: Any) -> Dict[str, Any]:
+    """Purpose: retain official usage counters without inferring hidden thinking.
+
+    Inputs: SDK usage model, dictionary or attribute-based offline test double.
+    Returns: detached metadata with SDK snake-case names, including explicitly
+    supplied nulls and nested modality/cache details. Failures: malformed or
+    missing metadata raises ValueError. Debug: inspect this metadata, not final
+    text length, for reported thought usage; absent counts remain absent.
+    """
+    if callable(getattr(metadata, "model_dump", None)):
+        value = metadata.model_dump(mode="json", by_alias=False, exclude_unset=True)
+    elif isinstance(metadata, dict):
+        value = metadata
+    elif hasattr(metadata, "__dict__"):
+        value = vars(metadata)
+    else:
+        raise ValueError("Gemini provider usage unavailable")
+    if not isinstance(value, dict):
+        raise ValueError("Gemini provider usage malformed")
+    return deepcopy(value)
+
+
+def _token_count(usage: Dict[str, Any], field: str, *, optional: bool = False) -> int:
+    """Purpose: read a nonnegative reported counter for normalized accounting.
+
+    Inputs: preserved usage dictionary, SDK field name and optional-count flag.
+    Returns: integer count; absent/null optional fields add zero without altering
+    raw metadata. Failures: missing required, boolean, negative or noninteger
+    counts raise ValueError. Debug: missing thoughts are not evidence of zero
+    thinking and are never reconstructed from the provider's total.
+    """
+    value = usage.get(field)
+    if optional and value is None:
+        return 0
+    if type(value) is not int or value < 0:
+        raise ValueError(f"Gemini provider usage invalid: {field}")
+    return value
 
 
 class GeminiAdapter(BaseLLMAdapter):
@@ -51,6 +91,7 @@ class GeminiAdapter(BaseLLMAdapter):
         max_tokens: int = 4096,
         timeout_seconds: float = 60.0,
         offline_mode: Optional[bool] = None,
+        thinking_level: Optional[str] = None,
     ) -> None:
         """
         ------------------------------------------------------------------------
@@ -59,8 +100,19 @@ class GeminiAdapter(BaseLLMAdapter):
         Purpose:
             Initializes the Google Gemini adapter with configurable model IDs
             and safe key retrieval from keys/gemini_key.txt.
+            thinking_level accepts LOW/MEDIUM/HIGH (case-insensitive) or None.
+            None preserves the exact legacy request config: no thinking_config.
+            Explicit levels use the official SDK ThinkingConfig; MEDIUM is a
+            reasoning tier, not a fixed numeric thought-token guarantee.
+            Gemini 3.8 Flash already defaults to MEDIUM at the provider; making
+            MEDIUM explicit is not by itself a reduction in thinking or a
+            demonstrated remedy for truncation. Output headroom is caller-owned.
+            Configure via this argument or the thinking_level property. Caller
+            request identities must bind generation_options when nonempty.
+            Invalid levels fail before credentials or client construction.
         ------------------------------------------------------------------------
         """
+        self.thinking_level = thinking_level
         resolved_model = model_id or os.getenv("GEMINI_MODEL_ID", "gemini-3.8-flash")
         resolved_key = get_gemini_key() if api_key is _UNSET_KEY else api_key
         # In this phase, offline mode defaults to True if credentials are absent or explicitly set
@@ -78,6 +130,37 @@ class GeminiAdapter(BaseLLMAdapter):
             timeout_seconds=timeout_seconds,
             offline_mode=resolved_offline,
         )
+
+    @property
+    def thinking_level(self) -> Optional[str]:
+        """Return the canonical explicit Gemini thinking tier, or legacy None."""
+        return self._thinking_level
+
+    @thinking_level.setter
+    def thinking_level(self, value: Optional[str]) -> None:
+        """Validate an opt-in LOW/MEDIUM/HIGH tier without SDK/key access.
+
+        Inputs: tier string (also an official string enum) or None. Returns:
+        None after storing a canonical uppercase value. Failures: invalid types
+        or tiers raise ValueError before mutation. Debug: numeric budgets and
+        unsupported model-specific tiers are not equivalent to this setting.
+        """
+        normalized = value.upper() if isinstance(value, str) else value
+        if normalized is not None and (not isinstance(normalized, str)
+                                       or normalized not in {"LOW", "MEDIUM", "HIGH"}):
+            raise ValueError("Gemini thinking_level must be None, LOW, MEDIUM or HIGH")
+        self._thinking_level = normalized
+
+    @property
+    def generation_options(self) -> Dict[str, str]:
+        """Return actual nondefault generation settings for caller request hashes.
+
+        Inputs: current adapter setting. Returns: a fresh empty dict for legacy
+        None, otherwise {'thinking_level': canonical tier}. No I/O or failures.
+        Debug: bind this per request, not into old global checkpoint config;
+        callers serialize setting changes and dispatch under their existing lock.
+        """
+        return {} if self.thinking_level is None else {"thinking_level": self.thinking_level}
 
     @property
     def provider_name(self) -> str:
@@ -172,27 +255,38 @@ class GeminiAdapter(BaseLLMAdapter):
                     retry_options=types.HttpRetryOptions(attempts=1),
                 ),
             )
-            config = types.GenerateContentConfig(
+            config_options = dict(
                 temperature=self.temperature,
                 max_output_tokens=self.max_tokens,
                 system_instruction=system_prompt if system_prompt else None,
             )
+            if self.thinking_level is not None:
+                # Official Gemini 3 control; no numeric thinking_budget or thought
+                # summaries. Default None does not add even a null config field.
+                # https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/thinking
+                config_options["thinking_config"] = types.ThinkingConfig(
+                    thinking_level=types.ThinkingLevel(self.thinking_level))
+            config = types.GenerateContentConfig(**config_options)
             response = client.models.generate_content(
                 model=self.model_id,
                 contents=prompt,
                 config=config,
             )
 
-            raw_usage = getattr(response, "usage_metadata", None)
-            input_toks = getattr(raw_usage, "prompt_token_count", None)
-            output_toks = getattr(raw_usage, "candidates_token_count", None)
-            if input_toks is None or output_toks is None:
-                raise ValueError("Gemini provider usage unavailable")
-            cached_toks = (
-                getattr(raw_usage, "cached_content_token_count", 0) or 0
-                if raw_usage
-                else 0
-            )
+            raw_usage = _usage_payload(getattr(response, "usage_metadata", None))
+            prompt_toks = _token_count(raw_usage, "prompt_token_count")
+            candidate_toks = _token_count(raw_usage, "candidates_token_count")
+            thought_toks = _token_count(raw_usage, "thoughts_token_count", optional=True)
+            tool_toks = _token_count(raw_usage, "tool_use_prompt_token_count", optional=True)
+            cached_toks = _token_count(raw_usage, "cached_content_token_count", optional=True)
+            # Generic completion accounting includes reported thoughts, like
+            # reasoning-token accounting elsewhere. Visible candidate count,
+            # thoughts, tool prompts and official total remain separate in raw_usage.
+            # Keep normalized total=input+output; never guess thoughts from an
+            # unexplained official total. Missing optional counters add no tokens.
+            # https://ai.google.dev/api/generate-content#UsageMetadata
+            input_toks = prompt_toks + tool_toks
+            output_toks = candidate_toks + thought_toks
 
             usage = ProviderUsage(
                 input_tokens=input_toks,
@@ -201,6 +295,7 @@ class GeminiAdapter(BaseLLMAdapter):
                 total_tokens=input_toks + output_toks,
                 estimated_cost_usd=self.estimate_cost(input_toks, output_toks),
                 currency="USD",
+                raw_usage=raw_usage,
             )
             cand_finish = "stop"
             if hasattr(response, "candidates") and response.candidates:
