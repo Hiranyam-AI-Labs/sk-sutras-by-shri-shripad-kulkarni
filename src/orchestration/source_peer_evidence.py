@@ -48,7 +48,7 @@ def committed(refs):
     _require(isinstance(refs,list),'Explicit committed reference list required, including []')
     cards=[];formulas=[];proofs=[];seen=set();numbers=set()
     for ref in refs:
-        doc=read_bound(ref);path=Path(ref['path']).resolve()
+        doc=read_bound(ref);p=Path(ref['path']);path=p if p.is_absolute() else p.resolve()
         if doc.get('status')=='ACCEPTED_FOR_CASE_ASSIGNMENT':
             _require(doc.get('case_curation_eligible') is True,'Committed candidate must be genuinely eligible')
             discussion_path=path.parent/doc['discussion_file'];bundle=json.loads(discussion_path.read_text(encoding='utf-8'))

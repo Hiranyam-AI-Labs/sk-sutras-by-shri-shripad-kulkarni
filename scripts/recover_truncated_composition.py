@@ -116,6 +116,7 @@ def prepare_recovery(work, number, partial_path):
     captured = {}
     # Use existing pure composition validation to select the exact proposal/peers.
     council = object.__new__(ResearchCouncil)
+    council.source_first_selection = False
     council._bind = lambda n, base: captured.update(base=deepcopy(base))
     council._compose = lambda base, debate, proposal, peers: captured.update(request={
         **base, "discussion": debate, "speaker": "sutrakar", "proposal": proposal,

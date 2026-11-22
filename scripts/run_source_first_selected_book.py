@@ -561,7 +561,8 @@ def _editorials(authority, tasks, work, forbidden):
         path = (base / reference['path']).resolve(); key = _path_key(path)
         if book.byte_hash(path) != reference['sha256'] or (key in audits and audits[key]['sha256'] != reference['sha256']):
             raise ValueError('External spend lineage hash drift')
-        audits[key] = {'path': str(path), 'sha256': reference['sha256']}
+        p_str = next((r['path'] for r in previous.get('external_audits', []) if _path_key(r['path']) == key), str(path))
+        audits[key] = {'path': p_str, 'sha256': reference['sha256']}
     if set(audits) != expected_external or any(audits.get(_path_key(row['path'])) != row for row in previous['external_audits']):
         raise ValueError('Complete unchanged external held spend lineage required')
     _audit_sum([row['path'] for row in audits.values()])
